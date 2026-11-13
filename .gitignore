@@ -1,0 +1,24 @@
+# dependências
+/node_modules
+
+# next.js
+/.next/
+/out/
+/build
+next-env.d.ts
+*.tsbuildinfo
+
+# banco de dados local (SQLite)
+/data
+
+# variáveis de ambiente (nunca suba chaves para o repositório)
+.env
+.env.*
+!.env.example
+
+# diversos
+.DS_Store
+*.pem
+npm-debug.log*
+.vercel
+/coverage
