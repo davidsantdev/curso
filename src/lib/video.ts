@@ -7,13 +7,20 @@ function youtube(id: string | null | undefined): VideoEmbed | null {
   return { kind: "iframe", src: `https://www.youtube-nocookie.com/embed/${id}?rel=0` };
 }
 
+/** Vídeo guardado no próprio site (pasta public/), ex.: /videos/aula-01.mp4 */
+const LOCAL_FILE = /^\/(?!\/)[\w\-./]+\.(mp4|webm|m4v)$/i;
+
 /**
  * Converte o link colado no admin em algo que dá para incorporar na aula.
- * Aceita YouTube, Vimeo, Panda Video, Bunny Stream e arquivos .mp4/.webm.
+ * Aceita YouTube, Vimeo, Panda Video, Bunny Stream, arquivos .mp4/.webm (https)
+ * e vídeos da pasta public/ do site (/videos/aula.mp4).
  * Retorna null quando o link não é reconhecido.
  */
 export function toVideoEmbed(input: string | null | undefined): VideoEmbed | null {
   if (!input) return null;
+
+  const path = input.trim();
+  if (LOCAL_FILE.test(path) && !path.includes("..")) return { kind: "file", src: path };
 
   let url: URL;
   try {

@@ -1,0 +1,27 @@
+{
+  "name": "video-aulas",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Vídeos editados das aulas (Remotion): animações sincronizadas com a voz do professor",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render Aula1 out/aula-01.mp4 && node scripts/masterizar.mjs out/aula-01.mp4",
+    "render:legendado": "remotion render Aula1Legendada out/aula-01-legendada.mp4 && node scripts/masterizar.mjs out/aula-01-legendada.mp4",
+    "render:rascunho": "remotion render Aula1 out/aula-01-rascunho.mp4 --scale=0.5",
+    "quadros": "node scripts/quadros.mjs",
+    "efeitos": "python scripts/sfx.py public && python scripts/grain.py public/grain",
+    "sincronizar": "python scripts/transcribe.py public/voz.mp3 out/transcricao.json small src/data/volume.json && python scripts/align.py out/transcricao.json ../roteiros/aula-01-vender-sem-estoque.md src/data/palavras.json && python scripts/legendas.py src/data/palavras.json out/aula-01.srt"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.543",
+    "@remotion/google-fonts": "4.0.543",
+    "lucide-react": "1.73.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.543"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0",
+    "typescript": "5.9.3"
+  }
+}

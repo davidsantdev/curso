@@ -2,7 +2,7 @@
 
 Trilha **Vender sem estoque** (grátis) · aula de abertura da plataforma.
 
-**Duração estimada:** cerca de 7 minutos (1087 palavras) · **Formato:** vídeo horizontal (16:9), gravado de frente pra câmera.
+**Duração:** 7 min 17 s na gravação da voz (1087 palavras) · **Formato:** vídeo horizontal (16:9).
 
 > O texto falado é o mesmo que aparece escrito na aula 1 — na página inicial e dentro da plataforma.
 > Se mudar o texto aqui, mude também em **Administração → Conteúdo → Vender sem estoque → aula 1**.
@@ -20,14 +20,16 @@ Trilha **Vender sem estoque** (grátis) · aula de abertura da plataforma.
 
 ## Capítulos (para colar na descrição do YouTube)
 
+Tempos da gravação (`voz.mp3`, 7 min 17 s), já batendo com o vídeo editado:
+
 ```
 0:00 Abertura
-0:30 Primeira coisa: o que é vender sem estoque
-1:35 Do clique à casa do cliente
-3:15 E esse tal de dropshipping?
-3:40 Quem faz o quê
-4:50 O que vender sem estoque não é
-6:00 O que você faz com isso
+0:32 Primeira coisa: o que é vender sem estoque
+1:39 Do clique à casa do cliente
+3:29 E esse tal de dropshipping?
+4:00 Quem faz o quê
+5:14 O que vender sem estoque não é
+6:29 O que você faz com isso
 ```
 
 ## Roteiro
@@ -38,7 +40,7 @@ Trilha **Vender sem estoque** (grátis) · aula de abertura da plataforma.
 
 Opa, fala galera, professor na área. Hoje a gente começa do começo, tá bom? Vender sem estoque. Você já deve ter ouvido falar disso por aí, às vezes com outro nome, e talvez tenha ficado com aquela dúvida: como assim vender uma coisa que eu não tenho? Então aqui eu vou te dar toda a explicação que você precisa. Como isso funciona na prática? Quem faz o quê? É verdade ou é conversa de internet? E o que muda pra você, que tá começando do zero?
 
-### 2. Primeira coisa: o que é vender sem estoque (0:30)
+### 2. Primeira coisa: o que é vender sem estoque (0:32)
 
 **Na tela:** Ilustração simples: a sua casa vazia de um lado e o fornecedor com as caixas do outro. Quando você disser "você só paga o fornecedor depois", destaque a frase na tela.
 
@@ -48,7 +50,7 @@ Repara numa coisa aqui, que é o ponto mais importante da aula inteira: você s�
 
 E não sei se você sabe, mas é bem provável que você já tenha comprado de uma loja que funciona assim e nem percebeu. Você comprou, o pacote chegou, tava tudo certo, e você nem imaginou que aquela loja nunca encostou no produto.
 
-### 3. Do clique à casa do cliente (1:35)
+### 3. Do clique à casa do cliente (1:39)
 
 **Na tela:** O caminho em 4 passos: cliente paga R$ 99 → você paga R$ 45 ao fornecedor → fornecedor envia → cliente recebe. Depois, a comparação lado a lado: "100 garrafas × R$ 45 = R$ 4.500 antes da 1ª venda" contra "R$ 0 em produto antes da 1ª venda". Legenda fixa no canto: "valores ilustrativos".
 
@@ -60,13 +62,13 @@ Sobraram 54 reais? Sobraram, mas calma, porque desses 54 ainda sai a taxa de que
 
 Agora olha a diferença pro jeito tradicional. O cara que quer vender garrafa do jeito antigo compra cem garrafas antes de vender a primeira. Cem vezes 45 dá 4.500 reais saindo do bolso dele antes de entrar um real sequer. E se a garrafa não vender? Fica lá, parada na casa dele, ocupando espaço e prendendo dinheiro. O outro cara, que vende sem estoque, gastou zero com produto antes da primeira venda. Zero. É uma diferença brutal de risco pra quem tá começando. E é por isso que esse modelo é tão usado por quem começa com pouco dinheiro.
 
-### 4. E esse tal de dropshipping? (3:15)
+### 4. E esse tal de dropshipping? (3:29)
 
 **Na tela:** Texto na tela: **DROP** (deixar) + **SHIPPING** (envio) = **dropshipping** = vender sem estoque.
 
 E aí aparece a palavra que assusta todo mundo: dropshipping. Que fique claro: dropshipping é só o nome desse modelo em inglês. Não é outra coisa, não é segredo, não é esquema. *Drop* é deixar, *shipping* é envio. O fornecedor "deixa", entre aspas, o produto direto com o seu cliente, sem passar por você. Então, quando você vir alguém falando de dropshipping por aí, você já sabe: é vender sem estoque. Mesma coisa.
 
-### 5. Quem faz o quê (3:40)
+### 5. Quem faz o quê (4:00)
 
 **Na tela:** Três colunas: Você, Fornecedor e Cliente, com o papel de cada um. Na objeção, a frase riscada: "se atrasar, o problema é do fornecedor". Na sigla: "CDC = Código de Defesa do Consumidor".
 
@@ -76,7 +78,7 @@ Você é quem escolhe o produto, monta a loja, faz o cliente chegar até ela e c
 
 Tem gente que pensa assim: "ah, mas se quem manda o produto é o fornecedor, então, se atrasar ou chegar quebrado, o problema é dele". Isso tá errado. Isso tá errado. Por quê? Porque, pro cliente, quem vendeu foi você. Ele comprou na sua loja, pagou pra você, e é com você que ele vai falar. E o Código de Defesa do Consumidor, o CDC, que é a lei que protege quem compra, também enxerga assim: a loja responde pelo que vendeu. Então atrasou? É você que resolve com o cliente, e depois você se acerta com o fornecedor. É por isso que escolher um bom fornecedor faz tanta diferença, e esse assunto tem uma trilha inteira aqui dentro.
 
-### 6. O que vender sem estoque não é (4:50)
+### 6. O que vender sem estoque não é (5:14)
 
 **Na tela:** Três cartões, um de cada vez: "não é dinheiro fácil", "não é sem custo", "não tira a sua responsabilidade". Feche com: "pouco dinheiro + pouco risco".
 
@@ -90,7 +92,7 @@ E vender sem estoque **não tira a sua responsabilidade**, que é o que eu acabe
 
 Qual é a vantagem real, então? É começar com pouco dinheiro e com pouco risco. Só isso? Só isso. E isso já é muita coisa. O que faz dar certo continua sendo o básico: produto certo, oferta clara e atendimento bom. E é exatamente isso que a gente vai construir aqui, passo a passo.
 
-### 7. O que você faz com isso (6:00)
+### 7. O que você faz com isso (6:29)
 
 **Na tela:** As duas tarefas na tela e o lembrete do quiz. Cartão final: "Próxima aula: Do clique ao lucro".
 
@@ -102,7 +104,11 @@ Na próxima aula a gente pega uma venda e faz a conta completa, do clique até o
 
 ## Depois de gravar
 
+A voz desta aula já foi gravada (`voz.mp3`) e virou um vídeo editado, com animações sincronizadas com a fala:
+`video/out/aula-01.mp4`, mais a legenda `video/out/aula-01.srt`. Como refazer ou trocar algo: [video/README.md](../video/README.md).
+
 1. Suba o vídeo no YouTube (como **não listado**, se quiser que ele só apareça na plataforma), no Vimeo, no Panda
    ou no Bunny.
 2. Em **Administração → Conteúdo → Vender sem estoque → aula 1**, cole o link no campo **Vídeo** e salve.
 3. Pronto: o vídeo aparece sozinho na página inicial e dentro da aula. O texto continua embaixo, como transcrição.
+4. No YouTube, envie também a legenda (`aula-01.srt`, em Legendas → Enviar arquivo) e cole os capítulos acima na descrição.

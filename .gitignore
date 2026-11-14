@@ -16,6 +16,15 @@ next-env.d.ts
 .env.*
 !.env.example
 
+# vídeos das aulas (Remotion): dependências, gravação de voz e vídeos renderizados ficam fora do Git
+/video/node_modules
+/video/out
+/video/public/voz*.mp3
+/video/public/broll/*.mp4
+/voz*.mp3
+# vídeos servidos pelo próprio site em desenvolvimento (em produção, use YouTube, Bunny ou Panda)
+/public/videos/
+
 # diversos
 .DS_Store
 *.pem

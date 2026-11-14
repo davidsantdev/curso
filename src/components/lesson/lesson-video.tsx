@@ -1,6 +1,8 @@
 import { BookOpen } from "lucide-react";
+import { VideoPlayer } from "@/components/lesson/video-player";
 import { deepGradient, getTheme } from "@/lib/theme";
 import { toVideoEmbed } from "@/lib/video";
+import { localVideoAssets } from "@/lib/video-assets";
 
 export function LessonVideo({
   url,
@@ -40,23 +42,22 @@ export function LessonVideo({
     );
   }
 
+  if (embed.kind === "file") {
+    const { poster, captions } = localVideoAssets(embed.src);
+    return <VideoPlayer src={embed.src} poster={poster} captions={captions} title={title} />;
+  }
+
   return (
     <div className="bg-navy-950 relative aspect-video overflow-hidden rounded-3xl shadow-[0_24px_60px_-30px_rgb(21_21_77/0.6)]">
-      {embed.kind === "iframe" ? (
-        <iframe
-          src={embed.src}
-          title={`Vídeo: ${title}`}
-          className="absolute inset-0 size-full"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-          loading="lazy"
-        />
-      ) : (
-        <video src={embed.src} controls playsInline preload="metadata" className="absolute inset-0 size-full">
-          Seu navegador não conseguiu reproduzir este vídeo.
-        </video>
-      )}
+      <iframe
+        src={embed.src}
+        title={`Vídeo: ${title}`}
+        className="absolute inset-0 size-full"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+        loading="lazy"
+      />
     </div>
   );
 }

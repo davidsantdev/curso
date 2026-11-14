@@ -50,7 +50,7 @@ e-mails aparecem no terminal. Para cobrar e enviar e-mails de verdade, veja as s
   o cliente compra → o fornecedor entrega) e só depois apresenta o nome "dropshipping"
 - **Aula 1 aberta na página inicial**: logo depois do topo, qualquer visitante lê a primeira aula grátis, no
   estilo do professor, sem cadastro (o começo aparece aberto e o resto em "Continuar lendo"). Quando a aula ganha
-  um vídeo no admin, ele aparece ali sozinho e o texto vira a transcrição
+  um vídeo no admin, o vídeo toma o lugar do texto ali (dentro da plataforma, o texto continua embaixo do vídeo)
 - Vitrine dos métodos (selos Grátis/Pro), recursos, planos e dúvidas frequentes
 - **O que você aprende** (`/cursos`): a grade completa, aberta a qualquer visitante, com todas as trilhas, módulos,
   aulas e o que se aprende em cada uma — inclusive nas aulas pagas
@@ -117,9 +117,10 @@ por módulo:
 O que **ainda falta** no conteúdo e só você pode fazer:
 
 - **Vídeos.** As aulas funcionam como aulas em texto. Para adicionar um vídeo, cole o link no editor da aula.
-  Comece pela aula 1: o roteiro de gravação está pronto em
-  [`roteiros/aula-01-vender-sem-estoque.md`](roteiros/aula-01-vender-sem-estoque.md), com o que mostrar na tela em
-  cada parte e os capítulos para colar no YouTube. O vídeo da aula 1 aparece sozinho na página inicial.
+  A aula 1 já tem vídeo editado (`video/out/aula-01.mp4`, ver [`video/README.md`](video/README.md)): suba no
+  YouTube como não listado (ou no Bunny/Panda) e cole o link. No seu computador, ele já está no ar pela pasta
+  `public/videos/`: um arquivo ali é usado como `/videos/nome.mp4`, e a capa (`nome.jpg`) e a legenda (`nome.vtt`)
+  com o mesmo nome entram sozinhas. Essa pasta não vai para o Git, então em produção use o link do YouTube/Bunny/Panda.
 - **Revisão.** Leia as aulas e ajuste o tom, os exemplos e as ferramentas que você recomenda. Nas aulas sobre
   impostos, MEI e taxas, os valores mudam com o tempo: confira antes de publicar.
 
@@ -332,6 +333,7 @@ scripts/
   content/            conteúdo inicial das trilhas, um arquivo por trilha
   seed.ts             carrega planos, contas e conteúdo em um banco vazio
 roteiros/             roteiros de gravação e o guia do estilo do professor
+video/                vídeo editado das aulas (Remotion), sincronizado com a gravação da voz; ver video/README.md
 ```
 
 Tecnologias: Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS 4, Drizzle ORM e SQLite/libSQL.

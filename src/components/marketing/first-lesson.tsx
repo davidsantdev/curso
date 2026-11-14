@@ -25,7 +25,8 @@ function splitPreview(markdown: string, visibleChapters = 1): { preview: string;
 
 /**
  * A primeira aula, aberta na página inicial para qualquer visitante (só aulas grátis chegam aqui).
- * Com vídeo cadastrado na aula, ele aparece no topo e o texto vira a transcrição.
+ * Com vídeo cadastrado na aula, a seção mostra o vídeo (o texto continua dentro da plataforma);
+ * sem vídeo, mostra a aula escrita, com o começo aberto e o resto em "Continuar lendo".
  */
 export function FirstLesson({ featured, signedIn }: { featured: FeaturedLesson; signedIn: boolean }) {
   const { lesson, track, position, next } = featured;
@@ -79,24 +80,24 @@ export function FirstLesson({ featured, signedIn }: { featured: FeaturedLesson; 
           <LessonObjectives objectives={lesson.objectives} />
         </div>
 
-        <article className="card mt-6 p-6 sm:p-10" aria-label={`Texto da aula: ${lesson.title}`}>
-          <div className="border-line mb-7 flex items-center gap-3 border-b pb-6">
-            <span className="bg-hero grid size-11 shrink-0 place-items-center rounded-full text-white">
-              <Mic className="size-5" aria-hidden="true" />
-            </span>
-            <div>
-              <p className="text-navy-900 text-[15px] leading-tight font-semibold">Professor</p>
-              <p className="text-muted mt-0.5 text-sm">
-                {hasVideo ? "Transcrição da aula" : "A aula escrita do jeito que é falada"}
-              </p>
+        {hasVideo ? null : (
+          <article className="card mt-6 p-6 sm:p-10" aria-label={`Texto da aula: ${lesson.title}`}>
+            <div className="border-line mb-7 flex items-center gap-3 border-b pb-6">
+              <span className="bg-hero grid size-11 shrink-0 place-items-center rounded-full text-white">
+                <Mic className="size-5" aria-hidden="true" />
+              </span>
+              <div>
+                <p className="text-navy-900 text-[15px] leading-tight font-semibold">Professor</p>
+                <p className="text-muted mt-0.5 text-sm">A aula escrita do jeito que é falada</p>
+              </div>
             </div>
-          </div>
-          <LessonReader
-            preview={<Markdown>{preview}</Markdown>}
-            rest={rest ? <Markdown>{rest}</Markdown> : null}
-            moreLabel="Continuar lendo a aula"
-          />
-        </article>
+            <LessonReader
+              preview={<Markdown>{preview}</Markdown>}
+              rest={rest ? <Markdown>{rest}</Markdown> : null}
+              moreLabel="Continuar lendo a aula"
+            />
+          </article>
+        )}
 
         {/* Próximo passo */}
         <div className="card border-brand-100 mt-6 flex flex-col gap-5 border p-6 sm:p-7 md:flex-row md:items-center md:justify-between">

@@ -291,7 +291,7 @@ export async function updateLessonAction(_previous: FormState, formData: FormDat
     return {
       ok: false,
       message: "Revise os campos destacados.",
-      errors: { videoUrl: "Link não reconhecido. Use YouTube, Vimeo, Panda Video, Bunny ou um arquivo .mp4 (https)." },
+      errors: { videoUrl: "Link não reconhecido. Use YouTube, Vimeo, Panda Video, Bunny, um arquivo .mp4 (https) ou um vídeo da pasta do site (/videos/aula.mp4)." },
     };
   }
 

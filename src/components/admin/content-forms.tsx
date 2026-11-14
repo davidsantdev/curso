@@ -295,7 +295,7 @@ export function LessonForm({
           placeholder="https://www.youtube.com/watch?v=…"
           defaultValue={lesson.videoUrl ?? ""}
           error={state.errors?.videoUrl}
-          hint="YouTube, Vimeo, Panda Video, Bunny Stream ou arquivo .mp4. Deixe vazio para aula só em texto."
+          hint="YouTube, Vimeo, Panda Video, Bunny Stream, arquivo .mp4 ou um vídeo da pasta do site (/videos/aula.mp4). Deixe vazio para aula só em texto."
         />
 
         <div>

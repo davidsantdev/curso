@@ -38,10 +38,18 @@ Interface e textos em **português do Brasil**. Visão geral, comandos e deploy:
   primeira vez), sem promessa de ganho. Valores de taxas e impostos sempre com o aviso de conferir o valor atual.
 - No conteúdo em Markdown, linhas seguidas dentro de uma citação (`>`) viram um parágrafo só: use listas.
 - A **primeira aula grátis da grade** aparece aberta na página inicial (`getFeaturedLesson`, em
-  `src/lib/content.ts`). Só aula grátis pode entrar ali, porque a página é pública. O texto é dividido pelos
-  capítulos `## …`: o primeiro fica aberto e o resto abre em "Continuar lendo".
+  `src/lib/content.ts`). Só aula grátis pode entrar ali, porque a página é pública. Com vídeo cadastrado, a seção
+  mostra só o vídeo; sem vídeo, mostra o texto dividido pelos capítulos `## …` (o primeiro aberto, o resto em
+  "Continuar lendo").
+- Vídeo da aula pode ser link (YouTube, Vimeo, Panda, Bunny, .mp4 https) ou arquivo da pasta `public/videos/`
+  (`/videos/nome.mp4`, com capa `nome.jpg` e legenda `nome.vtt` achadas pelo nome). Essa pasta é ignorada pelo
+  Git: serve para desenvolvimento, não para produção.
 - Aulas no **estilo do professor** seguem `roteiros/estilo-do-professor.md` (a aula 1 já está assim; as outras
   ainda em texto didático). O roteiro de gravação de cada aula fica em `roteiros/`.
+- `video/` é um projeto separado (Remotion, com `package.json` próprio) que transforma a gravação da voz em vídeo
+  editado. Fica fora do `tsconfig` do site. As cenas se prendem a frases do roteiro (`em("…")`), então o texto
+  do roteiro e o da gravação precisam bater. O Remotion usa as portas 3100 e 3200, porque a 3000 é do `next dev`.
+  Guia: `video/README.md`.
 
 ## Verificar mudanças
 
