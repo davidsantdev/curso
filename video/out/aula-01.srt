@@ -1,0 +1,654 @@
+1
+00:00:00,000 --> 00:00:00,810
+Opa,
+
+2
+00:00:01,060 --> 00:00:03,330
+fala galera, professor na área.
+
+3
+00:00:03,480 --> 00:00:06,290
+Hoje a gente começa do começo, tá bom?
+
+4
+00:00:06,560 --> 00:00:08,530
+Vender sem estoque.
+
+5
+00:00:08,700 --> 00:00:13,780
+Você já deve ter ouvido falar disso por
+aí, às vezes com outro nome, e talvez tenha
+
+6
+00:00:13,800 --> 00:00:15,550
+ficado com aquela dúvida:
+
+7
+00:00:15,800 --> 00:00:18,610
+como assim vender uma
+coisa que eu não tenho?
+
+8
+00:00:18,840 --> 00:00:22,630
+Então aqui eu vou te dar toda
+a explicação que você precisa.
+
+9
+00:00:22,840 --> 00:00:24,750
+Como isso funciona na prática?
+
+10
+00:00:24,880 --> 00:00:26,130
+Quem faz o quê?
+
+11
+00:00:26,240 --> 00:00:28,810
+É verdade ou é conversa de internet?
+
+12
+00:00:29,060 --> 00:00:32,270
+E o que muda pra você,
+que tá começando do zero?
+
+13
+00:00:32,600 --> 00:00:33,610
+Primeira coisa:
+
+14
+00:00:33,840 --> 00:00:37,550
+vender sem estoque é
+exatamente o que o nome diz.
+
+15
+00:00:37,760 --> 00:00:41,130
+Você vende um produto
+que não está na sua casa.
+
+16
+00:00:41,220 --> 00:00:46,150
+Não tá no seu quarto, não tá num
+depósito, não tá em lugar nenhum seu.
+
+17
+00:00:46,380 --> 00:00:51,650
+Quem tem o produto guardado é o
+fornecedor, que é a empresa que fabrica...
+
+18
+00:00:51,760 --> 00:00:57,040
+na verdade nem sempre fabrica, às vezes
+só distribui, mas é a empresa que tem o
+
+19
+00:00:57,060 --> 00:00:58,470
+produto na prateleira.
+
+20
+00:00:58,620 --> 00:01:03,760
+E aí, quando um cliente compra na sua
+loja, você repassa o pedido pra esse
+
+21
+00:01:03,780 --> 00:01:08,890
+fornecedor, e é ele que embala e
+manda direto pra casa do cliente.
+
+22
+00:01:09,060 --> 00:01:13,570
+Repara numa coisa aqui, que é o ponto
+mais importante da aula inteira:
+
+23
+00:01:13,680 --> 00:01:18,670
+você só paga o fornecedor depois
+que o cliente já te pagou.
+
+24
+00:01:18,720 --> 00:01:19,710
+Não antes.
+
+25
+00:01:19,860 --> 00:01:20,590
+Depois.
+
+26
+00:01:20,960 --> 00:01:22,870
+Pô, isso muda tudo, tá?
+
+27
+00:01:23,080 --> 00:01:28,260
+E não sei se você sabe, mas é bem provável
+que você já tenha comprado de uma loja
+
+28
+00:01:28,280 --> 00:01:31,040
+que funciona assim e nem percebeu.
+
+29
+00:01:31,060 --> 00:01:37,060
+Você comprou, o pacote chegou, tava tudo
+certo, e você nem imaginou que aquela loja
+
+30
+00:01:37,080 --> 00:01:39,070
+nunca encostou no produto.
+
+31
+00:01:39,320 --> 00:01:40,110
+Beleza.
+
+32
+00:01:40,200 --> 00:01:43,930
+Vou te mostrar com um exemplo,
+porque com exemplo fica fácil.
+
+33
+00:01:44,120 --> 00:01:48,230
+Tô usando número redondo aqui, só
+pra você enxergar a lógica, tá bom?
+
+34
+00:01:48,300 --> 00:01:49,790
+Não é promessa de nada.
+
+35
+00:01:50,120 --> 00:01:53,910
+Você acha um fornecedor que
+vende uma garrafa térmica por
+
+36
+00:01:54,500 --> 00:01:55,320
+45 reais.
+
+37
+00:01:55,340 --> 00:01:58,110
+Você coloca essa garrafa na sua loja por
+
+38
+00:01:58,700 --> 00:01:59,000
+99.
+
+39
+00:01:59,200 --> 00:02:01,490
+Aí um cliente entra, gosta,
+
+40
+00:02:01,700 --> 00:02:02,950
+compra e paga
+
+41
+00:02:03,580 --> 00:02:04,810
+99 reais pra você.
+
+42
+00:02:05,000 --> 00:02:08,990
+Você pega esse pedido,
+vai no fornecedor, paga os
+
+43
+00:02:09,500 --> 00:02:11,750
+45 e passa o endereço do cliente.
+
+44
+00:02:11,860 --> 00:02:15,300
+O fornecedor, por sua vez, embala e envia.
+
+45
+00:02:15,320 --> 00:02:17,630
+E o cliente recebe a garrafa em casa.
+
+46
+00:02:17,880 --> 00:02:18,490
+Pronto:
+
+47
+00:02:18,600 --> 00:02:22,530
+a venda aconteceu e você
+nunca encostou na garrafa.
+
+48
+00:02:22,620 --> 00:02:23,410
+Sobraram
+
+49
+00:02:24,100 --> 00:02:24,820
+54 reais?
+
+50
+00:02:24,840 --> 00:02:30,920
+Sobraram, mas calma, porque desses 54
+ainda sai a taxa de quem processou o
+
+51
+00:02:30,940 --> 00:02:36,420
+pagamento, sai o que você gastou de anúncio
+pra esse cliente chegar até você, e por
+
+52
+00:02:36,440 --> 00:02:37,150
+aí vai.
+
+53
+00:02:37,320 --> 00:02:41,770
+Eu ainda vou me aprofundar nessa
+conta, ela tem uma aula só pra ela.
+
+54
+00:02:41,800 --> 00:02:43,970
+Por enquanto, guarda a estrutura:
+
+55
+00:02:44,120 --> 00:02:49,430
+o cliente paga você, você paga o
+fornecedor e o fornecedor entrega.
+
+56
+00:02:49,520 --> 00:02:52,590
+Agora olha a diferença
+pro jeito tradicional.
+
+57
+00:02:52,920 --> 00:02:58,460
+O cara que quer vender garrafa do jeito
+antigo compra cem garrafas antes de vender a
+
+58
+00:02:58,480 --> 00:02:59,110
+primeira.
+
+59
+00:02:59,200 --> 00:03:00,110
+Cem vezes
+
+60
+00:03:00,840 --> 00:03:07,230
+45 dá 4.500 reais saindo do bolso
+dele antes de entrar um real sequer.
+
+61
+00:03:07,340 --> 00:03:08,730
+E se a garrafa não vender?
+
+62
+00:03:08,960 --> 00:03:13,910
+Fica lá, parada na casa dele,
+ocupando espaço e prendendo dinheiro.
+
+63
+00:03:14,220 --> 00:03:19,500
+O outro cara, que vende sem estoque,
+gastou zero com produto antes da primeira
+
+64
+00:03:19,520 --> 00:03:20,250
+venda.
+
+65
+00:03:20,280 --> 00:03:21,110
+Zero.
+
+66
+00:03:21,260 --> 00:03:24,600
+É uma diferença brutal de
+risco pra quem tá começando.
+
+67
+00:03:24,620 --> 00:03:29,190
+E é por isso que esse modelo é tão usado
+por quem começa com pouco dinheiro.
+
+68
+00:03:29,540 --> 00:03:33,030
+E aí aparece a palavra
+que assusta todo mundo:
+
+69
+00:03:33,340 --> 00:03:34,330
+dropshipping.
+
+70
+00:03:34,540 --> 00:03:35,530
+Que fique claro:
+
+71
+00:03:35,680 --> 00:03:39,440
+dropshipping é só o nome
+desse modelo em inglês.
+
+72
+00:03:39,460 --> 00:03:42,990
+Não é outra coisa, não é
+segredo, não é esquema.
+
+73
+00:03:43,140 --> 00:03:44,610
+Drop é deixar,
+
+74
+00:03:44,960 --> 00:03:46,430
+shipping é envio.
+
+75
+00:03:46,580 --> 00:03:52,260
+O fornecedor "deixa", entre aspas, o
+produto direto com o seu cliente, sem passar
+
+76
+00:03:52,280 --> 00:03:53,150
+por você.
+
+77
+00:03:53,320 --> 00:03:57,950
+Então, quando você vir alguém falando
+de dropshipping por aí, você já sabe:
+
+78
+00:03:57,980 --> 00:03:59,790
+é vender sem estoque.
+
+79
+00:03:59,880 --> 00:04:00,710
+Mesma coisa.
+
+80
+00:04:01,080 --> 00:04:01,770
+Beleza.
+
+81
+00:04:01,860 --> 00:04:04,770
+Agora a parte que muita
+gente entende errado:
+
+82
+00:04:05,000 --> 00:04:06,530
+quem faz o quê.
+
+83
+00:04:06,740 --> 00:04:08,920
+São três personagens nessa história.
+
+84
+00:04:08,940 --> 00:04:11,530
+Você é quem escolhe o produto,
+
+85
+00:04:11,800 --> 00:04:16,350
+monta a loja, faz o cliente chegar
+até ela e cuida do atendimento.
+
+86
+00:04:16,520 --> 00:04:20,620
+O fornecedor é quem guarda
+o estoque, embala e envia.
+
+87
+00:04:20,640 --> 00:04:22,890
+E o cliente compra de você.
+
+88
+00:04:23,020 --> 00:04:24,330
+De você, tá?
+
+89
+00:04:24,420 --> 00:04:25,710
+Não do fornecedor.
+
+90
+00:04:25,820 --> 00:04:29,930
+E isso tem uma consequência
+muito, muito, muito importante.
+
+91
+00:04:30,160 --> 00:04:31,670
+Tem gente que pensa assim:
+
+92
+00:04:31,840 --> 00:04:36,520
+"ah, mas se quem manda o produto é o
+fornecedor, então, se atrasar ou chegar
+
+93
+00:04:36,540 --> 00:04:38,390
+quebrado, o problema é dele".
+
+94
+00:04:38,560 --> 00:04:39,890
+Isso tá errado.
+
+95
+00:04:39,960 --> 00:04:41,550
+Isso tá errado.
+
+96
+00:04:41,720 --> 00:04:42,430
+Por quê?
+
+97
+00:04:42,620 --> 00:04:45,550
+Porque, pro cliente, quem vendeu foi você.
+
+98
+00:04:45,780 --> 00:04:51,090
+Ele comprou na sua loja, pagou pra
+você, e é com você que ele vai falar.
+
+99
+00:04:51,320 --> 00:04:54,270
+E o Código de Defesa do Consumidor, o CDC,
+
+100
+00:04:54,640 --> 00:04:58,110
+que é a lei que protege quem
+compra, também enxerga assim:
+
+101
+00:04:58,300 --> 00:05:00,650
+a loja responde pelo que vendeu.
+
+102
+00:05:00,780 --> 00:05:01,910
+Então atrasou?
+
+103
+00:05:01,980 --> 00:05:06,990
+É você que resolve com o cliente, e
+depois você se acerta com o fornecedor.
+
+104
+00:05:07,100 --> 00:05:12,340
+É por isso que escolher um bom fornecedor
+faz tanta diferença, e esse assunto tem
+
+105
+00:05:12,360 --> 00:05:14,490
+uma trilha inteira aqui dentro.
+
+106
+00:05:14,640 --> 00:05:17,090
+Mas, como eu tava dizendo lá no começo:
+
+107
+00:05:17,300 --> 00:05:19,850
+isso é verdade ou é conversa de internet?
+
+108
+00:05:20,340 --> 00:05:21,230
+É verdade.
+
+109
+00:05:21,460 --> 00:05:26,920
+Só que, olha, eu preciso ser bem honesto
+com você, porque tem muita promessa errada
+
+110
+00:05:26,940 --> 00:05:28,330
+sobre isso por aí.
+
+111
+00:05:28,600 --> 00:05:31,710
+Vender sem estoque não é dinheiro fácil.
+
+112
+00:05:31,840 --> 00:05:32,850
+Dá trabalho:
+
+113
+00:05:32,880 --> 00:05:37,970
+escolher produto, montar loja,
+divulgar, atender, ajustar.
+
+114
+00:05:38,220 --> 00:05:43,500
+Quem te fala que é só abrir a loja e esperar
+o dinheiro cair tá te vendendo ilusão,
+
+115
+00:05:43,520 --> 00:05:44,810
+pode ter certeza.
+
+116
+00:05:45,180 --> 00:05:47,910
+Vender sem estoque não é sem custo.
+
+117
+00:05:47,960 --> 00:05:53,680
+Você não compra estoque, mas paga a plataforma
+da loja, paga taxa de pagamento, paga
+
+118
+00:05:53,700 --> 00:05:54,530
+anúncio.
+
+119
+00:05:54,600 --> 00:05:58,450
+É um custo bem menor do que
+montar um estoque, mas existe.
+
+120
+00:05:58,660 --> 00:06:03,560
+E vender sem estoque não tira a sua
+responsabilidade, que é o que eu acabei de te
+
+121
+00:06:03,580 --> 00:06:04,190
+mostrar:
+
+122
+00:06:04,480 --> 00:06:06,530
+quem vendeu foi você.
+
+123
+00:06:06,840 --> 00:06:08,950
+Qual é a vantagem real, então?
+
+124
+00:06:09,280 --> 00:06:12,750
+É começar com pouco
+dinheiro e com pouco risco.
+
+125
+00:06:13,000 --> 00:06:13,730
+Só isso?
+
+126
+00:06:13,960 --> 00:06:14,970
+Só isso.
+
+127
+00:06:15,080 --> 00:06:17,190
+E isso já é muita coisa.
+
+128
+00:06:17,420 --> 00:06:20,710
+O que faz dar certo
+continua sendo o básico:
+
+129
+00:06:20,880 --> 00:06:21,850
+produto certo,
+
+130
+00:06:22,080 --> 00:06:24,810
+oferta clara e atendimento bom.
+
+131
+00:06:24,960 --> 00:06:28,310
+E é exatamente isso que a
+gente vai construir aqui,
+
+132
+00:06:28,540 --> 00:06:29,670
+passo a passo.
+
+133
+00:06:29,840 --> 00:06:32,830
+Então, o que você faz com
+essa informação agora?
+
+134
+00:06:33,100 --> 00:06:33,990
+Duas coisas.
+
+135
+00:06:34,300 --> 00:06:35,010
+Primeira:
+
+136
+00:06:35,120 --> 00:06:40,870
+explica com as suas palavras, em três
+linhas, como funciona vender sem estoque.
+
+137
+00:06:40,940 --> 00:06:44,370
+Pode ser pra alguém da sua
+casa, pode ser numa anotação.
+
+138
+00:06:44,520 --> 00:06:47,390
+Se você consegue explicar,
+é porque entendeu.
+
+139
+00:06:47,740 --> 00:06:48,630
+Segunda:
+
+140
+00:06:48,820 --> 00:06:51,240
+anota duas dúvidas que ficaram.
+
+141
+00:06:51,260 --> 00:06:54,900
+Elas provavelmente vão ser
+respondidas nas próximas aulas.
+
+142
+00:06:54,920 --> 00:07:01,000
+E responde as três perguntas do quiz
+dessa aula, que é rapidinho e fixa o que
+
+143
+00:07:01,020 --> 00:07:01,550
+importa.
+
+144
+00:07:01,940 --> 00:07:08,220
+Na próxima aula a gente pega uma venda e
+faz a conta completa, do clique até o que
+
+145
+00:07:08,240 --> 00:07:09,770
+sobra no seu bolso.
+
+146
+00:07:09,820 --> 00:07:15,070
+Porque vender é uma coisa, e lucrar
+é outra completamente diferente,
+
+147
+00:07:15,480 --> 00:07:15,930
+tá bom?
+
+148
+00:07:16,160 --> 00:07:17,030
+Te vejo lá.
+

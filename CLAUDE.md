@@ -42,8 +42,11 @@ Interface e textos em **português do Brasil**. Visão geral, comandos e deploy:
   mostra só o vídeo; sem vídeo, mostra o texto dividido pelos capítulos `## …` (o primeiro aberto, o resto em
   "Continuar lendo").
 - Vídeo da aula pode ser link (YouTube, Vimeo, Panda, Bunny, .mp4 https) ou arquivo da pasta `public/videos/`
-  (`/videos/nome.mp4`, com capa `nome.jpg` e legenda `nome.vtt` achadas pelo nome). Essa pasta é ignorada pelo
-  Git: serve para desenvolvimento, não para produção.
+  (`/videos/nome.mp4`, com capa `nome.jpg` e legenda `nome.vtt` achadas pelo nome). No site publicado, use link
+  (a Vercel não baixa arquivos do Git LFS por padrão).
+- **Commits mandam tudo** (pedido do dono do projeto): código, textos, voz e vídeos. Mídia (.mp4, .mp3, .mov,
+  .webm, .m4a) vai pelo Git LFS (`.gitattributes`). Ficam fora só dependências (`node_modules`), arquivos de
+  build, o banco local (`data/`) e `.env`.
 - Aulas no **estilo do professor** seguem `roteiros/estilo-do-professor.md` (a aula 1 já está assim; as outras
   ainda em texto didático). O roteiro de gravação de cada aula fica em `roteiros/`.
 - `video/` é um projeto separado (Remotion, com `package.json` próprio) que transforma a gravação da voz em vídeo

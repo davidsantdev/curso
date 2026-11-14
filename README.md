@@ -120,7 +120,9 @@ O que **ainda falta** no conteúdo e só você pode fazer:
   A aula 1 já tem vídeo editado (`video/out/aula-01.mp4`, ver [`video/README.md`](video/README.md)): suba no
   YouTube como não listado (ou no Bunny/Panda) e cole o link. No seu computador, ele já está no ar pela pasta
   `public/videos/`: um arquivo ali é usado como `/videos/nome.mp4`, e a capa (`nome.jpg`) e a legenda (`nome.vtt`)
-  com o mesmo nome entram sozinhas. Essa pasta não vai para o Git, então em produção use o link do YouTube/Bunny/Panda.
+  com o mesmo nome entram sozinhas. Voz e vídeos vão para o GitHub pelo Git LFS (`.gitattributes`); mesmo assim,
+  no site publicado use o link do YouTube/Bunny/Panda: a Vercel não baixa arquivos LFS por padrão, e servir vídeo
+  pesado direto do site fica lento e caro.
 - **Revisão.** Leia as aulas e ajuste o tom, os exemplos e as ferramentas que você recomenda. Nas aulas sobre
   impostos, MEI e taxas, os valores mudam com o tempo: confira antes de publicar.
 
