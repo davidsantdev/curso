@@ -11,11 +11,17 @@ export const site = {
   /** E-mail de atendimento que aparece no site. Pode ser trocado por variável de ambiente. */
   supportEmail: process.env.NEXT_PUBLIC_SUPPORT_EMAIL || "contato@vendra.test",
   timeZone: "America/Sao_Paulo",
+  /**
+   * Pré-estreia: enquanto os vídeos das aulas são gravados, o site avisa que o curso está em produção e que o preço
+   * é de estreia, e as aulas ainda sem vídeo aparecem como "vídeo em breve" (somem sozinhas quando o vídeo entra).
+   * Troque para `false` quando todas as aulas tiverem vídeo. Lembre de rever os preços dos planos nessa hora.
+   */
+  prelaunch: true,
 } as const;
 
 /**
  * Endereço público do site, ou `null` quando ele roda em um endereço local.
- * Serviços externos (como o Mercado Pago) não aceitam "localhost" em links de retorno.
+ * Serviços externos (como o webhook da Cakto) não conseguem chamar um endereço "localhost".
  */
 export function publicSiteUrl(): string | null {
   try {

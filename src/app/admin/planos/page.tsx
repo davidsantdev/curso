@@ -44,7 +44,7 @@ export default async function AdminPlansPage() {
                 price: centsToInput(plan.priceCents),
                 interval: plan.interval,
                 features: plan.features.join("\n"),
-                externalPriceId: plan.externalPriceId ?? "",
+                paymentLink: plan.paymentLink ?? "",
                 highlighted: plan.highlighted,
                 active: plan.active,
               }}

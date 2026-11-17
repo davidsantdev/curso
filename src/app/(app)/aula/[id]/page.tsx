@@ -18,6 +18,7 @@ import { LessonComments, type CommentView } from "@/components/lesson/comments";
 import { CompleteLesson } from "@/components/lesson/complete-lesson";
 import { LessonObjectives } from "@/components/lesson/lesson-objectives";
 import { LessonOutline } from "@/components/lesson/lesson-outline";
+import { LessonPdfCard } from "@/components/lesson/lesson-pdf-card";
 import { LessonVideo } from "@/components/lesson/lesson-video";
 import { LockedPreview } from "@/components/lesson/locked-preview";
 import { LessonNotes } from "@/components/lesson/notes";
@@ -35,6 +36,8 @@ import {
   locateLesson,
 } from "@/lib/content";
 import { formatDate, plural } from "@/lib/format";
+import { lessonPdf } from "@/lib/lesson-pdf";
+import { toVideoEmbed } from "@/lib/video";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -140,6 +143,9 @@ export default async function LessonPage({ params }: Props) {
   const detail = await getLessonDetail(lesson.id);
   if (!detail) notFound();
 
+  const pdf = lessonPdf(track.slug, lesson.title);
+  const hasVideo = Boolean(toVideoEmbed(detail.videoUrl));
+
   /* ------------------------- Aula bloqueada ------------------------- */
   // Mostra o que a aula ensina (para dar vontade de assinar), mas nunca o conteúdo em si.
   if (!accessible) {
@@ -169,6 +175,7 @@ export default async function LessonPage({ params }: Props) {
             trackSlug={track.slug}
             minutes={lesson.durationMinutes}
             hasVideo={Boolean(detail.videoUrl)}
+            hasPdf={Boolean(pdf)}
             taskCount={detail.tasks.length}
             questionCount={detail.questions.length}
             resourceCount={detail.resources.length}
@@ -223,7 +230,11 @@ export default async function LessonPage({ params }: Props) {
 
         <LessonObjectives objectives={lesson.objectives} />
 
-        {detail.content.trim() ? (
+        {pdf ? <LessonPdfCard href={`/aula/${lesson.id}/pdf`} /> : null}
+
+        {/* Com vídeo, o texto da aula (o roteiro do vídeo) não aparece: o aluno assiste e baixa os slides.
+            Sem vídeo, o texto continua sendo o conteúdo da aula. */}
+        {!hasVideo && detail.content.trim() ? (
           <section className="card p-6 sm:p-9">
             <Markdown>{detail.content}</Markdown>
           </section>

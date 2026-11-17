@@ -19,6 +19,7 @@ next-env.d.ts
 # vídeos das aulas (Remotion): só as dependências ficam fora.
 # Voz e vídeos (.mp3, .mp4, .mov, .webm, .m4a) vão para o GitHub pelo Git LFS (ver .gitattributes).
 /video/node_modules
+/video/.cache-slides
 
 # diversos
 .DS_Store

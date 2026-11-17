@@ -83,7 +83,7 @@ export function ProductMock() {
         </div>
       </div>
 
-      <div className="animate-float shadow-float border-line absolute -bottom-7 -left-3 flex items-center gap-3 rounded-2xl border bg-white py-3 pr-5 pl-3 sm:-left-10">
+      <div className="animate-float shadow-float border-line absolute -bottom-12 -left-3 flex items-center gap-3 rounded-2xl border bg-white py-3 pr-5 pl-3 sm:-left-10">
         <span className="bg-sun-50 text-sun-500 grid size-10 place-items-center rounded-xl">
           <Rocket className="size-5" />
         </span>

@@ -5,7 +5,7 @@ import { db } from "@/db";
 import { payments, plans, subscriptions, type Plan, type PlanInterval } from "@/db/schema";
 import { grantAchievements } from "@/lib/achievements";
 import { isSubscriptionActive } from "@/lib/auth/dal";
-import { mercadoPagoEnabled } from "@/lib/payments/mercadopago";
+import { anyProviderReady } from "@/lib/payments/links";
 
 /**
  * COBRANÇA
@@ -14,21 +14,22 @@ import { mercadoPagoEnabled } from "@/lib/payments/mercadopago";
  * O acesso pago é sempre decidido pela tabela `subscriptions`.
  *
  * O modelo é de PERÍODOS DE ACESSO, sem cobrança automática: o aluno paga uma vez
- * (Pix, cartão ou boleto) e ganha 1 mês ou 1 ano de acesso. Quando renova, o novo
- * período é somado ao final do atual.
+ * (Pix, cartão ou boleto, na Cakto) e ganha 1 mês, 1 ano ou acesso vitalício.
+ * Quando renova, o novo período é somado ao final do atual.
  *
  * Formas de liberar o acesso:
- *   • "mercadopago" — pagamento real; quem ativa é `src/lib/checkout.ts`,
- *                     chamado pelo webhook e pela volta do checkout;
- *   • "cupom"       — cupom de 100% (cortesia);
- *   • "manual"      — o administrador libera pelo painel (venda por fora);
- *   • "demo"        — checkout de demonstração, sem cobrança (desenvolvimento).
+ *   • "cakto"   — venda real; quem ativa é `settleSaleEvent` (src/lib/checkout.ts),
+ *                 chamado pelo aviso de venda da Cakto (webhook). "hotmart" funciona igual, se for religada;
+ *   • "cupom"   — cupom de cortesia (100%);
+ *   • "manual"  — o administrador libera pelo painel (venda por fora);
+ *   • "demo"    — checkout de demonstração, sem cobrança (desenvolvimento).
  */
 
-export type BillingMode = "mercadopago" | "demo" | "disabled";
+/** "live": há uma plataforma de pagamento configurada (Cakto ou Hotmart). */
+export type BillingMode = "live" | "demo" | "disabled";
 
 export function getBillingMode(): BillingMode {
-  if (mercadoPagoEnabled()) return "mercadopago";
+  if (anyProviderReady()) return "live";
   if (process.env.NODE_ENV !== "production") return "demo";
   return process.env.ALLOW_DEMO_CHECKOUT === "true" ? "demo" : "disabled";
 }

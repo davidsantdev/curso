@@ -1,6 +1,6 @@
-import { CircleCheck } from "lucide-react";
+import { Check } from "lucide-react";
 import { Logo } from "@/components/logo";
-import { HeroIllustration } from "@/components/marketing/hero-illustration";
+import { HeroShowcase } from "@/components/marketing/hero-showcase";
 
 const BENEFITS = [
   "Trilha Vender sem estoque 100% grátis",
@@ -19,19 +19,25 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       </div>
 
       <aside className="hidden p-4 lg:block">
-        <div className="bg-hero relative flex h-full flex-col justify-between overflow-hidden rounded-[32px] p-12 xl:p-14">
+        <div className="bg-night relative flex h-full flex-col justify-between gap-14 overflow-hidden rounded-[32px] p-12 xl:p-14">
+          <div className="night-glow" aria-hidden="true" />
+          <div className="night-grid" aria-hidden="true" />
           <div className="max-w-md">
-            <h2 className="text-[40px] leading-[1.1] font-bold text-white">Seu negócio online começa com a primeira aula</h2>
+            <h2 className="text-[40px] leading-[1.06] font-semibold xl:text-[46px]">
+              Seu negócio online começa com a <span className="accent">primeira aula</span>
+            </h2>
             <ul className="mt-8 space-y-3.5">
               {BENEFITS.map((benefit) => (
-                <li key={benefit} className="flex items-center gap-3 text-[16px] text-white/95">
-                  <CircleCheck className="size-5 shrink-0" aria-hidden="true" />
+                <li key={benefit} className="flex items-center gap-3 text-[16px] text-white/75">
+                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-[linear-gradient(135deg,#6c5cff,#f25fdc)] text-white">
+                    <Check className="size-3.5" strokeWidth={3} aria-hidden="true" />
+                  </span>
                   {benefit}
                 </li>
               ))}
             </ul>
           </div>
-          <HeroIllustration className="mx-auto -mb-6 h-auto w-full max-w-[560px]" />
+          <HeroShowcase className="mx-auto mb-6 w-full max-w-[440px]" />
         </div>
       </aside>
     </div>

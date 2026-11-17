@@ -2,7 +2,18 @@ import type { Metadata } from "next";
 import Form from "next/form";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, CalendarCheck, Check, FlaskConical, LockKeyhole, Mail, ShieldCheck, Tag, X } from "lucide-react";
+import {
+  ArrowLeft,
+  CalendarCheck,
+  Check,
+  Clapperboard,
+  FlaskConical,
+  LockKeyhole,
+  Mail,
+  ShieldCheck,
+  Tag,
+  X,
+} from "lucide-react";
 import { startCheckoutAction } from "@/actions/billing";
 import { SubmitButton } from "@/components/ui/form";
 import { site } from "@/config/site";
@@ -10,6 +21,8 @@ import { requireUser } from "@/lib/auth/dal";
 import { addInterval, getActivePlanBySlug, getBillingMode, monthlyEquivalentCents } from "@/lib/billing";
 import { quotePlan } from "@/lib/checkout";
 import { formatDate, formatMoney, INTERVAL_LABEL } from "@/lib/format";
+import { sellableLink } from "@/lib/payments/links";
+import { PROVIDER_NAME } from "@/lib/payments/types";
 
 export const metadata: Metadata = { title: "Finalizar assinatura", robots: { index: false } };
 
@@ -26,6 +39,10 @@ export default async function CheckoutPage({
   if (!plan) notFound();
 
   const mode = getBillingMode();
+  // Com o pagamento ligado, o plano só é vendido se tiver o link de pagamento cadastrado no admin.
+  const link = mode === "live" ? sellableLink(plan.paymentLink) : null;
+  const payable = mode === "demo" || link !== null;
+  const providerName = link ? PROVIDER_NAME[link.provider] : null;
   const typedCoupon = typeof cupom === "string" ? cupom.trim().slice(0, 30) : "";
   const quote = await quotePlan(plan, typedCoupon);
   const isFree = quote.totalCents <= 0;
@@ -97,6 +114,13 @@ export default async function CheckoutPage({
               <ShieldCheck className="text-brand-500 mt-0.5 size-4.5 shrink-0" aria-hidden="true" />
               7 dias para pedir o reembolso, sem precisar explicar o motivo.
             </li>
+            {site.prelaunch ? (
+              <li className="flex items-start gap-2.5 sm:col-span-2">
+                <Clapperboard className="text-brand-500 mt-0.5 size-4.5 shrink-0" aria-hidden="true" />
+                Preço de estreia: o curso está em pré-estreia, com todas as aulas em texto e os vídeos sendo gravados.
+                Os vídeos que saírem durante o seu acesso já estão incluídos.
+              </li>
+            ) : null}
           </ul>
         </section>
 
@@ -138,7 +162,7 @@ export default async function CheckoutPage({
           ) : (
             <Form action={checkoutPath} className="mt-5">
               <label htmlFor="cupom" className="text-ink text-sm font-medium">
-                Tem um cupom de desconto?
+                Tem um cupom de cortesia?
               </label>
               <div className="mt-1.5 flex gap-2">
                 <input
@@ -166,7 +190,7 @@ export default async function CheckoutPage({
           )}
 
           {/* Botão de pagamento */}
-          {mode === "disabled" && !isFree ? (
+          {!payable && !isFree ? (
             <>
               <div className="bg-brand-50 text-brand-700 mt-6 flex gap-3 rounded-2xl p-4 text-sm leading-relaxed">
                 <Mail className="mt-0.5 size-5 shrink-0" aria-hidden="true" />
@@ -189,7 +213,7 @@ export default async function CheckoutPage({
                   <FlaskConical className="mt-0.5 size-5 shrink-0" aria-hidden="true" />
                   <p>
                     <strong className="font-semibold">Modo demonstração.</strong> Nenhum valor é cobrado: o plano é
-                    ativado na hora para você testar a plataforma. Conecte o Mercado Pago antes de vender.
+                    ativado na hora para você testar a plataforma. Configure a Cakto antes de vender.
                   </p>
                 </div>
               ) : null}
@@ -199,20 +223,21 @@ export default async function CheckoutPage({
                 <input type="hidden" name="cupom" value={quote.coupon?.code ?? ""} />
                 <SubmitButton
                   className="btn btn-pink btn-lg w-full"
-                  pendingLabel={mode === "mercadopago" && !isFree ? "Abrindo o pagamento…" : "Ativando…"}
+                  pendingLabel={link && !isFree ? "Abrindo o pagamento…" : "Ativando…"}
                 >
                   {isFree
                     ? "Ativar o meu acesso"
-                    : mode === "mercadopago"
+                    : link
                       ? "Pagar com Pix, cartão ou boleto"
                       : "Confirmar assinatura"}
                 </SubmitButton>
               </form>
 
-              {mode === "mercadopago" && !isFree ? (
+              {link && !isFree ? (
                 <p className="text-ink mt-4 text-center text-sm leading-relaxed">
-                  Você conclui o pagamento no ambiente seguro do Mercado Pago. No cartão, dá para parcelar em até 12
-                  vezes.
+                  Você conclui o pagamento no ambiente seguro da {providerName}, com o seu e-mail já preenchido. No cartão,
+                  dá para parcelar. Assim que o pagamento for aprovado, o plano é liberado sozinho e você recebe um
+                  e-mail.
                 </p>
               ) : null}
             </>

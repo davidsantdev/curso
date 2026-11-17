@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BadgeDollarSign, ChevronLeft, ChevronRight, CircleX, Clock, Undo2 } from "lucide-react";
-import { adminVerifyPaymentAction } from "@/actions/admin-billing";
 import { PageHeader } from "@/components/app/page-header";
-import { SubmitButton } from "@/components/ui/form";
 import { StatTile } from "@/components/ui/stat-tile";
 import { listAdminPayments, PAYMENT_FILTERS, type PaymentFilter } from "@/lib/admin";
 import { requireAdmin } from "@/lib/auth/dal";
-import { getBillingMode } from "@/lib/billing";
 import { formatDate, formatMoney, PAYMENT_STATUS_LABEL, paymentWayLabel, plural } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
@@ -49,13 +46,11 @@ export default async function AdminPaymentsPage({
   const page = Math.max(1, Number.parseInt(params.pagina ?? "1", 10) || 1);
 
   const { rows, total, pages, summary } = await listAdminPayments({ filter, page });
-  const gatewayOn = getBillingMode() === "mercadopago";
-
   return (
     <div className="mx-auto max-w-6xl">
       <PageHeader
         title="Pagamentos"
-        description="Tudo o que foi cobrado pela plataforma. Reembolsos são feitos no painel do Mercado Pago e aparecem aqui sozinhos."
+        description="Tudo o que foi vendido. As vendas e os reembolsos acontecem na Cakto e aparecem aqui sozinhos."
       />
 
       <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
@@ -120,9 +115,6 @@ export default async function AdminPaymentsPage({
                   <th scope="col" className="text-right">
                     Valor
                   </th>
-                  <th scope="col">
-                    <span className="sr-only">Ações</span>
-                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -155,16 +147,6 @@ export default async function AdminPaymentsPage({
                     </td>
                     <td className="text-navy-900 text-right font-medium whitespace-nowrap tabular-nums">
                       {formatMoney(payment.amountCents)}
-                    </td>
-                    <td className="text-right">
-                      {gatewayOn && payment.provider === "mercadopago" && payment.status !== "PAID" && payment.status !== "REFUNDED" ? (
-                        <form action={adminVerifyPaymentAction}>
-                          <input type="hidden" name="paymentId" value={payment.id} />
-                          <SubmitButton className="btn btn-outline btn-sm" pendingLabel="Conferindo…">
-                            Conferir
-                          </SubmitButton>
-                        </form>
-                      ) : null}
                     </td>
                   </tr>
                 ))}

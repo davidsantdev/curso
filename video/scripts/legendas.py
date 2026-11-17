@@ -1,6 +1,6 @@
 """Gera a legenda .srt (para o YouTube e players) a partir das palavras com tempo.
 
-uso: python scripts/legendas.py src/data/palavras.json out/aula-01.srt
+uso: python scripts/legendas.py src/data/palavras.json out/aula-01.srt   (ou .vtt, para o player do site)
 Cada legenda tem até 2 linhas de ~42 caracteres e quebra no fim das frases ou nas pausas.
 """
 import json
@@ -31,12 +31,18 @@ def two_lines(text):
     return text[:cut] + "\n" + text[cut + 1 :]
 
 
+VTT = out.lower().endswith(".vtt")  # .vtt para o player do site; .srt para o YouTube
+
+
 def stamp(seconds):
     ms = int(round(seconds * 1000))
-    return "%02d:%02d:%02d,%03d" % (ms // 3600000, ms // 60000 % 60, ms // 1000 % 60, ms % 1000)
+    sep = "." if VTT else ","
+    return "%02d:%02d:%02d%s%03d" % (ms // 3600000, ms // 60000 % 60, ms // 1000 % 60, sep, ms % 1000)
 
 
 with open(out, "w", encoding="utf-8") as f:
+    if VTT:
+        f.write("WEBVTT\n\n")
     for n, cue in enumerate(cues, 1):
         start = cue[0]["s"]
         end = cue[-1]["e"] + 0.25

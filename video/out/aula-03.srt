@@ -1,0 +1,270 @@
+1
+00:00:00,000 --> 00:00:03,070
+Opa, fala galera, professor na área.
+
+2
+00:00:03,200 --> 00:00:05,530
+Essa aula vai ser rapidinha, tá bom?
+
+3
+00:00:05,640 --> 00:00:10,200
+Antes de a gente seguir, eu quero te mostrar
+tudo o que vem pela frente aqui dentro.
+
+4
+00:00:10,220 --> 00:00:15,900
+Porque, quando você enxerga o caminho inteiro,
+fica muito mais fácil saber onde você
+
+5
+00:00:15,920 --> 00:00:17,850
+tá e pra onde você vai.
+
+6
+00:00:18,000 --> 00:00:19,630
+Olha só o que eu vou te mostrar.
+
+7
+00:00:19,820 --> 00:00:23,630
+Primeiro, os métodos que você
+vai aprender, um por um.
+
+8
+00:00:23,720 --> 00:00:27,810
+Depois, uma coisa que eu tenho
+certeza que vai te surpreender:
+
+9
+00:00:28,000 --> 00:00:29,310
+programação.
+
+10
+00:00:29,500 --> 00:00:31,510
+Calma, não precisa se assustar.
+
+11
+00:00:31,640 --> 00:00:35,050
+E no fim, os robôs que
+vão trabalhar por você.
+
+12
+00:00:35,220 --> 00:00:36,110
+Primeira coisa:
+
+13
+00:00:36,220 --> 00:00:37,370
+os métodos.
+
+14
+00:00:37,460 --> 00:00:42,230
+Logo depois desta trilha grátis,
+vem produtos e fornecedores.
+
+15
+00:00:42,380 --> 00:00:45,590
+É ali que eu te passo as
+dicas de quem vende muito:
+
+16
+00:00:45,820 --> 00:00:50,840
+como achar produto de low ticket, que é
+aquele de preço baixo, com quem falar pra
+
+17
+00:00:50,860 --> 00:00:56,290
+conseguir esse produto, e como separar
+o que é tendência do que é só modinha.
+
+18
+00:00:56,460 --> 00:01:01,650
+Depois, você aprende a montar a sua loja
+virtual e as suas páginas de venda.
+
+19
+00:01:01,800 --> 00:01:02,490
+Aí vem
+
+20
+00:01:02,700 --> 00:01:06,470
+pagamentos, pra você receber
+por Pix, cartão e boleto.
+
+21
+00:01:06,580 --> 00:01:10,070
+E depois, o que faz o
+cliente chegar até você:
+
+22
+00:01:10,120 --> 00:01:11,430
+os anúncios.
+
+23
+00:01:11,520 --> 00:01:13,330
+No Facebook e no Instagram,
+
+24
+00:01:13,540 --> 00:01:15,410
+no TikTok e no Google.
+
+25
+00:01:15,480 --> 00:01:20,700
+E ainda tem os marketplaces, que são
+aqueles sites grandes de compra, onde dá pra
+
+26
+00:01:20,720 --> 00:01:23,350
+vender sem nem ter uma loja própria.
+
+27
+00:01:23,520 --> 00:01:24,450
+É muita coisa?
+
+28
+00:01:24,640 --> 00:01:25,130
+É.
+
+29
+00:01:25,200 --> 00:01:29,050
+Mas é tudo passo a passo,
+uma coisa de cada vez.
+
+30
+00:01:29,760 --> 00:01:30,490
+Agora,
+
+31
+00:01:30,740 --> 00:01:32,470
+a parte que eu mais gosto.
+
+32
+00:01:32,560 --> 00:01:34,670
+A gente vai aprender programação.
+
+33
+00:01:34,720 --> 00:01:36,750
+Isso mesmo, programação.
+
+34
+00:01:36,780 --> 00:01:38,150
+Só que do jeito fácil.
+
+35
+00:01:38,400 --> 00:01:43,740
+Antes, pra criar um site, ajustar uma loja
+ou ligar uma ferramenta na outra, você
+
+36
+00:01:43,760 --> 00:01:45,950
+precisava de um programador.
+
+37
+00:01:46,200 --> 00:01:48,520
+E programador custa caro.
+
+38
+00:01:48,540 --> 00:01:53,030
+Hoje, a inteligência artificial
+faz boa parte desse trabalho.
+
+39
+00:01:53,120 --> 00:01:57,030
+E aqui dentro a gente vai
+usar a melhor IA do mercado.
+
+40
+00:01:57,300 --> 00:02:02,580
+Eu vou te ensinar como usar, como pedir
+as coisas pra ela do jeito certo, e o que
+
+41
+00:02:02,600 --> 00:02:06,870
+você precisa saber pra conferir
+se o que ela entregou funciona.
+
+42
+00:02:07,140 --> 00:02:08,330
+Que fique claro:
+
+43
+00:02:08,520 --> 00:02:11,140
+você não precisa virar programador.
+
+44
+00:02:11,160 --> 00:02:14,650
+Você precisa saber pedir e saber conferir.
+
+45
+00:02:14,800 --> 00:02:16,610
+O resto, a IA faz.
+
+46
+00:02:16,880 --> 00:02:18,110
+E o melhor de tudo:
+
+47
+00:02:18,240 --> 00:02:19,370
+os robôs.
+
+48
+00:02:19,400 --> 00:02:21,870
+Robô aqui não é aquele de filme, tá?
+
+49
+00:02:21,940 --> 00:02:24,870
+É uma regra que o
+computador executa sozinho:
+
+50
+00:02:25,060 --> 00:02:27,590
+quando acontecer isso, faça aquilo.
+
+51
+00:02:27,920 --> 00:02:29,010
+Chegou um pedido?
+
+52
+00:02:29,080 --> 00:02:31,030
+O robô manda pro fornecedor.
+
+53
+00:02:31,220 --> 00:02:33,020
+O produto saiu pra entrega?
+
+54
+00:02:33,040 --> 00:02:35,150
+O robô avisa o cliente.
+
+55
+00:02:35,240 --> 00:02:36,830
+Alguém esqueceu o carrinho?
+
+56
+00:02:36,900 --> 00:02:38,690
+O robô lembra a pessoa.
+
+57
+00:02:38,900 --> 00:02:39,420
+Ou seja:
+
+58
+00:02:39,440 --> 00:02:45,300
+a gente vai botar os robôs pra trabalhar
+no que é repetitivo, enquanto você fica só
+
+59
+00:02:45,320 --> 00:02:46,870
+com as estratégias.
+
+60
+00:02:46,960 --> 00:02:48,250
+Qual produto vender,
+
+61
+00:02:48,460 --> 00:02:51,390
+qual oferta fazer, onde anunciar.
+
+62
+00:02:51,480 --> 00:02:57,790
+Isso nenhum robô faz por você, e é isso que
+faz o negócio crescer, pode ter certeza.
+

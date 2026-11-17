@@ -24,8 +24,10 @@ export default function PrivacyPage() {
         </li>
         <li>
           <strong>Pagamento:</strong> plano contratado, valores, forma de pagamento e datas. O pagamento é processado
-          pelo Mercado Pago, que recebe o seu nome e e-mail para emitir a cobrança. Os dados do cartão ficam com ele e
-          não passam pelos nossos servidores.
+          pela Cakto, que recebe os dados da compra (como nome, e-mail e CPF) para fazer a cobrança, emitir o
+          comprovante e cuidar de reembolsos. A Cakto nos informa o resultado da compra (nome, e-mail, plano, valor e
+          forma de pagamento), que usamos para liberar o seu acesso. Os dados do cartão ficam com ela e não passam pelos
+          nossos servidores.
         </li>
       </ul>
 

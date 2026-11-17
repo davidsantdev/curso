@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Award, Check, CircleCheck, Crown, FileText, ListChecks, Lock, PlayCircle } from "lucide-react";
+import { Award, Check, CircleCheck, Crown, FileDown, FileText, ListChecks, Lock, PlayCircle } from "lucide-react";
+import { site } from "@/config/site";
 import { plural } from "@/lib/format";
 import { deepGradient, getTheme } from "@/lib/theme";
 
@@ -12,6 +13,7 @@ export function LockedPreview({
   trackSlug,
   minutes,
   hasVideo,
+  hasPdf = false,
   taskCount,
   questionCount,
   resourceCount,
@@ -20,6 +22,7 @@ export function LockedPreview({
   trackSlug: string;
   minutes: number;
   hasVideo: boolean;
+  hasPdf?: boolean;
   taskCount: number;
   questionCount: number;
   resourceCount: number;
@@ -27,7 +30,15 @@ export function LockedPreview({
   const theme = getTheme(color);
 
   const included = [
-    { icon: PlayCircle, text: hasVideo ? `Vídeo de ${minutes} min` : `Aula de ${minutes} min` },
+    {
+      icon: PlayCircle,
+      text: hasVideo
+        ? `Vídeo de ${minutes} min`
+        : site.prelaunch
+          ? `Aula de ${minutes} min (vídeo em gravação)`
+          : `Aula de ${minutes} min`,
+    },
+    hasPdf ? { icon: FileDown, text: "Slides da aula em PDF" } : null,
     taskCount > 0 ? { icon: ListChecks, text: plural(taskCount, "tarefa prática", "tarefas práticas") } : null,
     questionCount > 0 ? { icon: CircleCheck, text: `Quiz com ${plural(questionCount, "pergunta", "perguntas")}` } : null,
     resourceCount > 0 ? { icon: FileText, text: plural(resourceCount, "material de apoio", "materiais de apoio") } : null,

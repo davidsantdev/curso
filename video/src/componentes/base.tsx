@@ -2,7 +2,8 @@ import type { LucideIcon } from "lucide-react";
 import React from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { ENTRADA, prog, SUAVE } from "../lib/anim";
-import { FPS, indices, PALAVRAS, tokens } from "../lib/tempo";
+import { useTempo } from "../lib/contexto";
+import { FPS, tokens } from "../lib/tempo";
 import { COR, DEGRADE, DEGRADE_FORTE, FONTE } from "../tema";
 
 /**
@@ -125,6 +126,7 @@ export const Fala: React.FC<FalaProps> = ({
   style,
 }) => {
   const frame = useCurrentFrame();
+  const { indices, palavras: PALAVRAS } = useTempo();
   let dentro = false;
   const itens = texto
     .split(/\s+/)

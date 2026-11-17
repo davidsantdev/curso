@@ -1,6 +1,6 @@
 """Junta o texto do roteiro (palavras certas) com os tempos do Whisper (quando cada palavra é falada).
 
-uso: python align.py <transcricao.json> <roteiro.md> <palavras.json>
+uso: python align.py <transcricao.json> <roteiro.md ou texto.txt> <palavras.json>
 Saída: lista [{"t": palavra como aparece no roteiro, "s": início em s, "e": fim em s}].
 Palavras do roteiro que o Whisper não reconheceu ganham tempos interpolados entre as vizinhas.
 """
@@ -35,7 +35,10 @@ def key(token):
 
 data = json.load(open(transcript, encoding="utf-8"))
 heard = [w for seg in data["segments"] for w in seg["words"]]
-script = [DISPLAY.get(t, t) for t in spoken_text(open(roteiro, encoding="utf-8").read()).split()]
+source_text = open(roteiro, encoding="utf-8").read()
+# um .txt é o texto falado puro (ex.: as falas que foram para o ElevenLabs); um .md é o roteiro da aula 1
+spoken = source_text if roteiro.endswith(".txt") else spoken_text(source_text)
+script = [DISPLAY.get(t, t) for t in spoken.split()]
 
 a = [key(t) for t in script]
 b = [key(w["w"]) for w in heard]

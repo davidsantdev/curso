@@ -1,0 +1,29 @@
+{
+  "fonte": "voz-original.mp3",
+  "saida": "voz.mp3",
+  "cortes": [
+    {
+      "motivo": "Não é promessa de nada",
+      "fim_da_fala_anterior": 71.56,
+      "inicio_do_trecho": 71.8,
+      "fim_do_trecho": 73.02,
+      "inicio_da_fala_seguinte": 73.6
+    },
+    {
+      "motivo": "MEI, porcentagem, contador e estimativa de imposto (fica só: Quarto, impostos. Quando você formalizar o negócio, entra imposto.)",
+      "fim_da_fala_anterior": 274.16,
+      "inicio_do_trecho": 274.48,
+      "fim_do_trecho": 301.0,
+      "inicio_da_fala_seguinte": 301.48,
+      "pausa": 0.9
+    },
+    {
+      "motivo": "Na próxima aula, fornecedor do Brasil ou de fora (a aula 3 agora é \"O que vem pela frente\"; o gancho leva direto para ela)",
+      "fim_da_fala_anterior": 466.1,
+      "inicio_do_trecho": 466.62,
+      "fim_do_trecho": 478.42,
+      "inicio_da_fala_seguinte": 478.76,
+      "pausa": 0.8
+    }
+  ]
+}

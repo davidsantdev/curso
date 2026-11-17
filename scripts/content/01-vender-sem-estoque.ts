@@ -150,6 +150,52 @@ Muitas vezes você **paga o fornecedor na hora**, mas **recebe do meio de pagame
           ],
         },
         {
+          title: "O que vem pela frente: os métodos, a IA e os robôs",
+          summary: "Um tour rápido por tudo o que você vai aprender, da primeira venda aos robôs que trabalham por você.",
+          learn: [
+            "Os métodos que você vai aprender, um por um",
+            "Como a inteligência artificial deixa a programação fácil",
+            "O que os robôs fazem enquanto você cuida das estratégias",
+          ],
+          minutes: 3,
+          content: `## Os métodos que vêm pela frente
+
+| Trilha | O que você aprende |
+| --- | --- |
+| **Produtos e fornecedores** | Achar produto que vende, inclusive de preço baixo (*low ticket*), falar com fornecedor e separar tendência de modinha |
+| **Loja virtual e páginas de venda** | Montar a sua loja e páginas que convencem |
+| **Pagamentos** | Receber por Pix, cartão e boleto |
+| **Anúncios** | Levar clientes até você pelo Facebook e Instagram, pelo TikTok e pelo Google |
+| **Marketplaces** | Vender dentro dos grandes sites de compra, sem loja própria |
+| **Robôs e automações** | Deixar o trabalho repetitivo com os robôs |
+
+## Programação, do jeito fácil
+
+Antes, criar um site, ajustar uma loja ou ligar uma ferramenta na outra pedia um programador. Hoje, a **inteligência artificial** faz boa parte desse trabalho, e você vai aprender a usar a melhor IA do mercado:
+
+- **Como pedir:** explicar o que você quer, em português, como explicaria para uma pessoa
+- **O que você precisa saber:** o básico para entender o que a IA entregou e conferir se funciona
+- **Onde usar:** páginas, ajustes na loja e automações
+
+> Você não precisa virar programador. Precisa saber pedir e saber conferir.
+
+## Robôs trabalhando por você
+
+Um robô, aqui, é uma regra que o computador executa sozinho: **quando acontecer isso, faça aquilo**. Ele cuida do que se repete todo dia:
+
+- Mandar o pedido para o fornecedor
+- Avisar o cliente sobre a entrega
+- Responder as perguntas mais comuns
+- Lembrar quem esqueceu o carrinho
+
+Enquanto os robôs trabalham, você fica com as **estratégias**: qual produto vender, qual oferta fazer e onde anunciar.
+`,
+          tasks: [
+            "Escolha a trilha que mais chamou a sua atenção",
+            "Anote uma tarefa repetitiva que você gostaria de deixar com um robô",
+          ],
+        },
+        {
           title: "Fornecedor do Brasil ou de fora?",
           summary: "Compare prazo, preço e risco de cada caminho antes de decidir.",
           learn: [
@@ -194,42 +240,57 @@ Não existe opção "melhor". Existe a que combina com o seu dinheiro disponíve
         },
         {
           title: "O que você precisa para começar (e o que não precisa)",
-          summary: "Equipamento, tempo, dinheiro e os mitos que travam quem está começando.",
+          summary: "Os custos de verdade para começar, do essencial ao que acelera, e o que você não precisa.",
           learn: [
-            "O mínimo de equipamento, tempo e dinheiro para começar",
-            "CPF ou MEI: como dar os primeiros passos",
-            "Os mitos que travam quem está começando",
+            "Os custos essenciais: loja, pagamento e domínio",
+            "Onde entram a IA e os anúncios",
+            "O que você não precisa para começar",
           ],
           minutes: 6,
-          content: `## O que você precisa
+          // O PDF desta aula usa materiais/resumos/o-que-voce-precisa-para-comecar-e-o-que-nao-precisa.md (com a pirâmide).
+          content: `## A pirâmide do começo
 
-- **Um celular ou computador com internet.** Dá para começar só com o celular, mas o computador facilita na hora de montar a loja.
-- **Algumas horas por semana.** Uma rotina de 1 hora por dia já faz muita diferença.
-- **Uma reserva para os primeiros testes.** Você não compra estoque, mas vai pagar a plataforma da loja e os anúncios. Comece com um valor que não vai fazer falta nas suas contas.
-- **Vontade de aprender com os números.** Você vai testar, medir e ajustar.
+Pense nos custos para começar como uma pirâmide: embaixo fica o essencial; em cima, o que acelera.
+
+1. **Base, os custos primários:** a loja virtual, o pagamento e o domínio
+2. **Meio, a IA:** a "funcionária" que faz a parte pesada
+3. **Topo, os anúncios:** aceleram, mas não são o essencial
+
+E tudo isso fica em cima do chão: **um computador com internet**.
+
+## Base: os custos primários
+
+| Custo | O que é | Quanto custa |
+| --- | --- | --- |
+| **Loja virtual** | Onde o cliente vê e compra os produtos (ex.: Shopify) | Na Shopify, US$ 1 por mês nos 3 primeiros meses; depois, o valor do plano |
+| **Pagamento** | O *gateway*: recebe o Pix e o cartão do cliente e repassa o dinheiro para você | Uma porcentagem de cada venda. Na Shopify, com um gateway de fora, ainda entra uma taxa por venda (2% no plano básico) |
+| **Domínio** | O endereço da loja (ex.: sualoja.com.br) | R$ 40 por ano no Registro.br |
+| **Servidor** | Onde o site fica guardado | Com a Shopify, já vem incluso. Só entra se você criar um site próprio |
+
+> Valores de novembro de 2026: confira antes de assinar.
+
+## Meio: a IA
+
+A inteligência artificial é a sua "funcionária": faz a parte pesada, como textos, páginas e ajustes na loja. Dá para fazer tudo na mão, codificando sozinho? Dá, mas levaria anos de estudo. Para começar, ela tem versão grátis.
+
+## Topo: os anúncios
+
+- **Não são o essencial:** dá para começar com tráfego orgânico, que é conteúdo que atrai clientes sem pagar
+- **Com dinheiro, é mais rápido e mais estratégico:** o anúncio vai para as pessoas certas
+- Você aprende os dois caminhos aqui dentro
 
 ## O que você **não** precisa
 
 - Comprar estoque ou ter um depósito
 - Ter uma loja física
-- Saber programar ou ser designer
-- Ter muitos seguidores
-- Aparecer em vídeo — dá para vender sem mostrar o rosto
-
-## CPF ou MEI?
-
-Dá para dar os primeiros passos como pessoa física. Quando as vendas começarem, o caminho mais comum para quem está começando é abrir um **MEI** (Microempreendedor Individual): é simples, barato e permite emitir nota fiscal. Cada caso tem detalhes — na trilha *Pagamentos e checkout* você vê quando e como formalizar, e vale conversar com um contador.
-
-## Os mitos que travam quem está começando
-
-- **"Precisa de muito dinheiro."** Dá para começar pequeno e aumentar conforme os resultados aparecem.
-- **"Todo mundo já faz, não tem mais espaço."** Sempre surgem produtos e públicos novos; o que diferencia é a execução.
-- **"É só subir um anúncio e esperar."** Quem vende de verdade testa, mede e melhora toda semana.
+- Saber programar: a IA faz a parte pesada
+- Ter o melhor computador do mundo: com internet, já dá
+- Aparecer em vídeo
 `,
           tasks: [
-            "Anote quantas horas por semana você consegue dedicar",
-            "Defina o valor máximo que você vai investir nos primeiros testes",
-            "Escolha se vai começar pelo celular ou pelo computador",
+            "Anote quanto custa cada item da base da pirâmide",
+            "Separe o valor do primeiro mês da loja e do domínio",
+            "Confira se o seu computador e a sua internet dão conta",
           ],
         },
       ],

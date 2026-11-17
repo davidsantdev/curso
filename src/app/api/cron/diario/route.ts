@@ -2,10 +2,8 @@ import { timingSafeEqual } from "node:crypto";
 import { and, eq, gt, isNotNull, isNull, lt, lte, ne, or } from "drizzle-orm";
 import { db } from "@/db";
 import { passwordResets, payments, plans, sessions, subscriptions, users } from "@/db/schema";
-import { reconcilePayment } from "@/lib/checkout";
 import { sendEmail } from "@/lib/email";
 import { accessExpiringEmail } from "@/lib/email-templates";
-import { mercadoPagoEnabled } from "@/lib/payments/mercadopago";
 
 /**
  * Rotina diária. Deve ser chamada uma vez por dia por um agendador
@@ -15,10 +13,10 @@ import { mercadoPagoEnabled } from "@/lib/payments/mercadopago";
  *
  * O que ela faz:
  *   1. avisa por e-mail quem tem o acesso terminando nos próximos 3 dias;
- *   2. confere no Mercado Pago os pagamentos que ainda estão aguardando
- *      (rede de segurança caso algum aviso automático se perca);
- *   3. encerra cobranças abandonadas há mais de 10 dias;
- *   4. apaga sessões e links de senha vencidos.
+ *   2. encerra cobranças que ficaram pendentes há mais de 10 dias;
+ *   3. apaga sessões e links de senha vencidos.
+ *
+ * (Vendas e reembolsos chegam na hora pelo aviso da Hotmart: não há o que conferir aqui.)
  */
 
 export const maxDuration = 60;
@@ -82,48 +80,20 @@ export async function GET(request: Request): Promise<Response> {
     expiryNotices++;
   }
 
-  /* 2. Pagamentos aguardando ---------------------------------------- */
-  let reconciled = 0;
-  let activated = 0;
-  if (mercadoPagoEnabled()) {
-    const waiting = await db
-      .select({ id: payments.id })
-      .from(payments)
-      .where(
-        and(
-          eq(payments.provider, "mercadopago"),
-          eq(payments.status, "PENDING"),
-          gt(payments.createdAt, new Date(now.getTime() - 10 * DAY_MS)),
-        ),
-      )
-      .limit(100);
-
-    for (const payment of waiting) {
-      try {
-        if ((await reconcilePayment(payment.id)) === "activated") activated++;
-        reconciled++;
-      } catch (error) {
-        console.error(`[cron] Falha ao conferir o pagamento ${payment.id}:`, error);
-      }
-    }
-  }
-
-  /* 3. Cobranças abandonadas ---------------------------------------- */
+  /* 2. Cobranças pendentes ---------------------------------------- */
   const abandoned = await db
     .update(payments)
     .set({ status: "FAILED" })
     .where(and(eq(payments.status, "PENDING"), lt(payments.createdAt, new Date(now.getTime() - 10 * DAY_MS))))
     .returning({ id: payments.id });
 
-  /* 4. Limpeza ------------------------------------------------------- */
+  /* 3. Limpeza ------------------------------------------------------- */
   await db.delete(sessions).where(lt(sessions.expiresAt, now));
   await db.delete(passwordResets).where(lt(passwordResets.expiresAt, new Date(now.getTime() - DAY_MS)));
 
   return Response.json({
     ok: true,
     expiryNotices,
-    paymentsChecked: reconciled,
-    paymentsActivated: activated,
     paymentsClosed: abandoned.length,
   });
 }

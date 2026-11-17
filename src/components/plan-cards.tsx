@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Check } from "lucide-react";
+import { site } from "@/config/site";
 import type { Plan } from "@/db/schema";
 import { formatMoney, INTERVAL_LABEL } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -33,12 +34,12 @@ function FeatureList({ items, inverted }: { items: string[]; inverted?: boolean 
           <span
             className={cn(
               "mt-0.5 grid size-5 shrink-0 place-items-center rounded-full",
-              inverted ? "bg-white/25 text-white" : "bg-mint-50 text-mint-600",
+              inverted ? "bg-[linear-gradient(135deg,#6c5cff,#f25fdc)] text-white" : "bg-mint-50 text-mint-600",
             )}
           >
             <Check className="size-3.5" strokeWidth={3} aria-hidden="true" />
           </span>
-          <span className={inverted ? "text-white/95" : "text-ink"}>{item}</span>
+          <span className={inverted ? "text-white/80" : "text-ink"}>{item}</span>
         </li>
       ))}
     </ul>
@@ -66,7 +67,17 @@ export function PlanCards({ plans, viewer }: { plans: Plan[]; viewer: PlanViewer
       <article className="card border-line flex flex-col border p-8">
         <h3 className="text-xl font-semibold">Grátis</h3>
         <p className="text-ink mt-1.5 text-[15px]">Para entender como vender sem estoque e dar os primeiros passos.</p>
-        <p className="text-navy-900 mt-6 text-[40px] leading-none font-bold">R$ 0</p>
+        {site.prelaunch ? (
+          <p className="text-muted mt-6 font-mono text-[11.5px] font-medium tracking-[0.14em] uppercase">Sem custo</p>
+        ) : null}
+        <p
+          className={cn(
+            "text-navy-900 text-[44px] leading-none font-semibold tracking-[-0.04em]",
+            site.prelaunch ? "mt-2" : "mt-6",
+          )}
+        >
+          R$ 0
+        </p>
         <p className="text-muted mt-2 text-sm">para sempre</p>
         <FeatureList items={FREE_FEATURES} />
         <div className="mt-auto pt-8">
@@ -97,9 +108,12 @@ export function PlanCards({ plans, viewer }: { plans: Plan[]; viewer: PlanViewer
             key={plan.id}
             className={cn(
               "relative flex flex-col rounded-3xl p-8",
-              highlighted ? "bg-hero shadow-float text-white" : "card border-line border",
+              highlighted
+                ? "bg-night border-gradient overflow-hidden shadow-[0_40px_90px_-40px_rgb(46_32_120/0.75)]"
+                : "card border-line border",
             )}
           >
+            {highlighted ? <div className="night-glow" aria-hidden="true" /> : null}
             {saving > 0 ? (
               <span
                 className={cn(
@@ -111,18 +125,36 @@ export function PlanCards({ plans, viewer }: { plans: Plan[]; viewer: PlanViewer
               </span>
             ) : null}
 
-            <h3 className={cn("text-xl font-semibold", highlighted && "text-white")}>{plan.name}</h3>
-            <p className={cn("mt-1.5 max-w-[16rem] text-[15px]", highlighted ? "text-white/90" : "text-ink")}>
+            <h3 className="text-xl font-semibold">{plan.name}</h3>
+            <p className={cn("mt-1.5 max-w-[16rem] text-[15px]", highlighted ? "text-white/65" : "text-ink")}>
               {plan.description}
             </p>
 
-            <p className={cn("mt-6 text-[40px] leading-none font-bold", highlighted ? "text-white" : "text-navy-900")}>
+            {site.prelaunch ? (
+              <p
+                className={cn(
+                  "mt-6 font-mono text-[11.5px] font-medium tracking-[0.14em] uppercase",
+                  highlighted ? "text-[#c9c3ff]" : "text-brand-600",
+                )}
+              >
+                Preço de estreia
+              </p>
+            ) : null}
+            <p
+              className={cn(
+                "text-[44px] leading-none font-semibold tracking-[-0.04em]",
+                site.prelaunch ? "mt-2" : "mt-6",
+                highlighted ? "text-white" : "text-navy-900",
+              )}
+            >
               {formatMoney(plan.priceCents)}
-              <span className={cn("ml-1 text-base font-medium", highlighted ? "text-white/85" : "text-muted")}>
+              <span
+                className={cn("ml-1 text-base font-medium tracking-normal", highlighted ? "text-white/60" : "text-muted")}
+              >
                 {INTERVAL_LABEL[plan.interval].suffix}
               </span>
             </p>
-            <p className={cn("mt-2 text-sm", highlighted ? "text-white/85" : "text-muted")}>
+            <p className={cn("mt-2 text-sm", highlighted ? "text-white/55" : "text-muted")}>
               {plan.interval === "YEAR" && perMonth
                 ? `equivale a ${formatMoney(perMonth)} por mês · sem renovação automática`
                 : plan.interval === "LIFETIME"
@@ -140,7 +172,7 @@ export function PlanCards({ plans, viewer }: { plans: Plan[]; viewer: PlanViewer
               ) : (
                 <Link
                   href={viewer.signedIn ? checkoutPath : `/cadastro?next=${encodeURIComponent(checkoutPath)}`}
-                  className={cn("btn w-full", highlighted ? "btn-white" : "btn-primary")}
+                  className={cn("btn w-full", highlighted ? "btn-pink" : "btn-primary")}
                 >
                   Assinar {plan.name}
                 </Link>

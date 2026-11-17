@@ -21,8 +21,8 @@ export default async function AdminCouponsPage() {
   return (
     <div className="mx-auto max-w-6xl">
       <PageHeader
-        title="Cupons de desconto"
-        description="Crie códigos para lançamentos, parcerias e cortesias. O desconto vale para qualquer plano."
+        title="Cupons de cortesia"
+        description="Códigos que liberam o plano sem pagar, para parcerias, criadores de conteúdo e presentes. Descontos parciais (ex.: 20%) são criados na Cakto, no seu produto (o aluno digita na página de pagamento)."
       />
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
@@ -99,8 +99,8 @@ export default async function AdminCouponsPage() {
 
           {linkPlan ? (
             <p className="border-line text-ink border-t px-6 py-5 text-sm leading-relaxed">
-              <strong className="text-navy-900 font-semibold">Dica:</strong> para divulgar um link que já abre com o
-              desconto aplicado, use{" "}
+              <strong className="text-navy-900 font-semibold">Dica:</strong> para mandar um link que já abre com a
+              cortesia aplicada, use{" "}
               <code className="bg-surface text-navy-900 rounded px-1.5 py-0.5 text-[13px] break-all">
                 {site.url}/checkout/{linkPlan.slug}?cupom=CODIGO
               </code>
@@ -110,7 +110,7 @@ export default async function AdminCouponsPage() {
         </section>
 
         <section className="card h-fit p-6">
-          <h2 className="text-lg font-semibold">Novo cupom</h2>
+          <h2 className="text-lg font-semibold">Nova cortesia</h2>
           <div className="mt-4">
             <CouponForm />
           </div>

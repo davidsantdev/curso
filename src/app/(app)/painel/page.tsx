@@ -85,30 +85,30 @@ export default async function DashboardPage() {
 
       <div className="grid gap-6 lg:grid-cols-3">
         {/* -------- Continue de onde parou -------- */}
-        <section className="bg-hero relative overflow-hidden rounded-3xl p-7 text-white sm:p-8 lg:col-span-2">
-          <div className="absolute -top-20 -right-14 size-64 rounded-full bg-white/10" aria-hidden="true" />
-          <div className="absolute right-24 -bottom-24 size-48 rounded-full bg-white/10" aria-hidden="true" />
+        <section className="bg-night relative overflow-hidden rounded-3xl p-7 text-white sm:p-8 lg:col-span-2">
+          <div className="night-glow" aria-hidden="true" />
+          <div className="night-grid" aria-hidden="true" />
 
           <div className="relative">
             {next && nextContext && nextTrackProgress ? (
               <>
-                <p className="text-sm font-semibold tracking-wider text-white/80 uppercase">
+                <p className="font-mono text-[12px] font-medium tracking-[0.16em] text-[#c9c3ff] uppercase">
                   {completed.size === 0 ? "Comece por aqui" : "Continue de onde parou"}
                 </p>
                 <div className="mt-5 flex items-start gap-4">
-                  <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-white/20">
+                  <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-[linear-gradient(135deg,#6c5cff,#f25fdc)] shadow-[0_10px_24px_-10px_rgb(214_84_230/0.7)]">
                     <TrackIcon icon={next.track.icon} className="size-7" />
                   </span>
                   <div className="min-w-0">
-                    <h2 className="text-2xl leading-tight font-bold text-white sm:text-[28px]">{next.lesson.title}</h2>
-                    <p className="mt-1.5 text-[15px] text-white/85">
+                    <h2 className="text-2xl leading-tight font-semibold sm:text-[30px]">{next.lesson.title}</h2>
+                    <p className="mt-1.5 text-[15px] text-white/60">
                       {next.track.title} · {nextContext.module.title}
                     </p>
                   </div>
                 </div>
 
                 <div className="mt-7 max-w-md">
-                  <div className="mb-2 flex justify-between text-sm text-white/90">
+                  <div className="mb-2 flex justify-between text-sm text-white/70">
                     <span>
                       {nextTrackProgress.done} de {plural(nextTrackProgress.total, "aula", "aulas")}
                     </span>
@@ -117,9 +117,9 @@ export default async function DashboardPage() {
                   <ProgressBar
                     value={nextTrackProgress.percent}
                     label={`Progresso em ${next.track.title}`}
-                    from="#ffffff"
-                    to="#ffffff"
-                    track="rgb(255 255 255 / 0.25)"
+from="#8c9bff"
+                    to="#b49cfb"
+                    track="rgb(140 155 255 / 0.18)"
                   />
                 </div>
 
@@ -131,8 +131,8 @@ export default async function DashboardPage() {
             ) : allDone ? (
               <>
                 <PartyPopper className="size-10" aria-hidden="true" />
-                <h2 className="mt-4 text-2xl font-bold text-white sm:text-[28px]">Você concluiu todas as aulas!</h2>
-                <p className="mt-2 max-w-md text-[16px] text-white/90">
+                <h2 className="mt-4 text-2xl font-semibold sm:text-[30px]">Você concluiu todas as aulas!</h2>
+                <p className="mt-2 max-w-md text-[16px] text-white/65">
                   Parabéns pela dedicação. Seus certificados estão esperando por você.
                 </p>
                 <Link href="/certificados" className="btn btn-white btn-lg mt-7">
@@ -142,8 +142,8 @@ export default async function DashboardPage() {
             ) : lockedLessons > 0 ? (
               <>
                 <Lock className="size-10" aria-hidden="true" />
-                <h2 className="mt-4 text-2xl font-bold text-white sm:text-[28px]">Você concluiu as aulas grátis</h2>
-                <p className="mt-2 max-w-md text-[16px] text-white/90">
+                <h2 className="mt-4 text-2xl font-semibold sm:text-[30px]">Você concluiu as aulas grátis</h2>
+                <p className="mt-2 max-w-md text-[16px] text-white/65">
                   Mandou bem! Para seguir na trilha, libere o restante do conteúdo com o plano Pro.
                 </p>
                 <Link href="/assinatura" className="btn btn-white btn-lg mt-7">
@@ -153,8 +153,8 @@ export default async function DashboardPage() {
             ) : (
               <>
                 <BookOpen className="size-10" aria-hidden="true" />
-                <h2 className="mt-4 text-2xl font-bold text-white sm:text-[28px]">As trilhas estão chegando</h2>
-                <p className="mt-2 max-w-md text-[16px] text-white/90">
+                <h2 className="mt-4 text-2xl font-semibold sm:text-[30px]">As trilhas estão chegando</h2>
+                <p className="mt-2 max-w-md text-[16px] text-white/65">
                   Assim que as primeiras aulas forem publicadas, elas aparecem aqui.
                 </p>
               </>

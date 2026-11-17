@@ -7,21 +7,21 @@ const STEPS = [
     icon: Store,
     who: "Você",
     title: "Você anuncia",
-    text: "Escolhe um produto de um fornecedor e coloca à venda na sua loja. Por exemplo: uma garrafa térmica por R$ 99.",
+    text: "Escolhe um produto de um fornecedor e coloca à venda na sua loja. Por exemplo: uma garrafa térmica por R$\u00a099.",
     box: "bg-brand-50 text-brand-600",
   },
   {
     icon: CreditCard,
     who: "Cliente",
     title: "O cliente compra",
-    text: "Ele paga os R$ 99 na sua loja, por Pix ou cartão. O dinheiro da venda vem para você.",
+    text: "Ele paga os R$\u00a099 na sua loja, por Pix ou cartão. O dinheiro da venda vem para você.",
     box: "bg-magenta-50 text-magenta-600",
   },
   {
     icon: Truck,
     who: "Fornecedor",
     title: "O fornecedor entrega",
-    text: "Você repassa o pedido (R$ 45, no exemplo) e ele envia o produto direto para a casa do cliente.",
+    text: "Você repassa o pedido (R$\u00a045, no exemplo) e ele envia o produto direto para a casa do cliente.",
     box: "bg-mint-50 text-mint-600",
   },
 ];
@@ -29,13 +29,15 @@ const STEPS = [
 /** Explica o modelo "vender sem estoque" para quem nunca ouviu falar de dropshipping. */
 export function HowItWorks({ startHref }: { startHref: string }) {
   return (
-    <section id="como-funciona" className="container-page py-20 lg:py-28">
-      <div className="mx-auto max-w-2xl text-center">
+    <section id="como-funciona" className="container-page py-24 lg:py-32">
+      <div className="mx-auto max-w-3xl text-center">
         <p className="eyebrow">Vender sem estoque</p>
-        <h2 className="mt-3 text-4xl leading-[1.12] font-bold lg:text-[44px]">
-          Você vende. <span className="block">O fornecedor entrega.</span>
+        <h2 className="mt-4 text-[40px] leading-[1.05] font-semibold lg:text-[52px]">
+          Você vende.
+          <br />
+          <span className="accent">O fornecedor entrega.</span>
         </h2>
-        <p className="text-ink mt-4 text-[17px] leading-relaxed">
+        <p className="text-ink mx-auto mt-5 max-w-2xl text-[17px] leading-relaxed">
           Você não precisa comprar nada antes nem guardar produto em casa. Veja como funciona uma venda:
         </p>
       </div>
@@ -48,11 +50,11 @@ export function HowItWorks({ startHref }: { startHref: string }) {
                 <span className={cn("grid size-14 place-items-center rounded-2xl", step.box)}>
                   <step.icon className="size-7" aria-hidden="true" />
                 </span>
-                <span className="text-muted text-sm font-semibold">
-                  {index + 1} · {step.who}
+                <span className="text-muted font-mono text-[11.5px] font-medium tracking-[0.14em] uppercase">
+                  {String(index + 1).padStart(2, "0")} · {step.who}
                 </span>
               </div>
-              <h3 className="mt-6 text-xl font-semibold">{step.title}</h3>
+              <h3 className="mt-6 text-xl leading-tight font-semibold">{step.title}</h3>
               <p className="text-ink mt-2 text-[15px] leading-relaxed">{step.text}</p>
             </div>
             {index < STEPS.length - 1 ? (
@@ -67,16 +69,16 @@ export function HowItWorks({ startHref }: { startHref: string }) {
         ))}
       </ol>
 
-      <div className="bg-hero relative mt-6 overflow-hidden rounded-3xl p-7 text-white sm:p-9">
-        <div className="absolute -top-16 -right-10 size-56 rounded-full bg-white/10" aria-hidden="true" />
+      <div className="bg-night relative mt-6 overflow-hidden rounded-3xl p-7 sm:p-9">
+        <div className="night-glow" aria-hidden="true" />
         <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div className="flex items-start gap-4">
-            <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-white/20">
+            <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-[linear-gradient(135deg,#6c5cff,#f25fdc)] text-white shadow-[0_10px_24px_-10px_rgb(214_84_230/0.7)]">
               <Wallet className="size-7" aria-hidden="true" />
             </span>
             <div>
-              <h3 className="text-2xl leading-tight font-bold text-white">Você fica com a diferença</h3>
-              <p className="mt-1.5 max-w-xl text-[16px] leading-relaxed text-white/90">
+              <h3 className="text-2xl leading-tight font-semibold">Você fica com a diferença</h3>
+              <p className="mt-1.5 max-w-xl text-[16px] leading-relaxed text-white/65">
                 Do que sobra, você paga as taxas e os anúncios — o resto é o seu lucro. Sem estoque parado, sem depósito
                 e sem embalar nada.
               </p>

@@ -1,0 +1,622 @@
+1
+00:00:00,000 --> 00:00:03,330
+Opa, fala galera, professor na área.
+
+2
+00:00:03,520 --> 00:00:08,580
+Na aula passada eu te mostrei como funciona
+vender sem estoque e deixei uma conta
+
+3
+00:00:08,600 --> 00:00:09,640
+pela metade.
+
+4
+00:00:09,660 --> 00:00:10,110
+Lembra?
+
+5
+00:00:10,200 --> 00:00:16,780
+Sobraram R $ 54 da garrafa e eu falei,
+calma, que desse dinheiro ainda sai muita
+
+6
+00:00:16,800 --> 00:00:17,520
+coisa.
+
+7
+00:00:17,540 --> 00:00:20,820
+Pois é, hoje é a aula dessa conta.
+
+8
+00:00:20,840 --> 00:00:25,290
+Então aqui eu vou te mostrar o caminho
+completo do dinheiro numa venda.
+
+9
+00:00:25,420 --> 00:00:28,510
+Pra onde vai cada real que o cliente paga?
+
+10
+00:00:28,640 --> 00:00:31,610
+Quanto sobra de verdade no seu bolso?
+
+11
+00:00:31,660 --> 00:00:36,430
+E por que tem loja que vende bem
+e mesmo assim fica sem dinheiro?
+
+12
+00:00:36,740 --> 00:00:37,220
+Bora.
+
+13
+00:00:37,240 --> 00:00:39,250
+Olha só o roteiro de hoje.
+
+14
+00:00:39,380 --> 00:00:45,130
+Primeiro, a gente segue um pedido passo
+a passo do pagamento até o que sobra.
+
+15
+00:00:45,180 --> 00:00:50,580
+Depois, eu te mostro os quatro custos
+que você precisa conhecer antes de vender
+
+16
+00:00:50,600 --> 00:00:52,190
+qualquer coisa.
+
+17
+00:00:52,280 --> 00:00:59,050
+E no fim, a parte que pega muita gente
+desprevenida, o dinheiro em caixa, tá bom?
+
+18
+00:00:59,260 --> 00:01:00,230
+Primeira coisa,
+
+19
+00:01:00,440 --> 00:01:03,870
+vou trocar de exemplo aqui pra
+gente fazer a conta inteira.
+
+20
+00:01:03,940 --> 00:01:06,730
+Um produto que você vende por R $ 120.
+
+21
+00:01:07,100 --> 00:01:08,710
+Número redondo, tá?
+
+22
+00:01:08,820 --> 00:01:11,810
+É só exemplo pra você
+enxergar a estrutura.
+
+23
+00:01:12,120 --> 00:01:15,550
+O cliente entra na sua
+loja e paga R $ 120.
+
+24
+00:01:16,100 --> 00:01:17,930
+Beleza, entrou R $ 120.
+
+25
+00:01:18,100 --> 00:01:21,330
+Só que esse dinheiro não
+chega inteiro pra você.
+
+26
+00:01:21,560 --> 00:01:26,840
+Primeiro, o meio de pagamento, que é a
+empresa que recebe o Pix ou o cartão no seu
+
+27
+00:01:26,860 --> 00:01:29,040
+lugar, fica com uma taxa.
+
+28
+00:01:29,060 --> 00:01:30,750
+Aqui no exemplo, R $ 6.
+
+29
+00:01:31,120 --> 00:01:36,490
+Aí você vai no fornecedor e paga
+o produto e o frete, R $ 55.
+
+30
+00:01:37,040 --> 00:01:41,270
+E tem uma parte que muita
+gente esquece, que é o anúncio.
+
+31
+00:01:41,460 --> 00:01:45,820
+Pra esse cliente chegar até a sua
+loja, você gastou com anúncio.
+
+32
+00:01:45,840 --> 00:01:48,160
+Aqui, R $ 30 por essa venda.
+
+33
+00:01:48,180 --> 00:01:49,610
+E o que sobrou?
+
+34
+00:01:49,800 --> 00:01:50,410
+R $ 120,
+
+35
+00:01:50,840 --> 00:01:53,230
+menos R $ 6, menos R $ 55,
+
+36
+00:01:53,500 --> 00:01:56,390
+menos R $ 30, sobra R $ 29.
+
+37
+00:01:56,780 --> 00:02:00,430
+Esses R $ 29 são a sua margem.
+
+38
+00:02:00,480 --> 00:02:06,390
+Margem é isso, o que sobra pra você depois
+de pagar tudo o que a venda custou.
+
+39
+00:02:06,560 --> 00:02:12,090
+Agora repara, tem gente que vende
+R $ 120 e fala, faturei R $ 120.
+
+40
+00:02:12,560 --> 00:02:16,890
+E faturou mesmo, porque
+faturamento é o total que entrou.
+
+41
+00:02:16,980 --> 00:02:20,230
+O problema é quando o cara
+acha que ganhou R $ 120.
+
+42
+00:02:20,600 --> 00:02:23,390
+Isso tá errado, isso tá errado.
+
+43
+00:02:23,500 --> 00:02:25,070
+Ele ganhou R $ 29.
+
+44
+00:02:25,380 --> 00:02:31,750
+Dos R $ 120 que entraram, R $ 91 já tinham
+dono antes de chegar na conta dele.
+
+45
+00:02:32,040 --> 00:02:36,110
+Faturamento e lucro são coisas
+completamente diferentes.
+
+46
+00:02:36,400 --> 00:02:41,910
+E confundir as duas é o erro mais comum
+de quem tá começando, pode ter certeza.
+
+47
+00:02:42,240 --> 00:02:44,850
+E olha que essa conta é por venda.
+
+48
+00:02:44,940 --> 00:02:50,580
+Se você não sabe a sua margem por venda,
+você não sabe se tá ganhando ou perdendo
+
+49
+00:02:50,600 --> 00:02:51,250
+dinheiro.
+
+50
+00:02:51,380 --> 00:02:52,450
+Simples assim.
+
+51
+00:02:52,760 --> 00:02:58,500
+Beleza, dessa conta saem os quatro custos
+que você precisa conhecer antes de vender
+
+52
+00:02:58,520 --> 00:02:59,910
+qualquer produto.
+
+53
+00:03:00,140 --> 00:03:01,600
+Vou passar um por um.
+
+54
+00:03:01,620 --> 00:03:04,240
+Primeiro, produto mais frete.
+
+55
+00:03:04,260 --> 00:03:06,110
+É o que o fornecedor te cobra.
+
+56
+00:03:06,180 --> 00:03:11,660
+E presta atenção no frete, porque tem
+fornecedor que mostra o preço do produto bem
+
+57
+00:03:11,680 --> 00:03:12,560
+baixinho.
+
+58
+00:03:12,580 --> 00:03:15,350
+E o frete vem depois, separado.
+
+59
+00:03:15,440 --> 00:03:18,850
+Pra sua conta, o que
+importa é a soma dos dois.
+
+60
+00:03:19,160 --> 00:03:21,110
+Segundo, as taxas.
+
+61
+00:03:21,220 --> 00:03:26,640
+Tem a taxa do meio de pagamento que a
+gente já viu e muitas vezes tem também a da
+
+62
+00:03:26,660 --> 00:03:31,230
+plataforma da loja, que é o site
+onde você monta a sua loja.
+
+63
+00:03:31,400 --> 00:03:37,420
+Umas cobram mensalidade, outras cobram um
+pedacinho de cada venda, outras cobram as
+
+64
+00:03:37,440 --> 00:03:38,570
+duas coisas.
+
+65
+00:03:38,660 --> 00:03:39,560
+Isso varia.
+
+66
+00:03:39,580 --> 00:03:42,320
+Então você confere na
+plataforma que for usar.
+
+67
+00:03:42,340 --> 00:03:46,250
+Terceiro, e esse é o que mais engana.
+
+68
+00:03:46,360 --> 00:03:48,910
+O custo do anúncio por venda.
+
+69
+00:03:49,000 --> 00:03:55,870
+Não é quanto você gastou de anúncio no total,
+é quanto custou em anúncio cada venda.
+
+70
+00:03:55,980 --> 00:04:02,270
+Por exemplo, você gastou 300 reais de
+anúncio na semana e fez 10 vendas.
+
+71
+00:04:02,380 --> 00:04:07,760
+300 dividido por 10, cada venda
+custou 30 reais de anúncio.
+
+72
+00:04:07,780 --> 00:04:10,410
+Esse é o número que entra na conta.
+
+73
+00:04:10,580 --> 00:04:11,820
+E por que ele engana?
+
+74
+00:04:11,840 --> 00:04:12,970
+Porque ele muda.
+
+75
+00:04:13,000 --> 00:04:14,450
+Numa semana é 30.
+
+76
+00:04:14,480 --> 00:04:16,230
+Na outra pode ser 50.
+
+77
+00:04:16,560 --> 00:04:21,790
+E se ele passar da sua margem, cada
+venda que você faz dá prejuízo.
+
+78
+00:04:21,900 --> 00:04:23,920
+Eu ainda vou me aprofundar nisso.
+
+79
+00:04:23,940 --> 00:04:27,170
+Tem trilha inteira de
+anúncio aqui dentro, tá bom?
+
+80
+00:04:27,580 --> 00:04:29,330
+Quarto, impostos.
+
+81
+00:04:29,520 --> 00:04:32,930
+Quando você formalizar o
+negócio, entra imposto.
+
+82
+00:04:33,580 --> 00:04:37,380
+E agora, a parte que pega
+muita gente desprevenida.
+
+83
+00:04:37,400 --> 00:04:41,070
+Olha, essa aqui é muito, muito importante.
+
+84
+00:04:41,400 --> 00:04:46,820
+Não sei se você sabe, mas o dinheiro da
+venda não cai na sua conta na hora em que o
+
+85
+00:04:46,840 --> 00:04:47,930
+cliente paga.
+
+86
+00:04:48,020 --> 00:04:52,030
+Depende do meio de pagamento
+e da forma de pagamento.
+
+87
+00:04:52,180 --> 00:04:54,330
+No Pix, costuma cair rápido.
+
+88
+00:04:54,460 --> 00:04:58,190
+No cartão, pode levar
+dias, às vezes semanas.
+
+89
+00:04:58,360 --> 00:05:03,750
+Porque o meio de pagamento segura o
+dinheiro um tempo antes de te repassar.
+
+90
+00:05:03,840 --> 00:05:04,740
+E o fornecedor?
+
+91
+00:05:04,760 --> 00:05:08,640
+O fornecedor você paga na
+hora, quando faz o pedido.
+
+92
+00:05:08,660 --> 00:05:10,210
+Então, olha a situação.
+
+93
+00:05:10,620 --> 00:05:12,590
+O cara começa a vender bem.
+
+94
+00:05:12,740 --> 00:05:15,170
+Dez vendas por dia, no cartão.
+
+95
+00:05:15,320 --> 00:05:20,093
+Cada pedido, ele paga R $
+55 pro fornecedor, na hora.
+
+96
+00:05:20,113 --> 00:05:21,550
+Dez vendas:
+
+97
+00:05:21,660 --> 00:05:25,830
+R $ 550 por dia saindo do bolso dele.
+
+98
+00:05:25,920 --> 00:05:29,410
+Em uma semana, R $ 3 .850.
+
+99
+00:05:29,900 --> 00:05:31,780
+E o dinheiro dessas vendas?
+
+100
+00:05:31,800 --> 00:05:33,520
+Ainda não caiu.
+
+101
+00:05:33,540 --> 00:05:36,760
+Tá lá no meio de pagamento,
+esperando o prazo.
+
+102
+00:05:36,780 --> 00:05:42,470
+Isso sem contar o anúncio, que também
+é cobrado enquanto as vendas acontecem.
+
+103
+00:05:42,520 --> 00:05:47,930
+Resultado, o cara tá vendendo bem e não
+tem dinheiro para pagar o próximo pedido.
+
+104
+00:05:47,980 --> 00:05:50,530
+Parece contraditório, mas acontece
+
+105
+00:05:50,900 --> 00:05:51,490
+direto.
+
+106
+00:05:51,520 --> 00:05:53,850
+Tem loja que fecha vendendo.
+
+107
+00:05:53,900 --> 00:05:55,710
+Então, o que você faz?
+
+108
+00:05:56,060 --> 00:05:57,030
+Duas coisas.
+
+109
+00:05:57,180 --> 00:06:02,860
+Primeira, antes de começar, descobre em
+quantos dias o meio de pagamento que você
+
+110
+00:06:02,880 --> 00:06:06,610
+vai usar libera o dinheiro
+do Pix e do cartão.
+
+111
+00:06:06,800 --> 00:06:07,610
+Segunda,
+
+112
+00:06:07,900 --> 00:06:12,630
+separa uma reserva para pagar os
+pedidos enquanto o dinheiro não cai.
+
+113
+00:06:12,900 --> 00:06:13,450
+Quanto?
+
+114
+00:06:13,640 --> 00:06:14,590
+Faz a conta.
+
+115
+00:06:14,780 --> 00:06:20,660
+Quanto você paga de fornecedor e de anúncio
+por dia, vezes o número de dias que o
+
+116
+00:06:20,680 --> 00:06:22,210
+dinheiro demora para cair.
+
+117
+00:06:22,380 --> 00:06:27,880
+E para não fazer tudo isso no papel, tem a
+Calculadora de margem, lá em Ferramentas,
+
+118
+00:06:27,900 --> 00:06:29,530
+aqui dentro da plataforma.
+
+119
+00:06:29,720 --> 00:06:31,090
+Você coloca o preço,
+
+120
+00:06:31,320 --> 00:06:37,340
+o custo do produto, o frete, o anúncio
+por venda, as taxas e os impostos.
+
+121
+00:06:37,360 --> 00:06:40,210
+E ela te mostra quanto sobra por venda.
+
+122
+00:06:40,340 --> 00:06:43,370
+Usa antes de anunciar qualquer produto.
+
+123
+00:06:43,700 --> 00:06:46,310
+Então, o que você faz com isso agora?
+
+124
+00:06:46,640 --> 00:06:49,030
+Três tarefas que estão aqui na tela.
+
+125
+00:06:49,160 --> 00:06:55,100
+Primeira, pega um produto que você pensa
+em vender e lista todos os custos dele, os
+
+126
+00:06:55,120 --> 00:06:56,450
+quatro que a gente viu.
+
+127
+00:06:56,620 --> 00:07:03,010
+Segunda, joga esses números na Calculadora
+de margem e anota quanto sobra por venda.
+
+128
+00:07:03,200 --> 00:07:08,440
+Terceira, descobre em quantos dias um
+meio de pagamento libera o dinheiro das
+
+129
+00:07:08,460 --> 00:07:09,170
+vendas.
+
+130
+00:07:09,300 --> 00:07:13,990
+Escolhe um, entra no site dele e
+procura o prazo de recebimento.
+
+131
+00:07:14,240 --> 00:07:18,450
+Isso leva dez minutos e te
+salva muita dor de cabeça.
+
+132
+00:07:19,000 --> 00:07:20,330
+E já fica o aviso:
+
+133
+00:07:20,420 --> 00:07:24,810
+Nos próximos módulos, eu vou te
+passar as dicas de quem vende muito.
+
+134
+00:07:25,000 --> 00:07:30,040
+Produto de low ticket, que é aquele de
+preço baixo que a pessoa compra sem pensar
+
+135
+00:07:30,060 --> 00:07:30,690
+muito.
+
+136
+00:07:30,880 --> 00:07:36,380
+Como achar esse produto, com quem falar
+pra conseguir ele e como separar o que é
+
+137
+00:07:36,400 --> 00:07:40,290
+tendência de verdade do que
+é só modinha passageira.
+
+138
+00:07:40,340 --> 00:07:43,330
+É ali que o jogo começa
+a ficar interessante.
+
+139
+00:07:43,420 --> 00:07:44,730
+Pode ter certeza.
+
+140
+00:07:45,020 --> 00:07:45,970
+Te vejo lá!
+

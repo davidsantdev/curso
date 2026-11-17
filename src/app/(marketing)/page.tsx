@@ -3,26 +3,28 @@ import {
   ArrowRight,
   Award,
   Calculator,
-  ChevronDown,
   CircleCheck,
   Flame,
   ListChecks,
   MessageCircle,
   NotebookPen,
+  Play,
+  Plus,
   TrendingUp,
 } from "lucide-react";
 import { TrackBadge } from "@/components/icons";
 import { ArtChecklist, ArtNumbers, ArtPractice } from "@/components/marketing/feature-art";
 import { FirstLesson } from "@/components/marketing/first-lesson";
-import { HeroIllustration } from "@/components/marketing/hero-illustration";
+import { HeroShowcase } from "@/components/marketing/hero-showcase";
 import { HowItWorks } from "@/components/marketing/how-it-works";
 import { ProductMock } from "@/components/marketing/product-mock";
 import { PlanCards } from "@/components/plan-cards";
+import { PrelaunchNote } from "@/components/prelaunch";
 import { AccessBadge } from "@/components/track-access-badge";
 import { site } from "@/config/site";
 import { getCurrentUser } from "@/lib/auth/dal";
 import { listActivePlans } from "@/lib/billing";
-import { getCatalog, getFeaturedLesson, trackAccess, trackLessons } from "@/lib/content";
+import { getCatalog, getFeaturedLesson, trackAccess, trackLessons, videoProgress } from "@/lib/content";
 import { formatDuration, plural } from "@/lib/format";
 
 const REASONS = [
@@ -73,7 +75,15 @@ const FEATURES = [
   { icon: MessageCircle, title: "Dúvidas e comentários", text: "Pergunte e troque experiências em cada aula." },
 ];
 
+/** Só aparece durante a pré-estreia (`site.prelaunch`). */
+const PRELAUNCH_FAQ = {
+  question: "Por que o preço está tão baixo?",
+  answer:
+    "Porque o curso está em pré-estreia. Todas as aulas já estão no ar em texto, com tarefas e quiz, e os vídeos estão sendo gravados, um por um. Quem assina agora paga o preço de estreia, e os vídeos que saírem durante o acesso já estão incluídos, sem pagar nada a mais.",
+};
+
 const FAQ = [
+  ...(site.prelaunch ? [PRELAUNCH_FAQ] : []),
   {
     question: "Nunca vendi nada pela internet. Consigo aprender?",
     answer:
@@ -126,34 +136,60 @@ export default async function HomePage() {
 
   const startHref = user ? "/painel" : "/cadastro";
   const totalLessons = catalog.reduce((sum, track) => sum + trackLessons(track).length, 0);
+  const totalMinutes = catalog.reduce(
+    (sum, track) => sum + trackLessons(track).reduce((acc, lesson) => acc + lesson.durationMinutes, 0),
+    0,
+  );
+  const stats = [
+    { value: String(totalLessons), label: "aulas" },
+    { value: String(catalog.length), label: "trilhas" },
+    { value: `${Math.round(totalMinutes / 60)} h`, label: "de conteúdo" },
+  ];
 
   return (
     <>
       {/* ------------------------------ Hero ------------------------------ */}
-      <section className="container-page pt-2 md:pt-4">
-        <div className="bg-hero relative rounded-[28px] px-6 pt-12 sm:px-10 md:rounded-[36px] lg:rounded-br-[200px] lg:px-16 lg:py-24">
-          <div className="relative z-10 max-w-[560px]">
-            <h1 className="text-[40px] leading-[1.08] font-bold text-white sm:text-5xl sm:leading-[1.06] lg:text-[48px] xl:text-[56px]">
-              Venda pela internet <span className="block">sem ter estoque</span>
+      <section className="bg-night relative overflow-hidden">
+        <div className="night-glow" aria-hidden="true" />
+        <div className="night-grid" aria-hidden="true" />
+        <div className="container-page grid grid-cols-1 items-center gap-20 pt-14 pb-24 lg:grid-cols-[1.03fr_1fr] lg:gap-14 lg:pt-24 lg:pb-32">
+          <div className="max-w-[600px]">
+            <p className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/5 py-1.5 pr-4 pl-1.5 text-[13px] text-white/75">
+              <span className="rounded-full bg-[linear-gradient(135deg,#6c5cff,#f25fdc)] px-2.5 py-1 font-mono text-[10.5px] leading-none font-semibold tracking-[0.1em] text-white uppercase">
+                Grátis
+              </span>
+              Trilha inicial completa, sem cartão de crédito
+            </p>
+            <h1 className="mt-7 text-[46px] leading-[1.02] font-semibold sm:text-[60px] lg:text-[66px]">
+              Venda pela internet <span className="accent whitespace-nowrap">sem ter estoque</span>
             </h1>
-            <p className="mt-6 max-w-[500px] text-[17px] leading-relaxed text-white/90">
+            <p className="mt-6 max-w-[540px] text-[18px] leading-relaxed text-white/65">
               Você não precisa comprar produto, ter loja física nem experiência. Aprenda do zero a montar a sua loja,
               receber pagamentos, automatizar com robôs e anunciar no Facebook, Instagram, TikTok e Google.
             </p>
-            <div className="mt-9 flex flex-wrap gap-4">
+            <div className="mt-10 flex flex-wrap gap-3">
               <Link href={startHref} className="btn btn-pink btn-lg">
                 {user ? "Continuar estudando" : "Começar grátis"}
+                <ArrowRight className="size-4.5" aria-hidden="true" />
               </Link>
               <Link href={featured ? "#aula-1" : "/cursos"} className="btn btn-glass btn-lg">
-                {featured ? `Ver a aula ${featured.position} grátis` : "Ver o que você vai aprender"}
+                <Play className="size-4 fill-current" aria-hidden="true" />
+                {featured ? `Assistir à aula ${featured.position}` : "Ver o que você vai aprender"}
               </Link>
             </div>
-            <p className="mt-6 text-sm text-white/85">Sem cartão de crédito · Trilha inicial 100% grátis</p>
+            {totalLessons > 0 ? (
+              <ul className="mt-12 grid max-w-[480px] grid-cols-3 gap-6 border-t border-white/10 pt-8">
+                {stats.map((stat) => (
+                  <li key={stat.label}>
+                    <p className="text-[30px] leading-none font-semibold tracking-[-0.04em] text-white">{stat.value}</p>
+                    <p className="mt-2 font-mono text-[11.5px] tracking-[0.14em] text-white/45 uppercase">{stat.label}</p>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
           </div>
 
-          <div className="relative mx-auto mt-6 w-full max-w-[520px] lg:absolute lg:-top-10 lg:right-0 lg:mt-0 lg:w-[46%] lg:max-w-[580px]">
-            <HeroIllustration className="h-auto w-full" />
-          </div>
+          <HeroShowcase className="mx-auto w-full max-w-[560px] lg:mr-0 lg:ml-auto" priority />
         </div>
       </section>
 
@@ -164,21 +200,21 @@ export default async function HomePage() {
       <HowItWorks startHref={startHref} />
 
       {/* ----------------------------- Métodos ---------------------------- */}
-      <section id="metodos" className="bg-surface py-20 lg:py-28">
+      <section id="metodos" className="bg-surface py-24 lg:py-32">
         <div className="container-page">
-          <div className="mx-auto max-w-2xl text-center">
+          <div className="mx-auto max-w-3xl text-center">
             <p className="eyebrow">Métodos</p>
-            <h2 className="mt-3 text-4xl leading-[1.12] font-bold text-balance lg:text-[42px]">
-              Tudo o que você precisa para fazer a primeira venda
+            <h2 className="mt-4 text-[40px] leading-[1.05] font-semibold lg:text-[52px]">
+              Tudo o que você precisa para fazer a <span className="accent">primeira venda</span>
             </h2>
-            <p className="text-ink mt-4 text-[17px] leading-relaxed">
+            <p className="text-ink mx-auto mt-5 max-w-2xl text-[17px] leading-relaxed">
               {catalog.length > 0
                 ? `${plural(catalog.length, "trilha", "trilhas")} e ${plural(totalLessons, "aula", "aulas")}, do produto ao anúncio. Comece pela trilha grátis e libere os métodos quando quiser.`
                 : "As primeiras trilhas estão sendo preparadas. Crie a sua conta para ser avisado."}
             </p>
           </div>
 
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {catalog.map((track) => {
               const lessonList = trackLessons(track);
               const minutes = lessonList.reduce((sum, lesson) => sum + lesson.durationMinutes, 0);
@@ -186,7 +222,7 @@ export default async function HomePage() {
                 <Link
                   key={track.id}
                   href={`/cursos#${track.slug}`}
-                  className="card group flex flex-col p-6 transition-transform duration-200 hover:-translate-y-1"
+                  className="card group flex flex-col p-6 transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_60px_-28px_rgb(18_18_43/0.35)]"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <TrackBadge icon={track.icon} color={track.color} />
@@ -196,7 +232,7 @@ export default async function HomePage() {
                     {track.title}
                   </h3>
                   <p className="text-ink mt-2 line-clamp-3 text-sm leading-relaxed">{track.description}</p>
-                  <p className="text-muted mt-auto pt-4 text-xs">
+                  <p className="text-muted mt-auto pt-5 font-mono text-[11px] tracking-[0.08em] uppercase">
                     {plural(lessonList.length, "aula", "aulas")} · {formatDuration(minutes)}
                   </p>
                 </Link>
@@ -204,7 +240,7 @@ export default async function HomePage() {
             })}
           </div>
 
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
+          <div className="mt-12 flex flex-wrap justify-center gap-3">
             <Link href="/cursos" className="btn btn-outline">
               Ver a grade completa
               <ArrowRight className="size-4" aria-hidden="true" />
@@ -217,17 +253,20 @@ export default async function HomePage() {
       </section>
 
       {/* ---------------------- Por que aprender aqui --------------------- */}
-      <section className="container-page py-20 lg:py-28">
-        <div className="grid gap-12 lg:grid-cols-[300px_1fr] lg:items-center lg:gap-16">
+      <section className="container-page py-24 lg:py-32">
+        <div className="grid gap-12 lg:grid-cols-[340px_1fr] lg:items-center lg:gap-16">
           <div>
-            <h2 className="text-4xl leading-[1.12] font-bold lg:text-[42px]">Feita para quem nunca vendeu nada</h2>
+            <p className="eyebrow">Para iniciantes</p>
+            <h2 className="mt-4 text-[40px] leading-[1.05] font-semibold lg:text-[48px]">
+              Feita para quem <span className="accent">nunca vendeu nada</span>
+            </h2>
             <p className="text-ink mt-5 text-[17px] leading-relaxed">
               Nada de aulas intermináveis nem promessa de dinheiro fácil. Você aprende um passo, executa e segue para o
               próximo.
             </p>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-3">
             {REASONS.map((reason) => (
               <article key={reason.title} className="card px-6 pt-8 pb-8 text-center">
                 <reason.art className="mx-auto h-32 w-auto" />
@@ -240,17 +279,19 @@ export default async function HomePage() {
       </section>
 
       {/* ------------------------- Comece em 4 passos ---------------------- */}
-      <section id="passos" className="bg-surface overflow-x-clip py-20 lg:py-28">
-        <div className="container-page grid gap-16 lg:grid-cols-2 lg:items-center">
+      <section id="passos" className="bg-surface overflow-x-clip py-24 lg:py-32">
+        <div className="container-page grid grid-cols-1 gap-16 lg:grid-cols-2 lg:items-center">
           <div>
             <p className="eyebrow">Como começar</p>
-            <h2 className="mt-3 text-4xl leading-[1.12] font-bold lg:text-[42px]">Comece em 4 passos</h2>
+            <h2 className="mt-4 text-[40px] leading-[1.05] font-semibold lg:text-[52px]">
+              Comece em <span className="accent">4 passos</span>
+            </h2>
 
-            <ol className="mt-10 space-y-7">
+            <ol className="mt-10 space-y-3">
               {STEPS.map((step, index) => (
-                <li key={step.title} className="flex gap-5">
-                  <span className="bg-brand-gradient shadow-brand grid size-11 shrink-0 place-items-center rounded-2xl text-lg font-bold text-white">
-                    {index + 1}
+                <li key={step.title} className="flex gap-5 rounded-2xl p-4 transition-colors hover:bg-white">
+                  <span className="text-brand-600 border-brand-100 grid size-12 shrink-0 place-items-center rounded-2xl border bg-white font-mono text-[15px] font-semibold shadow-[0_8px_20px_-12px_rgb(108_92_255/0.5)]">
+                    {String(index + 1).padStart(2, "0")}
                   </span>
                   <div>
                     <h3 className="text-lg leading-tight font-semibold">{step.title}</h3>
@@ -268,37 +309,47 @@ export default async function HomePage() {
       </section>
 
       {/* ----------------------------- Recursos --------------------------- */}
-      <section className="container-page py-20 lg:py-28">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="eyebrow">Por dentro da plataforma</p>
-          <h2 className="mt-3 text-4xl leading-[1.12] font-bold lg:text-[42px]">Tudo para você estudar e executar</h2>
-        </div>
+      <section className="bg-night relative overflow-hidden py-24 lg:py-32">
+        <div className="night-glow" aria-hidden="true" />
+        <div className="container-page">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="eyebrow">Por dentro da plataforma</p>
+            <h2 className="mt-4 text-[40px] leading-[1.05] font-semibold lg:text-[52px]">
+              Tudo para você <span className="accent">estudar e executar</span>
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-[17px] leading-relaxed text-white/60">
+              Cada aula vira uma tarefa, e cada tarefa te deixa mais perto da primeira venda.
+            </p>
+          </div>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {FEATURES.map((feature) => (
-            <article key={feature.title} className="card p-6">
-              <span className="bg-brand-50 text-brand-600 grid size-11 place-items-center rounded-2xl">
-                <feature.icon className="size-5.5" aria-hidden="true" />
-              </span>
-              <h3 className="mt-5 text-[17px] leading-tight font-semibold">{feature.title}</h3>
-              <p className="text-ink mt-2 text-[15px] leading-relaxed">{feature.text}</p>
-            </article>
-          ))}
+          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {FEATURES.map((feature) => (
+              <article key={feature.title} className="glass rounded-3xl p-6">
+                <span className="grid size-11 place-items-center rounded-2xl bg-[linear-gradient(135deg,#6c5cff,#f25fdc)] text-white shadow-[0_10px_24px_-10px_rgb(214_84_230/0.7)]">
+                  <feature.icon className="size-5.5" aria-hidden="true" />
+                </span>
+                <h3 className="mt-5 text-[17px] leading-tight font-semibold">{feature.title}</h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-white/55">{feature.text}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ------------------------------ Planos ---------------------------- */}
-      <section id="planos" className="bg-surface py-20 lg:py-28">
+      <section id="planos" className="bg-surface py-24 lg:py-32">
         <div className="container-page">
-          <div className="mx-auto max-w-2xl text-center">
+          <div className="mx-auto max-w-3xl text-center">
             <p className="eyebrow">Planos</p>
-            <h2 className="mt-3 text-4xl leading-[1.12] font-bold lg:text-[42px]">Comece grátis. Evolua quando quiser.</h2>
-            <p className="text-ink mt-4 text-[17px] leading-relaxed">
+            <h2 className="mt-4 text-[40px] leading-[1.05] font-semibold lg:text-[52px]">
+              Comece grátis. <span className="accent">Evolua quando quiser.</span>
+            </h2>
+            <p className="text-ink mx-auto mt-5 max-w-2xl text-[17px] leading-relaxed">
               Pague por Pix, cartão ou boleto. Sem renovação automática e com 7 dias de garantia.
             </p>
           </div>
 
-          <div className="mt-12">
+          <div className="mt-14">
             <PlanCards
               plans={plans}
               viewer={{
@@ -308,15 +359,19 @@ export default async function HomePage() {
               }}
             />
           </div>
+
+          <PrelaunchNote progress={videoProgress(catalog)} className="mt-12" />
         </div>
       </section>
 
       {/* ------------------------------ Dúvidas --------------------------- */}
-      <section id="duvidas" className="container-page py-20 lg:py-28">
-        <div className="grid gap-12 lg:grid-cols-[340px_1fr]">
-          <div>
+      <section id="duvidas" className="container-page py-24 lg:py-32">
+        <div className="grid gap-12 lg:grid-cols-[360px_1fr]">
+          <div className="lg:sticky lg:top-28 lg:self-start">
             <p className="eyebrow">Dúvidas frequentes</p>
-            <h2 className="mt-3 text-4xl leading-[1.12] font-bold lg:text-[42px]">Antes de você perguntar</h2>
+            <h2 className="mt-4 text-[40px] leading-[1.05] font-semibold lg:text-[48px]">
+              Antes de você <span className="accent">perguntar</span>
+            </h2>
             <p className="text-ink mt-5 text-[17px] leading-relaxed">
               Não achou a resposta? Escreva para{" "}
               <a href={`mailto:${site.supportEmail}`} className="text-brand-600 font-medium underline underline-offset-4">
@@ -328,13 +383,15 @@ export default async function HomePage() {
 
           <div className="space-y-3">
             {FAQ.map((item) => (
-              <details key={item.question} className="card group px-6 py-5 open:pb-6">
-                <summary className="text-navy-900 flex cursor-pointer list-none items-center justify-between gap-4 text-[17px] font-semibold [&::-webkit-details-marker]:hidden">
+              <details
+                key={item.question}
+                className="group border-line hover:border-brand-200 rounded-2xl border bg-white px-6 py-5 transition open:pb-6 open:shadow-[0_18px_40px_-26px_rgb(18_18_43/0.3)]"
+              >
+                <summary className="text-navy-900 flex cursor-pointer list-none items-center justify-between gap-4 text-[17px] font-semibold tracking-[-0.01em] [&::-webkit-details-marker]:hidden">
                   {item.question}
-                  <ChevronDown
-                    className="text-brand-500 size-5 shrink-0 transition-transform duration-200 group-open:rotate-180"
-                    aria-hidden="true"
-                  />
+                  <span className="bg-surface text-brand-600 group-open:bg-brand-500 grid size-8 shrink-0 place-items-center rounded-full transition group-open:rotate-45 group-open:text-white">
+                    <Plus className="size-4" aria-hidden="true" />
+                  </span>
                 </summary>
                 <p className="text-ink mt-3 max-w-2xl text-[16px] leading-relaxed">{item.answer}</p>
               </details>
@@ -344,25 +401,24 @@ export default async function HomePage() {
       </section>
 
       {/* ---------------------------- Chamada final ----------------------- */}
-      <section className="container-page pb-20 lg:pb-24">
-        <div className="bg-hero relative overflow-hidden rounded-[36px] px-6 py-16 text-center sm:px-12 lg:py-20">
-          <div className="absolute -top-24 -left-16 size-64 rounded-full bg-white/10" aria-hidden="true" />
-          <div className="absolute -right-10 -bottom-28 size-72 rounded-full bg-white/10" aria-hidden="true" />
-          <div className="relative mx-auto max-w-2xl">
-            <h2 className="text-4xl leading-[1.1] font-bold text-white lg:text-5xl">
-              Sua primeira venda começa com a primeira aula
-            </h2>
-            <p className="mx-auto mt-5 max-w-xl text-[17px] leading-relaxed text-white/90">
-              Crie a sua conta grátis e comece hoje pela trilha Vender sem estoque. Você decide o ritmo.
-            </p>
-            <div className="mt-9 flex flex-wrap justify-center gap-4">
-              <Link href={startHref} className="btn btn-pink btn-lg">
-                {user ? "Ir para o painel" : "Criar conta grátis"}
-              </Link>
-              <Link href="/cursos" className="btn btn-glass btn-lg">
-                Ver o que você vai aprender
-              </Link>
-            </div>
+      <section className="bg-night relative overflow-hidden py-24 text-center lg:py-32">
+        <div className="night-glow" aria-hidden="true" />
+        <div className="night-grid" aria-hidden="true" />
+        <div className="container-page">
+          <h2 className="mx-auto max-w-3xl text-[40px] leading-[1.04] font-semibold sm:text-[54px] lg:text-[62px]">
+            Sua primeira venda começa com a <span className="accent">primeira aula</span>
+          </h2>
+          <p className="mx-auto mt-6 max-w-xl text-[17px] leading-relaxed text-white/60">
+            Crie a sua conta grátis e comece hoje pela trilha Vender sem estoque. Você decide o ritmo.
+          </p>
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
+            <Link href={startHref} className="btn btn-pink btn-lg">
+              {user ? "Ir para o painel" : "Criar conta grátis"}
+              <ArrowRight className="size-4.5" aria-hidden="true" />
+            </Link>
+            <Link href="/cursos" className="btn btn-glass btn-lg">
+              Ver o que você vai aprender
+            </Link>
           </div>
         </div>
       </section>

@@ -1,0 +1,71 @@
+[   0.00 -    6.80] Opa, fala galera, professor na área. Na aula passada eu te mostrei como funciona vender sem
+[   6.80 -   14.74] estoque e deixei uma conta pela metade. Lembra? Sobraram R$ 54 da garrafa e eu falei, calma,
+[  14.98 -   21.40] que desse dinheiro ainda sai muita coisa. Pois é, hoje é a aula dessa conta. Então aqui
+[  21.40 -   27.32] eu vou te mostrar o caminho completo do dinheiro numa venda. Pra onde vai cada real que
+[  27.32 -   33.72] o cliente paga? Quanto sobra de verdade no seu bolso? E por que tem loja que vende bem
+[  33.72 -   40.72] e mesmo assim fica sem dinheiro? Bora, olha só o roteiro de hoje. Primeiro, a gente segue
+[  40.72 -   47.16] um pedido passo a passo do pagamento até o que sobra. Depois, eu te mostro os quatro
+[  47.16 -   53.56] custos que você precisa conhecer antes de vender qualquer coisa. E no fim, a parte
+[  53.56 -   60.94] que pega muita gente desprevenida, o dinheiro em caixa, tá bom? Primeira coisa, vou trocar
+[  60.94 -   66.48] de exemplo aqui pra gente fazer a conta inteira. Um produto que você vende por R$ 120.
+[  67.10 -   73.02] Número redondo, tá? É só exemplo pra você enxergar a estrutura. Não é promessa de nada.
+[  73.60 -   80.20] O cliente entra na sua loja e paga R$ 120. Beleza, entrou R$ 120. Só que esse
+[  80.20 -   86.58] dinheiro não chega inteiro pra você. Primeiro, o meio de pagamento, que é a empresa que recebe o
+[  86.58 -   94.42] PIX ou o cartão no seu lugar, fica com uma taxa. Aqui no exemplo, R$ 6. Aí você vai no fornecedor
+[  94.42 -  102.50] e paga o produto e o frete, R$ 55. E tem uma parte que muita gente esquece, que é o anúncio.
+[ 102.94 -  109.66] Pra esse cliente chegar até a sua loja, você gastou com anúncio. Aqui, R$ 30 por essa venda.
+[ 109.66 -  121.66] E o que sobrou? R$ 120, menos R$ 6, menos R$ 55, menos R$ 30, sobra R$ 29. Esses R$ 29 são a sua margem.
+[ 121.96 -  128.90] Margem é isso, o que sobra pra você depois de pagar tudo o que a venda custou. Agora repara,
+[ 129.24 -  137.38] tem gente que vende R$ 120 e fala, faturei R$ 120. E faturou mesmo, porque faturamento é o total
+[ 137.38 -  144.62] que entrou. O problema é quando o cara acha que ganhou R$ 120. Isso tá errado, isso tá errado.
+[ 144.98 -  152.98] Ele ganhou R$ 29. Dos R$ 120 que entraram, R$ 91 já tinha um dono antes de chegar na conta dele.
+[ 153.52 -  160.26] Faturamento e lucro são coisas completamente diferentes. E confundir as duas é o erro mais
+[ 160.26 -  166.82] comum de quem tá começando, pode ter certeza. E olha que essa conta é por venda. Se você
+[ 166.82 -  173.68] não sabe a sua margem por venda, você não sabe se tá ganhando ou perdendo dinheiro. Simples assim.
+[ 174.24 -  181.14] Beleza, dessa conta saem os quatro custos que você precisa conhecer antes de vender qualquer produto.
+[ 181.62 -  189.00] Vou passar um por um. Primeiro, produto mais frete. É o que o fornecedor te cobra. E presta atenção no
+[ 189.00 -  195.56] frete, porque tem fornecedor que mostra o preço do produto bem baixinho. E o frete vem depois,
+[ 195.56 -  204.06] separado. Pra sua conta, o que importa é a soma dos dois. Segundo, as taxas. Tem a taxa do meio de
+[ 204.06 -  210.64] pagamento que a gente já viu e muitas vezes tem também a da plataforma da loja, que é o site
+[ 210.64 -  217.46] onde você monta a sua loja. Umas cobram mensalidade, outras cobram um pedacinho de cada venda,
+[ 217.76 -  223.82] outras cobram as duas coisas. Isso varia. Então você confere na plataforma que for usar.
+[ 223.82 -  232.38] Terceiro, e esse é o que mais engana. O custo do anúncio por venda. Não é quanto você gastou de
+[ 232.38 -  240.46] anúncio no total, é quanto custou em anúncio cada venda. Por exemplo, você gastou 300 reais de
+[ 240.46 -  249.26] anúncio na semana e fez 10 vendas. 300 dividido por 10, cada venda custou 30 reais de anúncio.
+[ 249.26 -  256.44] Esse é o número que entra na conta. E por que ele engana? Porque ele muda. Numa semana é 30. Na outra
+[ 256.44 -  264.16] pode ser 50. E se ele passar da sua margem, cada venda que você faz dá prejuízo. Eu ainda vou
+[ 264.16 -  271.18] me aprofundar nisso. Tem trilha inteira de anúncio aqui dentro, tá bom? Quarto, impostos. Quando
+[ 271.18 -  277.84] você formalizar o negócio, entra em posto. No MEI, o microempreendedor individual é um valor
+[ 277.84 -  284.66] fixo por mês. Em outros tipos de empresa, costuma ser uma porcentagem do que você vende. Qual
+[ 284.66 -  291.34] vale pra você? Depende do que você vende e de como você se formaliza. E eu não vou chutar número
+[ 291.34 -  297.10] aqui. Isso é conversa pra ter com um contador. O que eu quero é que o imposto esteja na sua
+[ 297.10 -  305.30] conta desde o começo, nem que seja como estimativa. E agora, a parte que pega muita gente desprevenida.
+[ 305.30 -  312.22] Olha, essa aqui é muito, muito importante. Não sei se você sabe, mas o dinheiro da venda
+[ 312.22 -  318.88] não cai na sua conta na hora em que o cliente paga. Depende do meio de pagamento e da forma
+[ 318.88 -  325.84] de pagamento. No PIX, costuma cair rápido. No cartão, pode levar dias, às vezes semanas.
+[ 326.26 -  332.66] Porque o meio de pagamento segura o dinheiro um tempo antes de te repassar. E o fornecedor?
+[ 332.66 -  339.36] O fornecedor você paga na hora, quando faz o pedido. Então, olha a situação. O cara começa
+[ 339.36 -  347.26] a vender bem. Dez vendas por dia, no cartão. Cada pedido, ele paga R$ 55 para o fornecedor.
+[ 347.46 -  358.66] Na hora, dez vendas, R$ 550 por dia saindo do bolso dele. Em uma semana, R$ 3.850. E o
+[ 358.66 -  365.32] preço dessas vendas ainda não caiu. Tá lá no meio de pagamento, esperando o prazo. Isso sem
+[ 365.32 -  372.38] contar o anúncio, que também é cobrado enquanto as vendas acontecem. Resultado, o cara tá vendendo
+[ 372.38 -  378.18] bem e não tem dinheiro para pagar o próximo pedido. Parece contraditório, mas acontece
+[ 378.90 -  386.90] direto. Tem loja que fecha vendendo. Então, o que você faz? Duas coisas. Primeira, antes de
+[ 386.90 -  393.82] pagar, descobre em quantos dias o meio de pagamento que você vai usar libera o dinheiro do PIX e do
+[ 393.82 -  401.10] cartão. Segunda, separa uma reserva para pagar os pedidos enquanto o dinheiro não cai. Quanto?
+[ 401.54 -  408.32] Faz a conta. Quanto você paga de fornecedor e de anúncio por dia, vezes o número de dias
+[ 408.32 -  414.54] que o dinheiro demora para cair. E para não fazer tudo isso no papel, tem a calculadora de margem,
+[ 414.54 -  420.26] lá em ferramentas, aqui dentro da plataforma. Você coloca o preço, o custo do produto,
+[ 420.62 -  427.86] o frete, o anúncio por venda, as taxas e os impostos. E ela te mostra quanto sobra por venda.
+[ 428.24 -  433.96] Usa antes de anunciar qualquer produto. Então, o que você faz com isso agora?
+[ 434.54 -  440.54] Três tarefas que estão aqui na tela. Primeira, pega um produto que você pensa em vender e
+[ 440.54 -  446.76] lista todos os custos dele, os quatro que a gente viu. Segunda, joga esses números na
+[ 447.34 -  454.02] calculadora de margem e anota quanto sobra por venda. Terceira, descobre em quantos dias um
+[ 454.02 -  460.42] meio de pagamento libera o dinheiro das vendas. Escolhe um, entra no site dele e procura o
+[ 460.42 -  467.72] prazo de recebimento. Isso leva dez minutos e te salva muita dor de cabeça. Na próxima aula,
+[ 467.72 -  474.96] a gente vai falar do fornecedor. Comprar do Brasil ou de fora. Porque essa escolha mexe no frete,
+[ 475.26 -  481.40] no prazo de entrega e, óbvio, na sua margem. E já fico o aviso. Nos próximos módulos,
+[ 481.62 -  487.16] eu vou te passar as dicas de quem vende muito. Produto de low ticket, que é aquele de
+[ 487.16 -  492.92] preço baixo que a pessoa compra sem pensar muito. Como achar esse produto, com quem
+[ 492.92 -  499.80] falar pra conseguir ele e como separar o que é tendência de verdade do que é só modinha passageira.
+[ 500.10 -  505.48] É ali que o jogo começa a ficar interessante. Pode ter certeza. Te vejo lá!

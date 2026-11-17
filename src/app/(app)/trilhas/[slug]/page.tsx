@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Award, Clock, Crown, Layers, Lock, Play, PlayCircle } from "lucide-react";
+import { ArrowLeft, Award, Clapperboard, Clock, Crown, Layers, Lock, Play, PlayCircle } from "lucide-react";
 import { LessonStatusIcon, type LessonStatus } from "@/components/app/lesson-status-icon";
 import { UpgradeBanner } from "@/components/app/upgrade-banner";
 import { TrackIcon } from "@/components/icons";
+import { trackVideoLabel, VideoSoonBadge } from "@/components/prelaunch";
 import { ProgressBar, ProgressRing } from "@/components/ui/progress";
+import { site } from "@/config/site";
 import { requireUser } from "@/lib/auth/dal";
 import {
   canAccessLesson,
@@ -13,6 +15,7 @@ import {
   getCompletedLessonIds,
   summarize,
   trackLessons,
+  videoProgress,
 } from "@/lib/content";
 import { formatDuration, LEVEL_LABEL, plural } from "@/lib/format";
 import { deepGradient, getTheme } from "@/lib/theme";
@@ -83,6 +86,12 @@ export default async function TrackPage({ params }: Props) {
                 <Clock className="size-4" aria-hidden="true" />
                 {formatDuration(progress.minutes)}
               </li>
+              {site.prelaunch ? (
+                <li className="inline-flex items-center gap-1.5">
+                  <Clapperboard className="size-4" aria-hidden="true" />
+                  {trackVideoLabel(videoProgress([track]))}
+                </li>
+              ) : null}
               <li className="inline-flex items-center gap-1.5">
                 <Award className="size-4" aria-hidden="true" />
                 Certificado ao concluir
@@ -190,6 +199,7 @@ export default async function TrackPage({ params }: Props) {
                           {lesson.summary ? <p className="text-muted mt-0.5 truncate text-sm">{lesson.summary}</p> : null}
                         </div>
                         <div className="flex shrink-0 items-center gap-3">
+                          {lesson.hasVideo ? null : <VideoSoonBadge className="hidden md:inline-flex" />}
                           {lesson.isFree && !user.isPremium ? (
                             <span className="badge bg-mint-50 text-mint-700 hidden sm:inline-flex">Grátis</span>
                           ) : null}

@@ -36,19 +36,19 @@ export function FirstLesson({ featured, signedIn }: { featured: FeaturedLesson; 
   const duration = formatDuration(lesson.durationMinutes);
 
   return (
-    <section id="aula-1" aria-labelledby="aula-1-titulo" className="container-page pt-16 lg:pt-24">
+    <section id="aula-1" aria-labelledby="aula-1-titulo" className="container-page pt-24 lg:pt-32">
       <div className="mx-auto max-w-3xl">
         <div className="text-center">
           <p className="eyebrow">
             Aula {position} · {signedIn ? "grátis" : "grátis, sem cadastro"}
           </p>
-          <h2 id="aula-1-titulo" className="mt-3 text-[34px] leading-[1.12] font-bold text-balance lg:text-[42px]">
+          <h2 id="aula-1-titulo" className="mt-4 text-[36px] leading-[1.06] font-semibold text-balance lg:text-[48px]">
             {keepShortWordsTogether(lesson.title)}
           </h2>
           {lesson.summary ? (
             <p className="text-ink mx-auto mt-4 max-w-2xl text-[17px] leading-relaxed">{lesson.summary}</p>
           ) : null}
-          <ul className="text-muted mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm">
+          <ul className="text-muted mt-6 flex flex-wrap justify-center gap-x-5 gap-y-2 font-mono text-[12px] tracking-[0.06em] uppercase">
             <li className="inline-flex items-center gap-1.5">
               <Clock className="size-4" aria-hidden="true" />
               {hasVideo ? `${duration} de vídeo` : `${duration} de leitura`}
@@ -83,7 +83,7 @@ export function FirstLesson({ featured, signedIn }: { featured: FeaturedLesson; 
         {hasVideo ? null : (
           <article className="card mt-6 p-6 sm:p-10" aria-label={`Texto da aula: ${lesson.title}`}>
             <div className="border-line mb-7 flex items-center gap-3 border-b pb-6">
-              <span className="bg-hero grid size-11 shrink-0 place-items-center rounded-full text-white">
+              <span className="grid size-11 shrink-0 place-items-center rounded-full bg-[linear-gradient(135deg,#6c5cff,#f25fdc)] text-white">
                 <Mic className="size-5" aria-hidden="true" />
               </span>
               <div>

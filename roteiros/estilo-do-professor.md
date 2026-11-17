@@ -9,7 +9,10 @@ O prompt abaixo é a base. Nas aulas da plataforma, valem também estes ajustes:
 
 - **Não falamos o nome da plataforma**: ele ainda é provisório.
 - **Sem "eu avisei" nem "quem me acompanha"**: o curso é novo, então não inventamos histórico de previsões.
-- **Nenhuma promessa de ganho.** Valores são sempre exemplo, e a aula diz isso em voz alta.
+- **Nenhuma promessa de ganho.** Valores são sempre exemplo, e a aula diz isso em voz alta ("número redondo, é só
+  exemplo"). Mas sem frases de defesa como "não é promessa de nada": o dono do curso pediu para tirar.
+- **Sem papelada nas aulas de introdução.** MEI, impostos em detalhe, contador e formalização ficam para as trilhas
+  mais avançadas, para não assustar quem está começando. Na introdução, imposto aparece só como um dos custos.
 - **Cada aula termina no que fazer agora**: as tarefas e o quiz daquela aula, e uma chamada para a próxima.
 - **Capítulos com título** (`## Título` no texto da aula): eles organizam a leitura na plataforma e viram os
   capítulos do vídeo no YouTube.

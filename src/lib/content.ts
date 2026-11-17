@@ -91,6 +91,14 @@ export function trackLessons(track: CatalogTrack): CatalogLesson[] {
 }
 
 /** "free": tudo grátis · "partial": algumas aulas grátis · "pro": só para assinantes. */
+export type VideoProgress = { withVideo: number; total: number };
+
+/** Quantas aulas publicadas já têm vídeo (para o aviso de pré-estreia). */
+export function videoProgress(tracks: CatalogTrack[]): VideoProgress {
+  const lessons = tracks.flatMap(trackLessons);
+  return { withVideo: lessons.filter((lesson) => lesson.hasVideo).length, total: lessons.length };
+}
+
 export type TrackAccess = "free" | "partial" | "pro";
 
 export function trackAccess(track: CatalogTrack): TrackAccess {

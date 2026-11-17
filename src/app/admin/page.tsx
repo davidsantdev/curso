@@ -4,15 +4,21 @@ import { ColumnChart } from "@/components/admin/column-chart";
 import { PageHeader } from "@/components/app/page-header";
 import { Avatar } from "@/components/ui/avatar";
 import { StatTile } from "@/components/ui/stat-tile";
+import { site } from "@/config/site";
 import { getAdminOverview } from "@/lib/admin";
 import { requireAdmin } from "@/lib/auth/dal";
-import { getBillingMode } from "@/lib/billing";
+import { getBillingMode, listActivePlans } from "@/lib/billing";
+import { getCatalog, videoProgress } from "@/lib/content";
 import { formatDate, formatMoney, paymentWayLabel, plural } from "@/lib/format";
+import { sellableLink } from "@/lib/payments/links";
 
 export default async function AdminOverviewPage() {
   await requireAdmin();
-  const data = await getAdminOverview();
+  const [data, activePlans, catalog] = await Promise.all([getAdminOverview(), listActivePlans(), getCatalog()]);
+  const videos = videoProgress(catalog);
   const billingMode = getBillingMode();
+  // Plano à venda sem um link de pagamento que funcione: ninguém consegue comprar.
+  const plansWithoutLink = billingMode === "live" ? activePlans.filter((plan) => !sellableLink(plan.paymentLink)) : [];
 
   return (
     <div className="mx-auto max-w-6xl">
@@ -29,14 +35,44 @@ export default async function AdminOverviewPage() {
       {billingMode === "demo" ? (
         <p className="bg-sun-50 text-sun-700 mb-6 rounded-2xl px-5 py-4 text-sm leading-relaxed">
           <strong className="font-semibold">Checkout em modo demonstração:</strong> os planos são ativados sem
-          cobrança. Para vender de verdade, conecte o Mercado Pago (veja o README, seção “Planos e pagamentos”).
+          cobrança. Para vender de verdade, conecte a Cakto (veja o README, seção “Planos e pagamentos”).
         </p>
       ) : billingMode === "disabled" ? (
         <p className="bg-sun-50 text-sun-700 mb-6 rounded-2xl px-5 py-4 text-sm leading-relaxed">
           <strong className="font-semibold">Pagamento on-line desligado:</strong> o checkout mostra só o contato por
-          e-mail. Defina MERCADOPAGO_ACCESS_TOKEN para receber por Pix, cartão e boleto (README, seção “Planos e
-          pagamentos”).
+          e-mail. Defina CAKTO_WEBHOOK_SECRET para vender pela Cakto (README, seção “Planos e pagamentos”).
         </p>
+      ) : plansWithoutLink.length > 0 ? (
+        <p className="bg-sun-50 text-sun-700 mb-6 rounded-2xl px-5 py-4 text-sm leading-relaxed">
+          <strong className="font-semibold">
+            {plansWithoutLink.length === 1 ? "Um plano está à venda" : "Alguns planos estão à venda"} sem link de
+            pagamento:
+          </strong>{" "}
+          {plansWithoutLink.map((plan) => plan.name).join(", ")}. Sem o link, o checkout mostra só o contato por
+          e-mail.{" "}
+          <Link href="/admin/planos" className="font-semibold underline underline-offset-2">
+            Cadastrar o link
+          </Link>
+          .
+        </p>
+      ) : null}
+
+      {site.prelaunch && videos.total > 0 ? (
+        videos.withVideo === videos.total ? (
+          <p className="bg-sun-50 text-sun-700 mb-6 rounded-2xl px-5 py-4 text-sm leading-relaxed">
+            <strong className="font-semibold">Todas as {videos.total} aulas já têm vídeo.</strong> Desligue a
+            pré-estreia em <code>src/config/site.ts</code> (<code>prelaunch: false</code>) e reveja os preços dos planos.
+          </p>
+        ) : (
+          <p className="bg-brand-50 text-brand-700 mb-6 rounded-2xl px-5 py-4 text-sm leading-relaxed">
+            <strong className="font-semibold">Pré-estreia ligada:</strong> {videos.withVideo} de {videos.total} aulas
+            publicadas já têm vídeo. Para pôr o vídeo de uma aula, abra a aula em{" "}
+            <Link href="/admin/conteudo" className="font-semibold underline underline-offset-2">
+              Conteúdo
+            </Link>{" "}
+            e cole o link no campo de vídeo. O aviso “vídeo em breve” daquela aula some sozinho.
+          </p>
+        )
       ) : null}
 
       <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">

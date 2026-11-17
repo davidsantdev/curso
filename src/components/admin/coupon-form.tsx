@@ -20,25 +20,11 @@ export function CouponForm() {
         maxLength={30}
         autoComplete="off"
         autoCapitalize="characters"
-        placeholder="Ex.: BEMVINDO20"
+        placeholder="Ex.: PARCEIRO2026"
         className="uppercase placeholder:normal-case"
         defaultValue={values?.code}
         error={state.errors?.code}
-        hint="Letras e números, sem espaços. É o que o aluno digita no checkout."
-      />
-      <Field
-        label="Desconto (%)"
-        name="percentOff"
-        type="number"
-        required
-        min={1}
-        max={100}
-        step={1}
-        inputMode="numeric"
-        placeholder="Ex.: 20"
-        defaultValue={values?.percentOff}
-        error={state.errors?.percentOff}
-        hint="Com 100, o aluno libera o plano sem pagar (cortesia)."
+        hint="Letras e números, sem espaços. Quem digitar no checkout libera o plano sem pagar."
       />
       <Field
         label="Limite de usos (opcional)"

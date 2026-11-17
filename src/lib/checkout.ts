@@ -1,30 +1,33 @@
 import "server-only";
-import { and, desc, eq, gte, isNull, ne, sql } from "drizzle-orm";
-import { publicSiteUrl, site } from "@/config/site";
+import { and, eq, ne, sql } from "drizzle-orm";
+import { site } from "@/config/site";
 import { db } from "@/db";
-import { coupons, payments, plans, users, type Coupon, type Payment, type Plan } from "@/db/schema";
+import { coupons, passwordResets, payments, plans, subscriptions, users, type Coupon, type Plan } from "@/db/schema";
+import { hashPassword } from "@/lib/auth/password";
+import { hashToken, newToken } from "@/lib/auth/session";
 import { activateSubscription, removePaidPeriod } from "@/lib/billing";
 import { sendEmail } from "@/lib/email";
-import { paymentApprovedEmail } from "@/lib/email-templates";
-import {
-  createPreference,
-  paymentMethodOf,
-  searchPaymentsByReference,
-  type MercadoPagoPayment,
-} from "@/lib/payments/mercadopago";
+import { paymentApprovedEmail, purchaseAccessEmail, saleAlertEmail } from "@/lib/email-templates";
+import { parsePaymentLink, personalizedCheckoutUrl, sellableLink } from "@/lib/payments/links";
+import { PROVIDER_NAME, type Buyer, type SaleEvent } from "@/lib/payments/types";
 
 /**
  * CHECKOUT
  * --------
- * Cria a cobrança no Mercado Pago e, quando o pagamento é confirmado, libera o plano.
+ * O pagamento acontece na plataforma de pagamento (hoje a Cakto; a Hotmart fica pronta para religar).
+ * Daqui saem:
+ *  - o link de pagamento de cada plano, com os dados do aluno já preenchidos;
+ *  - a liberação do plano quando a plataforma avisa a venda (`settleSaleEvent`),
+ *    e a retirada quando avisa reembolso, chargeback ou cancelamento.
  *
- * Regra de ouro: o plano só é liberado a partir do que a API do Mercado Pago responde
- * (`settleMercadoPagoPayment`). Nada do que chega pelo navegador ou pelo corpo do
- * webhook é usado para decidir — só o id do pagamento, que é consultado na API.
+ * Regra de ouro: o plano só é liberado por um aviso autenticado (assinatura da Cakto ou hottok da Hotmart,
+ * conferidos na rota do webhook). Nada que chega pelo navegador libera acesso.
  */
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+
 /* ------------------------------------------------------------------ */
-/* Cupons                                                              */
+/* Cupons de cortesia                                                  */
 /* ------------------------------------------------------------------ */
 
 /** "bem vindo 20" → "BEMVINDO20" */
@@ -41,6 +44,8 @@ export function couponProblem(coupon: Coupon, now: Date = new Date()): string | 
   if (coupon.maxRedemptions !== null && coupon.redemptions >= coupon.maxRedemptions) {
     return "Este cupom já atingiu o limite de usos.";
   }
+  // Descontos parciais são criados e aplicados na plataforma de pagamento; aqui só valem cortesias.
+  if (coupon.percentOff < 100) return "Cupom de desconto? Digite o código na página de pagamento.";
   return null;
 }
 
@@ -52,7 +57,7 @@ export type Quote = {
   totalCents: number;
 };
 
-/** Preço final do plano, com o cupom (se houver e for válido). */
+/** Preço final do plano, com o cupom de cortesia (se houver e for válido). */
 export async function quotePlan(plan: Pick<Plan, "priceCents">, couponCode: string | null | undefined): Promise<Quote> {
   const full: Quote = { coupon: null, couponError: null, discountCents: 0, totalCents: plan.priceCents };
 
@@ -81,89 +86,15 @@ async function countCouponUse(couponId: string | null): Promise<void> {
 /* Início do pagamento                                                 */
 /* ------------------------------------------------------------------ */
 
-type Buyer = { id: string; name: string; email: string };
-
-export type CheckoutStart =
-  | { kind: "redirect"; url: string }
-  /** Cupom de 100%: não há o que pagar, o plano já foi liberado. */
-  | { kind: "activated" }
-  | { kind: "error" };
-
-const REUSE_WINDOW_MS = 12 * 60 * 60 * 1000;
-
-/** Cria (ou reaproveita) a cobrança e devolve o link de pagamento do Mercado Pago. */
-export async function startMercadoPagoCheckout(buyer: Buyer, plan: Plan, quote: Quote): Promise<CheckoutStart> {
-  if (quote.totalCents <= 0) {
-    await activateWithoutGateway(buyer, plan, quote, "cupom");
-    return { kind: "activated" };
-  }
-
-  const couponId = quote.coupon?.id ?? null;
-
-  // Se o aluno já abriu este mesmo pagamento há pouco, continua nele em vez de criar outro.
-  const [reusable] = await db
-    .select({ checkoutUrl: payments.checkoutUrl })
-    .from(payments)
-    .where(
-      and(
-        eq(payments.userId, buyer.id),
-        eq(payments.planId, plan.id),
-        eq(payments.provider, "mercadopago"),
-        eq(payments.status, "PENDING"),
-        eq(payments.amountCents, quote.totalCents),
-        couponId ? eq(payments.couponId, couponId) : isNull(payments.couponId),
-        gte(payments.createdAt, new Date(Date.now() - REUSE_WINDOW_MS)),
-      ),
-    )
-    .orderBy(desc(payments.createdAt))
-    .limit(1);
-  if (reusable?.checkoutUrl) return { kind: "redirect", url: reusable.checkoutUrl };
-
-  const [payment] = await db
-    .insert(payments)
-    .values({
-      userId: buyer.id,
-      planId: plan.id,
-      amountCents: quote.totalCents,
-      discountCents: quote.discountCents,
-      couponId,
-      status: "PENDING",
-      provider: "mercadopago",
-    })
-    .returning({ id: payments.id });
-
-  try {
-    const baseUrl = publicSiteUrl();
-    const preference = await createPreference({
-      reference: payment.id,
-      title: `${site.name} — ${plan.name}`,
-      amountCents: quote.totalCents,
-      payer: { email: buyer.email, name: buyer.name },
-      statementDescriptor: site.name
-        .normalize("NFD")
-        .replace(/[^a-zA-Z0-9 ]/g, "")
-        .toUpperCase()
-        .slice(0, 13),
-      returnUrl: baseUrl ? `${baseUrl}/checkout/retorno` : null,
-      notificationUrl: baseUrl ? `${baseUrl}/api/webhooks/mercadopago` : null,
-    });
-
-    await db
-      .update(payments)
-      .set({ providerCheckoutId: preference.id, checkoutUrl: preference.url })
-      .where(eq(payments.id, payment.id));
-
-    return { kind: "redirect", url: preference.url };
-  } catch (error) {
-    console.error("[checkout] Não foi possível criar a cobrança no Mercado Pago:", error);
-    await db.update(payments).set({ status: "FAILED" }).where(eq(payments.id, payment.id));
-    return { kind: "error" };
-  }
+/** Link de pagamento deste plano para este aluno (null se o plano não tem link de uma plataforma configurada). */
+export function checkoutLinkFor(plan: Pick<Plan, "paymentLink">, buyer: Buyer): string | null {
+  const link = sellableLink(plan.paymentLink);
+  return link ? personalizedCheckoutUrl(link, buyer) : null;
 }
 
 /**
- * Libera o plano sem passar pelo gateway:
- *  - "cupom": cupom de 100% (não há o que cobrar);
+ * Libera o plano sem passar pela plataforma de pagamento:
+ *  - "cupom": cupom de cortesia (100%);
  *  - "demo":  checkout de demonstração, usado em desenvolvimento.
  */
 export async function activateWithoutGateway(
@@ -189,178 +120,191 @@ export async function activateWithoutGateway(
 }
 
 /* ------------------------------------------------------------------ */
-/* Confirmação do pagamento                                            */
+/* Avisos de venda                                                     */
 /* ------------------------------------------------------------------ */
 
-export type SettleResult =
-  /** Pagamento aprovado agora: o plano acabou de ser liberado. */
+export type SaleResult =
+  /** Venda aprovada agora: o plano acabou de ser liberado. */
   | "activated"
-  /** Já tinha sido processado antes (avisos repetidos são normais). */
+  /** Já tinha sido processada (o mesmo aviso pode chegar mais de uma vez). */
   | "already-paid"
-  | "pending"
-  | "failed"
+  /** Reembolso, chargeback ou cancelamento: o período foi retirado. */
   | "refunded"
-  /** Não é um pagamento desta plataforma, ou os dados não batem. */
+  /** Assinatura cancelada: o acesso vai até o fim do período já pago. */
+  | "canceled"
+  /** Evento que não muda nada aqui, ou venda que não pôde ser ligada a um plano. */
   | "ignored";
 
-/**
- * Aplica no nosso banco a situação de um pagamento lido da API do Mercado Pago.
- * Pode ser chamada várias vezes para o mesmo pagamento: só a primeira aprovação libera o plano.
- */
-export async function settleMercadoPagoPayment(remote: MercadoPagoPayment): Promise<SettleResult> {
-  const reference = remote.external_reference;
-  if (!reference || reference.length > 40) return "ignored";
-
-  const [payment] = await db
-    .select()
-    .from(payments)
-    .where(and(eq(payments.id, reference), eq(payments.provider, "mercadopago")))
-    .limit(1);
-  if (!payment) return "ignored";
-
-  const remoteId = String(remote.id);
-  const method = paymentMethodOf(remote);
-
-  switch (remote.status) {
+/** Aplica no nosso banco um aviso de venda. Pode ser chamada várias vezes com o mesmo aviso. */
+export async function settleSaleEvent(event: SaleEvent): Promise<SaleResult> {
+  switch (event.kind) {
     case "approved":
-      return settleApproved(payment, remote, remoteId, method);
-
-    case "refunded":
-    case "charged_back":
-      return settleRefunded(payment, remoteId);
-
-    case "rejected":
-    case "cancelled": {
-      // Uma tentativa recusada não impede uma próxima: o aluno pode tentar outro cartão ou o Pix.
-      await db
-        .update(payments)
-        .set({ status: "FAILED", method: method ?? payment.method })
-        .where(and(eq(payments.id, payment.id), eq(payments.status, "PENDING")));
-      return payment.status === "PAID" ? "already-paid" : "failed";
-    }
-
-    default: {
-      // pending, in_process, authorized, in_mediation: seguimos aguardando.
-      if (payment.status === "PAID") return "already-paid";
-      await db
-        .update(payments)
-        .set({ status: "PENDING", method: method ?? payment.method })
-        .where(and(eq(payments.id, payment.id), ne(payments.status, "PAID"), ne(payments.status, "REFUNDED")));
-      return "pending";
-    }
+      return event.orderId ? settleApproved(event, event.orderId) : "ignored";
+    case "reverted":
+      return event.orderId ? settleReverted(event, event.orderId) : "ignored";
+    case "subscription-canceled":
+      return settleSubscriptionCanceled(event);
+    default:
+      return "ignored";
   }
 }
 
-async function settleApproved(
-  payment: Payment,
-  remote: MercadoPagoPayment,
-  remoteId: string,
-  method: string | null,
-): Promise<SettleResult> {
-  if (payment.status === "PAID") {
-    // A mesma cobrança foi paga duas vezes (ex.: Pix e cartão). O plano já está liberado;
-    // o segundo valor precisa ser devolvido pelo painel do Mercado Pago.
-    if (payment.providerRef && payment.providerRef !== remoteId) {
-      console.warn(
-        `[checkout] Pagamento em duplicidade: a cobrança ${payment.id} já foi paga (${payment.providerRef}) ` +
-          `e chegou outro pagamento aprovado (${remoteId}). Reembolse o segundo no painel do Mercado Pago.`,
-      );
-    }
-    return "already-paid";
+/** O plano da venda: pelo código da oferta ou, se só um plano é vendido nessa plataforma, ele. */
+async function planForOffer(event: SaleEvent): Promise<Plan | null> {
+  const sold = (await db.select().from(plans))
+    .map((plan) => ({ plan, link: parsePaymentLink(plan.paymentLink) }))
+    .filter(({ link }) => link?.provider === event.provider);
+  if (event.offerCode) {
+    const exact = sold.find(({ link }) => link?.offerCode === event.offerCode);
+    if (exact) return exact.plan;
   }
-  if (payment.status === "REFUNDED") return "refunded";
+  return sold.length === 1 ? sold[0].plan : null;
+}
 
-  const paidCents = Math.round((remote.transaction_amount ?? 0) * 100);
-  if ((remote.currency_id && remote.currency_id !== "BRL") || paidCents < payment.amountCents) {
+type Account = Buyer & { created: boolean };
+
+/** A conta de quem comprou: pelo id que mandamos no link, pelo e-mail ou, se ainda não existe, uma conta nova. */
+async function buyerAccount(event: SaleEvent): Promise<Account | null> {
+  const columns = { id: users.id, name: users.name, email: users.email };
+
+  if (event.accountRef && /^[\w-]{6,40}$/.test(event.accountRef)) {
+    const [byId] = await db.select(columns).from(users).where(eq(users.id, event.accountRef)).limit(1);
+    if (byId) return { ...byId, created: false };
+  }
+
+  const email = event.email?.trim().toLowerCase();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) return null;
+
+  const [byEmail] = await db.select(columns).from(users).where(eq(users.email, email)).limit(1);
+  if (byEmail) return { ...byEmail, created: false };
+
+  // Comprou direto na plataforma (ex.: pelo link de um afiliado) sem ter conta: criamos uma.
+  // A senha é aleatória; a pessoa cria a dela pelo link que vai no e-mail.
+  const name = (event.name ?? "").replace(/\s+/g, " ").trim().slice(0, 80) || email.split("@")[0];
+  const [created] = await db
+    .insert(users)
+    .values({ name, email, passwordHash: await hashPassword(newToken()) })
+    .onConflictDoNothing()
+    .returning(columns);
+  if (created) return { ...created, created: true };
+
+  // Outra requisição criou a conta ao mesmo tempo.
+  const [raced] = await db.select(columns).from(users).where(eq(users.email, email)).limit(1);
+  return raced ? { ...raced, created: false } : null;
+}
+
+/** Link para a pessoa criar a senha (vale 7 dias). */
+async function createPasswordLink(userId: string): Promise<string> {
+  const token = newToken();
+  await db.insert(passwordResets).values({
+    id: hashToken(token),
+    userId,
+    expiresAt: new Date(Date.now() + 7 * DAY_MS),
+  });
+  return `${site.url}/redefinir-senha/${token}`;
+}
+
+async function settleApproved(event: SaleEvent, orderId: string): Promise<SaleResult> {
+  const where = and(eq(payments.provider, event.provider), eq(payments.providerRef, orderId));
+  const [existing] = await db.select({ status: payments.status }).from(payments).where(where).limit(1);
+  if (existing?.status === "PAID") return "already-paid";
+  if (existing?.status === "REFUNDED") return "refunded";
+
+  // A conta vem antes do plano: se o plano não for encontrado, a pessoa já existe no admin
+  // e a equipe consegue liberar o acesso à mão.
+  const account = await buyerAccount(event);
+  if (!account) {
+    console.error(`[vendas] ${PROVIDER_NAME[event.provider]}: venda ${orderId} sem e-mail de comprador válido.`);
+    await sendEmail(saleAlertEmail(event, orderId));
+    return "ignored";
+  }
+
+  const plan = await planForOffer(event);
+  if (!plan) {
     console.error(
-      `[checkout] Pagamento ${remoteId} não confere com a cobrança ${payment.id}: ` +
-        `pago ${paidCents} ${remote.currency_id ?? "?"}, esperado ${payment.amountCents} BRL.`,
+      `[vendas] ${PROVIDER_NAME[event.provider]}: venda ${orderId} (oferta ${event.offerCode ?? "?"}) sem plano ` +
+        "correspondente. Confira o link de pagamento de cada plano em Admin → Planos e libere o acesso pelo admin.",
     );
+    await sendEmail(saleAlertEmail(event, orderId));
     return "ignored";
   }
 
-  if (!payment.userId || !payment.planId) {
-    console.error(`[checkout] Pagamento ${remoteId} aprovado, mas a conta ou o plano da cobrança ${payment.id} não existe mais.`);
-    return "ignored";
-  }
+  const values = {
+    userId: account.id,
+    planId: plan.id,
+    amountCents: event.amountCents,
+    currency: event.currency,
+    method: event.method,
+    paidAt: event.paidAt ?? new Date(),
+    status: "PAID" as const,
+  };
 
-  const [[plan], [user]] = await Promise.all([
-    db.select().from(plans).where(eq(plans.id, payment.planId)).limit(1),
-    db.select({ name: users.name, email: users.email }).from(users).where(eq(users.id, payment.userId)).limit(1),
-  ]);
-  if (!plan || !user) return "ignored";
-
-  const approvedAt = remote.date_approved ? new Date(remote.date_approved) : new Date();
-  const paidAt = Number.isNaN(approvedAt.getTime()) ? new Date() : approvedAt;
-
-  // A troca de estado é atômica: se dois avisos chegarem juntos, só um deles libera o plano.
-  const claimed = await db
-    .update(payments)
-    .set({ status: "PAID", providerRef: remoteId, method, paidAt })
-    .where(and(eq(payments.id, payment.id), ne(payments.status, "PAID"), ne(payments.status, "REFUNDED")))
-    .returning({ id: payments.id });
+  // A troca de estado é atômica: se o mesmo aviso chegar duas vezes ao mesmo tempo, só um libera o plano
+  // (o índice único de provider + providerRef garante).
+  const claimed = existing
+    ? await db
+        .update(payments)
+        .set(values)
+        .where(and(where, ne(payments.status, "PAID"), ne(payments.status, "REFUNDED")))
+        .returning({ id: payments.id })
+    : await db
+        .insert(payments)
+        .values({ ...values, provider: event.provider, providerRef: orderId })
+        .onConflictDoNothing()
+        .returning({ id: payments.id });
   if (claimed.length === 0) return "already-paid";
 
   const { currentPeriodEnd } = await activateSubscription({
-    userId: payment.userId,
+    userId: account.id,
     plan,
-    provider: "mercadopago",
-    providerRef: remoteId,
+    provider: event.provider,
+    providerRef: orderId,
   });
-  await countCouponUse(payment.couponId);
 
-  await sendEmail(
-    paymentApprovedEmail(user, { planName: plan.name, amountCents: payment.amountCents, accessUntil: currentPeriodEnd }),
-  );
+  if (account.created) {
+    const passwordUrl = await createPasswordLink(account.id);
+    await sendEmail(
+      purchaseAccessEmail(
+        account,
+        { planName: plan.name, accessUntil: currentPeriodEnd, providerName: PROVIDER_NAME[event.provider] },
+        passwordUrl,
+      ),
+    );
+  } else {
+    await sendEmail(
+      paymentApprovedEmail(account, { planName: plan.name, amountCents: event.amountCents, accessUntil: currentPeriodEnd }),
+    );
+  }
 
   return "activated";
 }
 
-async function settleRefunded(payment: Payment, remoteId: string): Promise<SettleResult> {
-  // Só desfaz o período se este pagamento foi o que liberou o acesso.
-  const reverted = await db
+async function settleReverted(event: SaleEvent, orderId: string): Promise<SaleResult> {
+  // Só desfaz se esta venda liberou um período (e só uma vez).
+  const [reverted] = await db
     .update(payments)
     .set({ status: "REFUNDED" })
-    .where(and(eq(payments.id, payment.id), eq(payments.status, "PAID"), eq(payments.providerRef, remoteId)))
-    .returning({ id: payments.id });
+    .where(and(eq(payments.provider, event.provider), eq(payments.providerRef, orderId), eq(payments.status, "PAID")))
+    .returning({ userId: payments.userId, planId: payments.planId });
+  if (!reverted) return "ignored";
 
-  if (reverted.length > 0 && payment.userId && payment.planId) {
-    const [plan] = await db.select({ interval: plans.interval }).from(plans).where(eq(plans.id, payment.planId)).limit(1);
-    if (plan) await removePaidPeriod(payment.userId, plan.interval);
+  if (reverted.userId && reverted.planId) {
+    const [plan] = await db.select({ interval: plans.interval }).from(plans).where(eq(plans.id, reverted.planId)).limit(1);
+    if (plan) await removePaidPeriod(reverted.userId, plan.interval);
   }
   return "refunded";
 }
 
-/**
- * Consulta no Mercado Pago todas as tentativas de uma cobrança nossa e aplica a mais relevante.
- * Usada na volta do checkout, no botão "Já paguei" e na conferência diária.
- */
-export async function reconcilePayment(paymentId: string): Promise<SettleResult> {
-  const attempts = await searchPaymentsByReference(paymentId);
-  if (attempts.length === 0) return "pending";
+async function settleSubscriptionCanceled(event: SaleEvent): Promise<SaleResult> {
+  const email = event.email?.trim().toLowerCase();
+  if (!email) return "ignored";
+  const [user] = await db.select({ id: users.id }).from(users).where(eq(users.email, email)).limit(1);
+  if (!user) return "ignored";
 
-  const pick =
-    attempts.find((attempt) => attempt.status === "approved") ??
-    attempts.find((attempt) => attempt.status === "refunded" || attempt.status === "charged_back") ??
-    attempts.find((attempt) => ["pending", "in_process", "authorized"].includes(attempt.status)) ??
-    attempts[0];
-
-  return settleMercadoPagoPayment(pick);
-}
-
-/** Aviso mostrado na página Assinatura para cada resultado. */
-export function checkoutNotice(result: SettleResult): string {
-  switch (result) {
-    case "activated":
-    case "already-paid":
-      return "plano-ativado";
-    case "failed":
-      return "pagamento-recusado";
-    case "refunded":
-      return "pagamento-estornado";
-    case "ignored":
-      return "pagamento-em-analise";
-    default:
-      return "pagamento-pendente";
-  }
+  const updated = await db
+    .update(subscriptions)
+    .set({ cancelAtPeriodEnd: true, updatedAt: new Date() })
+    .where(and(eq(subscriptions.userId, user.id), eq(subscriptions.provider, event.provider)))
+    .returning({ id: subscriptions.id });
+  return updated.length > 0 ? "canceled" : "ignored";
 }

@@ -71,6 +71,8 @@ export const PAYMENT_STATUS_LABEL: Record<PaymentStatus, string> = {
 };
 
 const PROVIDER_LABEL: Record<string, string> = {
+  cakto: "Cakto",
+  hotmart: "Hotmart",
   mercadopago: "Mercado Pago",
   manual: "Liberado pela equipe",
   cupom: "Cupom",
@@ -81,6 +83,9 @@ const METHOD_LABEL: Record<string, string> = {
   pix: "Pix",
   cartao: "Cartão",
   boleto: "Boleto",
+  paypal: "PayPal",
+  picpay: "PicPay",
+  debito: "Débito",
   saldo: "Saldo Mercado Pago",
 };
 

@@ -7,6 +7,7 @@ import { plans, PLAN_INTERVALS, type PlanInterval } from "@/db/schema";
 import { requireAdmin } from "@/lib/auth/dal";
 import { checked, field, lines, rawField, type FormState } from "@/lib/forms";
 import { parseMoneyToCents } from "@/lib/format";
+import { parsePaymentLink } from "@/lib/payments/links";
 import { slugify } from "@/lib/utils";
 
 function isInterval(value: string): value is PlanInterval {
@@ -34,7 +35,7 @@ function readPlanForm(formData: FormData) {
     price: field(formData, "price"),
     interval: field(formData, "interval"),
     features: rawField(formData, "features"),
-    externalPriceId: field(formData, "externalPriceId"),
+    paymentLink: field(formData, "paymentLink"),
   };
 
   const errors: Record<string, string> = {};
@@ -46,13 +47,24 @@ function readPlanForm(formData: FormData) {
   if (priceCents === null || priceCents < 100) errors.price = "Informe um valor a partir de R$ 1,00. Exemplo: 49,90";
   if (!isInterval(raw.interval)) errors.interval = "Escolha a recorrência";
 
-  return { raw, errors, priceCents: priceCents ?? 0, interval: raw.interval as PlanInterval };
+  const link = raw.paymentLink ? parsePaymentLink(raw.paymentLink) : null;
+  if (raw.paymentLink && !link) {
+    errors.paymentLink = "Cole o link de pagamento da oferta, que começa com https://pay.cakto.com.br/";
+  }
+
+  return {
+    raw,
+    errors,
+    priceCents: priceCents ?? 0,
+    interval: raw.interval as PlanInterval,
+    paymentLink: link?.url ?? null,
+  };
 }
 
 export async function createPlanAction(_previous: FormState, formData: FormData): Promise<FormState> {
   await requireAdmin();
 
-  const { raw, errors, priceCents, interval } = readPlanForm(formData);
+  const { raw, errors, priceCents, interval, paymentLink } = readPlanForm(formData);
   if (Object.keys(errors).length > 0) return { ok: false, errors, values: raw };
 
   const [{ last }] = await db.select({ last: max(plans.sortOrder) }).from(plans);
@@ -64,7 +76,7 @@ export async function createPlanAction(_previous: FormState, formData: FormData)
     priceCents,
     interval,
     features: lines(raw.features).slice(0, 12),
-    externalPriceId: raw.externalPriceId || null,
+    paymentLink,
     // Nasce desativado: revise e ative quando quiser colocar à venda.
     active: false,
     sortOrder: (last ?? 0) + 1,
@@ -78,7 +90,7 @@ export async function updatePlanAction(_previous: FormState, formData: FormData)
   await requireAdmin();
 
   const id = field(formData, "id");
-  const { raw, errors, priceCents, interval } = readPlanForm(formData);
+  const { raw, errors, priceCents, interval, paymentLink } = readPlanForm(formData);
   if (Object.keys(errors).length > 0) return { ok: false, errors, values: raw };
 
   const [plan] = await db.select({ id: plans.id }).from(plans).where(eq(plans.id, id)).limit(1);
@@ -92,7 +104,7 @@ export async function updatePlanAction(_previous: FormState, formData: FormData)
       priceCents,
       interval,
       features: lines(raw.features).slice(0, 12),
-      externalPriceId: raw.externalPriceId || null,
+      paymentLink,
       highlighted: checked(formData, "highlighted"),
       active: checked(formData, "active"),
     })

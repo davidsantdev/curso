@@ -103,8 +103,13 @@ export const plans = sqliteTable("plans", {
   highlighted: bool("highlighted").notNull().default(false),
   active: bool("active").notNull().default(true),
   sortOrder: integer("sort_order").notNull().default(0),
-  /** ID do preço/produto no gateway de pagamento, quando houver. */
-  externalPriceId: text("external_price_id"),
+  /**
+   * Link de pagamento da oferta deste plano: https://pay.cakto.com.br/abc123 (Cakto) ou
+   * https://pay.hotmart.com/A12345678B?off=abc123 (Hotmart). O código da oferta no link identifica o plano
+   * quando a plataforma avisa a venda. (A coluna tem o nome antigo, de quando guardava o "ID no gateway":
+   * mantido para não precisar migrar o banco.)
+   */
+  paymentLink: text("external_price_id"),
   createdAt: createdAt(),
   updatedAt: updatedAt(),
 });
@@ -155,11 +160,11 @@ export const payments = sqliteTable(
     amountCents: integer("amount_cents").notNull(),
     currency: text("currency").notNull().default("BRL"),
     status: text("status", { enum: PAYMENT_STATUSES }).notNull().default("PAID"),
-    /** "demo", "manual", "cupom" ou o nome do gateway ("mercadopago"). */
+    /** "cakto", "hotmart", "manual", "cupom" ou "demo". */
     provider: text("provider").notNull(),
-    /** ID do pagamento no gateway (preenchido quando o gateway avisa). */
+    /** ID da venda na plataforma (na Cakto, o id do pedido; na Hotmart, o código da transação). */
     providerRef: text("provider_ref"),
-    /** ID da cobrança criada no gateway (no Mercado Pago, a "preferência"). */
+    /** ID da cobrança criada no gateway, quando o gateway usa uma (Cakto e Hotmart não usam). */
     providerCheckoutId: text("provider_checkout_id"),
     /** Link para o aluno continuar um pagamento que ficou pendente. */
     checkoutUrl: text("checkout_url"),

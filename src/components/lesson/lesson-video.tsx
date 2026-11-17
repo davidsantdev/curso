@@ -1,5 +1,6 @@
-import { BookOpen } from "lucide-react";
+import { BookOpen, Clapperboard } from "lucide-react";
 import { VideoPlayer } from "@/components/lesson/video-player";
+import { site } from "@/config/site";
 import { deepGradient, getTheme } from "@/lib/theme";
 import { toVideoEmbed } from "@/lib/video";
 import { localVideoAssets } from "@/lib/video-assets";
@@ -20,8 +21,9 @@ export function LessonVideo({
   const embed = toVideoEmbed(url);
 
   if (!embed) {
-    // Sem vídeo: um banner decorativo (o título já aparece logo abaixo).
+    // Sem vídeo: um banner decorativo (o título já aparece logo abaixo). Na pré-estreia, avisa que o vídeo vem aí.
     const theme = getTheme(color);
+    const Icon = site.prelaunch ? Clapperboard : BookOpen;
     return (
       <div
         className="relative flex min-h-48 items-end overflow-hidden rounded-3xl p-7 text-white sm:min-h-56 sm:p-9"
@@ -31,11 +33,17 @@ export function LessonVideo({
         <div className="absolute right-40 -bottom-16 size-36 rounded-full bg-white/10" aria-hidden="true" />
         <div className="relative">
           <span className="badge bg-white/90" style={{ color: theme.ink }}>
-            <BookOpen className="size-3.5" aria-hidden="true" />
-            Aula em texto · {moduleLabel}
+            <Icon className="size-3.5" aria-hidden="true" />
+            {site.prelaunch ? "Vídeo em gravação" : "Aula em texto"} · {moduleLabel}
           </span>
           {summary ? (
             <p className="mt-4 max-w-xl text-xl leading-snug font-semibold text-white sm:text-2xl">{summary}</p>
+          ) : null}
+          {site.prelaunch ? (
+            <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-white/85">
+              O vídeo desta aula está sendo gravado e aparece aqui assim que ficar pronto. O conteúdo completo já está
+              logo abaixo, em texto.
+            </p>
           ) : null}
         </div>
       </div>

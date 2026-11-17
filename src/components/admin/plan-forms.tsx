@@ -23,7 +23,7 @@ type PlanValues = {
   price: string;
   interval: string;
   features: string;
-  externalPriceId: string;
+  paymentLink: string;
   highlighted?: boolean;
   active?: boolean;
 };
@@ -76,11 +76,15 @@ function PlanFields({ values, state, idPrefix }: { values: PlanValues; state: Fo
         hint="Um por linha. Aparecem no cartão do plano."
       />
       <Field
-        id={`${idPrefix}-external`}
-        label="ID no gateway de pagamento (opcional)"
-        name="externalPriceId"
-        defaultValue={v.externalPriceId}
-        hint="Ex.: o ID do preço no Stripe ou do produto no Mercado Pago, quando conectar."
+        id={`${idPrefix}-link`}
+        label="Link de pagamento (Cakto)"
+        name="paymentLink"
+        type="url"
+        inputMode="url"
+        placeholder="https://pay.cakto.com.br/abc123"
+        defaultValue={v.paymentLink}
+        error={state.errors?.paymentLink}
+        hint="Na Cakto: no seu produto, copie o link da oferta deste plano. O preço cobrado é o da oferta na Cakto, então deixe os dois iguais. (Também aceita o link de uma oferta da Hotmart.)"
       />
     </>
   );
@@ -124,7 +128,7 @@ export function CreatePlanForm() {
     <form action={action} className="space-y-5">
       <FormMessage state={state} />
       <PlanFields
-        values={{ name: "", description: "", price: "", interval: "MONTH", features: "", externalPriceId: "" }}
+        values={{ name: "", description: "", price: "", interval: "MONTH", features: "", paymentLink: "" }}
         state={state.ok ? EMPTY_FORM_STATE : state}
         idPrefix="new-plan"
       />

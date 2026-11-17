@@ -3,20 +3,22 @@
 import { eq, not } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
-import { coupons, payments } from "@/db/schema";
+import { coupons } from "@/db/schema";
 import { requireAdmin } from "@/lib/auth/dal";
-import { normalizeCouponCode, reconcilePayment } from "@/lib/checkout";
+import { normalizeCouponCode } from "@/lib/checkout";
 import { field, type FormState } from "@/lib/forms";
-import { mercadoPagoEnabled } from "@/lib/payments/mercadopago";
 
 /* -------------------------------- Cupons ------------------------------- */
 
+/**
+ * Cupons de cortesia: liberam o plano sem pagar (parcerias, criadores de conteúdo, presentes).
+ * Descontos parciais são criados na Cakto, que é onde o pagamento acontece.
+ */
 export async function createCouponAction(_previous: FormState, formData: FormData): Promise<FormState> {
   await requireAdmin();
 
   const values = {
     code: field(formData, "code"),
-    percentOff: field(formData, "percentOff"),
     maxRedemptions: field(formData, "maxRedemptions"),
     expiresAt: field(formData, "expiresAt"),
   };
@@ -24,11 +26,7 @@ export async function createCouponAction(_previous: FormState, formData: FormDat
 
   const code = normalizeCouponCode(values.code);
   if (code.length < 3) errors.code = "Use pelo menos 3 letras ou números, sem espaços.";
-
-  const percentOff = Number(values.percentOff);
-  if (!Number.isInteger(percentOff) || percentOff < 1 || percentOff > 100) {
-    errors.percentOff = "Informe um número inteiro de 1 a 100.";
-  }
+  const percentOff = 100;
 
   let maxRedemptions: number | null = null;
   if (values.maxRedemptions) {
@@ -70,27 +68,4 @@ export async function deleteCouponAction(formData: FormData): Promise<void> {
   // Os pagamentos que usaram o cupom continuam no histórico (o vínculo fica vazio).
   await db.delete(coupons).where(eq(coupons.id, field(formData, "couponId")));
   revalidatePath("/admin/cupons");
-}
-
-/* ------------------------------ Pagamentos ----------------------------- */
-
-/** Consulta o Mercado Pago na hora para um pagamento que ainda não foi confirmado. */
-export async function adminVerifyPaymentAction(formData: FormData): Promise<void> {
-  await requireAdmin();
-  if (!mercadoPagoEnabled()) return;
-
-  const [payment] = await db
-    .select({ id: payments.id, provider: payments.provider })
-    .from(payments)
-    .where(eq(payments.id, field(formData, "paymentId")))
-    .limit(1);
-  if (!payment || payment.provider !== "mercadopago") return;
-
-  try {
-    await reconcilePayment(payment.id);
-  } catch (error) {
-    console.error("[admin] Falha ao consultar o pagamento no Mercado Pago:", error);
-  }
-
-  revalidatePath("/", "layout");
 }

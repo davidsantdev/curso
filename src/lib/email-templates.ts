@@ -2,6 +2,7 @@ import "server-only";
 import { site } from "@/config/site";
 import { formatDateLong, formatMoney } from "@/lib/format";
 import type { Email } from "@/lib/email";
+import { PROVIDER_NAME, type SaleEvent } from "@/lib/payments/types";
 
 /**
  * Modelos dos e-mails enviados pela plataforma.
@@ -140,6 +141,47 @@ export function paymentApprovedEmail(
     ],
     button: { label: "Ver todas as trilhas", url: `${site.url}/trilhas` },
     footnote: `Guarde este e-mail como comprovante. Se precisar de ajuda com a compra, escreva para ${site.supportEmail}.`,
+  });
+}
+
+/** Comprou na plataforma de pagamento sem ter conta: a conta foi criada e a pessoa cria a senha pelo link. */
+export function purchaseAccessEmail(
+  user: { name: string; email: string },
+  purchase: { planName: string; accessUntil: Date | null; providerName: string },
+  passwordUrl: string,
+): Email {
+  const access = purchase.accessUntil
+    ? `O seu acesso vale até ${formatDateLong(purchase.accessUntil)}.`
+    : "O seu acesso é vitalício.";
+
+  return render(user.email, {
+    subject: `Seu acesso ao ${purchase.planName} está liberado — crie sua senha`,
+    preview: "Falta só um passo: criar a senha para entrar na plataforma.",
+    heading: `Bem-vindo, ${firstName(user.name)}! A sua compra foi confirmada.`,
+    paragraphs: [
+      `Recebemos a confirmação da sua compra do ${purchase.planName} pela ${purchase.providerName}. Criamos a sua conta na plataforma com este e-mail (${user.email}), e todas as trilhas já estão liberadas.`,
+      access,
+      "Para entrar, crie a sua senha no botão abaixo.",
+    ],
+    button: { label: "Criar minha senha", url: passwordUrl },
+    footnote:
+      "O link vale por 7 dias e só pode ser usado uma vez. Depois disso, use “Esqueci minha senha” na tela de entrada.",
+  });
+}
+
+/** Para a equipe: chegou uma venda que a plataforma não conseguiu liberar sozinha. */
+export function saleAlertEmail(event: SaleEvent, orderId: string): Email {
+  const provider = PROVIDER_NAME[event.provider];
+  return render(site.supportEmail, {
+    subject: `[Atenção] Venda na ${provider} sem acesso liberado (${orderId})`,
+    preview: "Libere o acesso pelo admin e confira o link de cada plano.",
+    heading: "Uma venda precisa de você",
+    paragraphs: [
+      `A ${provider} avisou a venda ${orderId}, mas a plataforma não conseguiu liberar o acesso sozinha.`,
+      `Comprador: ${event.name ?? "—"} (${event.email ?? "sem e-mail"}) · Oferta: ${event.offerCode ?? "—"} · Valor: ${formatMoney(event.amountCents)} ${event.currency}.`,
+      "Libere o plano pelo admin: Usuários → a conta da pessoa → “Liberar ou renovar acesso manualmente”. Se a conta foi criada agora, avise a pessoa para entrar por “Esqueci minha senha”. Para não acontecer de novo, confira em Admin → Planos se cada plano à venda tem o link de pagamento da oferta certa.",
+    ],
+    button: { label: "Abrir o admin", url: `${site.url}/admin/usuarios` },
   });
 }
 

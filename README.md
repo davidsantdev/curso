@@ -89,10 +89,9 @@ e-mails aparecem no terminal. Para cobrar e enviar e-mails de verdade, veja as s
 - **Alunos**: busca, filtros, progresso, liberar acesso manualmente (vendas por fora), cortar acesso,
   tornar administrador, redefinir senha
 - **Comentários**: tudo o que os alunos escreveram nas aulas, com link para responder e botão de apagar
-- **Pagamentos**: todos os pagamentos com filtro por situação, totais e o botão "Conferir" (consulta o
-  Mercado Pago na hora)
-- **Planos**: preço, período, benefícios, destaque e "à venda"
-- **Cupons**: desconto em porcentagem, limite de usos e validade; cupom de 100% vira cortesia
+- **Pagamentos**: todas as vendas da Cakto (e cortesias), com filtro por situação e totais
+- **Planos**: preço, período, benefícios, destaque, "à venda" e o link de pagamento da Cakto
+- **Cupons de cortesia**: códigos que liberam o plano sem pagar, com limite de usos e validade
 
 ---
 
@@ -141,6 +140,51 @@ A aula 1 foi escrita como um vídeo de YouTube falado de frente pra câmera, seg
 didático; o mesmo guia serve para reescrever qualquer uma delas. Divida o texto em capítulos com `## Título`: eles
 organizam a leitura e viram os capítulos do vídeo.
 
+### PDFs das videoaulas
+
+Cada aula tem um PDF em slides (16:9) para gravar a videoaula explicando na tela, com microfone e tablet. São 77
+PDFs em [`materiais/pdf/`](materiais/pdf), um por aula, com capa ilustrada nas cores da trilha, o roteiro da aula, um
+slide por tópico e a página "Pratique". A [lista de gravação](materiais/lista-de-gravacao.md) mostra todas as aulas
+na ordem, com a duração e o PDF de cada uma.
+
+```bash
+npm run materiais:pdf             # refaz todos os PDFs (precisa do Google Chrome instalado)
+npm run materiais:pdf -- 12 13    # refaz só as aulas 12 e 13
+```
+
+- O texto vem de [`scripts/content`](scripts/content). Para o PDF de uma aula mostrar outro texto, crie
+  `materiais/resumos/aula-NN.md` (a aula 1 usa um resumo, porque o texto dela é o roteiro falado).
+- Cada `## Título` vira um tópico. O ícone é escolhido pelo assunto; para escolher à mão, use
+  `## Título {icone: Truck}` com um nome do [lucide](https://lucide.dev/icons).
+- As ilustrações ficam em [`materiais/arte.mts`](materiais/arte.mts) e a montagem dos slides em
+  [`materiais/gerar-pdfs.mts`](materiais/gerar-pdfs.mts).
+- Os PDFs vão para o repositório pelo Git LFS, como os vídeos.
+- **No site:** cada aula mostra o botão **"Baixar o PDF"**. O arquivo sai de `/aula/<id>/pdf`, que só entrega para
+  quem pode abrir a aula (o PDF de uma aula Pro nunca fica em uma pasta pública). Nas aulas **com vídeo**, o texto
+  da aula não aparece: o aluno assiste e baixa os slides. Nas aulas ainda sem vídeo, o texto continua.
+- **Na Vercel:** ligue o Git LFS em *Settings → Git* do projeto. Sem isso, o servidor recebe só o "ponteiro" do LFS
+  no lugar de cada PDF, e o botão some (a plataforma percebe e esconde o botão em vez de entregar um arquivo quebrado).
+
+### Pré-estreia (vídeos em gravação)
+
+Enquanto os vídeos são gravados, o site fica em **pré-estreia** (`prelaunch: true` em
+[`src/config/site.ts`](src/config/site.ts)):
+
+- uma faixa no topo das páginas públicas avisa que os vídeos estão sendo gravados, com a contagem real
+  ("1 de 77 aulas já com vídeo"), e explica que por isso o preço é de estreia;
+- os planos mostram "Preço de estreia", e a página inicial e a de planos têm o quadro "Por que o preço está tão
+  baixo?" (também no FAQ, no checkout e nos Termos de uso);
+- as aulas sem vídeo aparecem com "Vídeo em breve" na grade e na trilha, e a página da aula avisa que o vídeo está
+  sendo gravado e que o texto completo já está ali.
+
+Para pôr o vídeo de uma aula, cole o link em **Administração → Conteúdo → (aula) → Vídeo**: o aviso daquela aula
+some sozinho e a contagem sobe. Quando todas tiverem vídeo, o painel do admin avisa; aí troque para
+`prelaunch: false` e reveja os preços.
+
+> **Cuidado com o anúncio:** "preço de estreia" quer dizer que este é o primeiro preço. Um anúncio dizendo que o
+> curso já custou mais caro contradiz isso, e um preço "de" que nunca foi cobrado é propaganda enganosa (Código de
+> Defesa do Consumidor, art. 37).
+
 ### Passo a passo no admin
 
 1. **Trilha**: crie e preencha título, descrição, nível, ícone e cor.
@@ -158,72 +202,98 @@ organizam a leitura e viram os capítulos do vídeo.
 
 ### Como funciona
 
-O modelo é de **períodos de acesso, sem cobrança automática**: o aluno paga uma vez — por **Pix, cartão (em até
-12x) ou boleto** — e libera 1 mês ou 1 ano. Quando o período está acabando, ele recebe um e-mail e decide se
-renova. Ao renovar, o novo período é somado ao que ainda resta.
+A venda acontece na **Cakto**: ela cobra (Pix, cartão parcelado e boleto), cuida de afiliados e reembolsos e
+repassa o dinheiro para você. O aluno estuda **aqui**, na plataforma. Quando a Cakto aprova uma venda, ela avisa a
+plataforma (webhook) e o plano é liberado sozinho.
+
+O modelo é de **períodos de acesso, sem cobrança automática**: o aluno paga uma vez e libera o período do plano
+(1 mês, 1 ano ou vitalício). Quando o período está acabando, ele recebe um e-mail e decide se renova. Ao renovar, o
+novo período é somado ao que ainda resta.
 
 O acesso pago é decidido em um único lugar: a tabela `subscriptions`, controlada por
 [`src/lib/billing.ts`](src/lib/billing.ts). Um plano pode ser liberado de quatro formas:
 
 | Forma | Quando acontece |
 | --- | --- |
-| **Mercado Pago** | Pagamento real aprovado |
-| **Cupom de 100%** | Cortesia: o aluno "compra" sem pagar |
-| **Liberação manual** | Administração → Alunos → (aluno) → "Liberar acesso". Para vendas por fora |
-| **Demonstração** | Sem Mercado Pago configurado: ativa na hora, sem cobrar. Só para testar |
+| **Cakto** | Venda aprovada (aviso da Cakto) |
+| **Cupom de cortesia** | O aluno digita o código no checkout da plataforma e libera sem pagar |
+| **Liberação manual** | Administração → Alunos → (aluno) → "Liberar ou renovar acesso manualmente". Para vendas por fora |
+| **Demonstração** | Sem plataforma de pagamento configurada: ativa na hora, sem cobrar. Só para testar |
 
-### Ligando o Mercado Pago
+### Ligando a Cakto
 
-1. Crie a sua conta no [Mercado Pago](https://www.mercadopago.com.br) e, no painel de desenvolvedores
-   (**Suas integrações**), crie uma aplicação do tipo **Checkout Pro**.
-2. Copie o **Access Token** e coloque no arquivo `.env`:
-
-   ```bash
-   MERCADOPAGO_ACCESS_TOKEN=APP_USR-...
-   NEXT_PUBLIC_SITE_URL=https://seudominio.com.br
-   ```
-
-   Com o token preenchido, o botão do checkout passa a ser "Pagar com Pix, cartão ou boleto".
-   O `NEXT_PUBLIC_SITE_URL` precisa ser o endereço público de verdade: é para ele que o Mercado Pago devolve o
-   aluno e envia os avisos de pagamento.
-3. Em **Suas integrações → Webhooks**, cadastre a URL
-   `https://seudominio.com.br/api/webhooks/mercadopago`, marque o evento **Pagamentos** e copie a
-   **assinatura secreta** para o `.env`:
+1. **Produto.** Na Cakto, crie o produto como **pagamento único**. O aluno estuda aqui, então a área de membros
+   da Cakto não é necessária. Na garantia, escolha **7 dias**, que é o que o site promete.
+2. **Ofertas.** Crie uma oferta para cada plano (ex.: mensal e anual), com o mesmo preço do plano aqui. Copie o
+   link de cada oferta (`https://pay.cakto.com.br/abc123`) e cole em **Administração → Planos → Link de pagamento**.
+   O código no fim do link é o que diz qual plano liberar.
+3. **Página de obrigado.** Em cada oferta, use `https://seudominio.com.br/assinatura?aviso=compra` como página de
+   obrigado (pós-compra).
+4. **Webhook.** Cadastre um webhook (no painel da Cakto ou pela API pública) com a URL
+   `https://seudominio.com.br/api/webhooks/cakto`, o produto do curso e os eventos **purchase_approved, refund,
+   chargeback e subscription_canceled**. Copie a **chave secreta** do webhook para o `.env`:
 
    ```bash
-   MERCADOPAGO_WEBHOOK_SECRET=...
+   CAKTO_WEBHOOK_SECRET=...
    ```
 
-4. **Teste antes de vender.** Use as credenciais de teste do Mercado Pago e uma compra de valor baixo. Confira:
-   o plano é liberado sozinho, o e-mail de confirmação chega e o pagamento aparece em Administração → Pagamentos.
+   Com a chave preenchida, o botão do checkout passa a ser "Pagar com Pix, cartão ou boleto" e leva para a Cakto.
+5. **Teste antes de vender.** Use o envio de teste do webhook na Cakto (deve aparecer como entregue) e faça uma
+   compra real de valor baixo com o seu e-mail. Confira: o plano é liberado, o e-mail chega e a venda aparece em
+   Administração → Pagamentos. Confira também o prazo de saque e se a Cakto segura parte do valor. Depois peça o
+   reembolso e confira que o período sai.
 
-> **O que foi testado e o que não foi.** O fluxo inteiro — criar a cobrança, aviso assinado, valor adulterado,
-> aprovação, avisos repetidos, reembolso, "Já paguei" e rotina diária — foi testado contra um **simulador** que
-> imita a API do Mercado Pago. Ele ainda **não** foi testado com uma conta real, porque isso depende das suas
-> credenciais. Faça o passo 4 antes de divulgar o site.
+> **O que foi testado e o que não foi.** O fluxo completo foi testado com avisos simulados no formato da Cakto:
+> assinatura certa e errada, aviso velho, venda aprovada, aviso repetido e simultâneo, comprador sem conta,
+> reembolso, chargeback e link de pagamento com os dados do aluno. Ainda **não** foi testado com uma venda real,
+> porque isso depende da sua conta. Faça o passo 5 antes de divulgar o site.
+
+> **Se a Cakto responder com erro:** ela não reenvia sozinha um aviso que recebeu erro (só reenvia quando a rede
+> falha). Se um aviso aparecer como falha no histórico da Cakto, use "Reenviar evento": reenviar é seguro, nenhuma
+> venda é liberada duas vezes.
 
 ### O que a plataforma faz sozinha
 
-- **Libera o plano** quando o Mercado Pago avisa que o pagamento foi aprovado e envia o e-mail de confirmação.
-- **Nunca confia no navegador:** o plano só é liberado depois de consultar o pagamento direto na API do Mercado
-  Pago, conferindo valor e moeda. Avisos repetidos não liberam duas vezes.
-- **Reembolso:** você devolve o dinheiro no painel do Mercado Pago; a plataforma recebe o aviso, marca o
-  pagamento como reembolsado e encerra aquele período. Lembre que o cliente tem **7 dias** para desistir da
-  compra (Código de Defesa do Consumidor) — isso está prometido no checkout e nos termos.
-- **Pagamentos pendentes** (boleto, Pix não pago): aparecem para o aluno com "Continuar pagamento" e "Já paguei".
-  Cobranças abandonadas há mais de 10 dias são encerradas pela [rotina diária](#rotina-diária).
+- **Link de pagamento personalizado:** o botão "Pagar" abre a Cakto com o nome e o e-mail do aluno já preenchidos
+  e o id da conta dele (`sck`). Assim a compra cai na conta certa.
+- **Libera o plano** quando a Cakto aprova a venda e manda o e-mail de confirmação.
+- **Quem compra sem ter conta** (pelo link de um afiliado, por exemplo) ganha uma conta com o e-mail da compra e
+  recebe um e-mail para criar a senha.
+- **Segurança:** cada aviso vem assinado pela Cakto (HMAC-SHA256 com a chave secreta); aviso com assinatura errada
+  ou com mais de 5 minutos é recusado. Avisos repetidos ou simultâneos liberam uma vez só.
+- **Reembolso e chargeback:** o aluno pede pela Cakto (ou você devolve por lá); a plataforma recebe o aviso, marca
+  o pagamento como reembolsado e tira aquele período. O cliente tem **7 dias** para desistir da compra (Código de
+  Defesa do Consumidor, art. 49).
+- **Venda que não bate com nenhum plano** (oferta sem link cadastrado aqui): a plataforma cria ou encontra a conta
+  e manda um alerta para o e-mail de suporte, para você liberar o acesso à mão. A página inicial do admin também
+  avisa quando um plano está à venda sem o link.
+
+### Afiliados
+
+O programa de afiliados é da Cakto: você liga no produto, escolhe a comissão e a Cakto divide o valor sozinha. A
+venda de afiliado chega pelo mesmo aviso de venda, então nada muda aqui. Para criadores de conteúdo conhecerem o
+curso antes de divulgar, use um cupom de cortesia.
 
 ### Cupons
 
-Em **Administração → Cupons**: código, desconto em %, limite de usos e validade. O aluno digita no checkout, ou
-você divulga um link que já abre com o desconto: `https://seudominio.com.br/checkout/pro-anual?cupom=CODIGO`.
+- **Desconto parcial** (ex.: 20%): crie na Cakto, no seu produto. O aluno digita na página de pagamento.
+- **Cortesia** (acesso sem pagar, para parceiros e criadores de conteúdo): crie em **Administração → Cupons**. O
+  aluno digita no checkout da plataforma, ou você manda um link que já abre com a cortesia:
+  `https://seudominio.com.br/checkout/pro-anual?cupom=CODIGO`.
 
-### Usando outro meio de pagamento
+### Hotmart (opcional, desligada)
 
-A integração está isolada em dois arquivos: [`src/lib/payments/mercadopago.ts`](src/lib/payments/mercadopago.ts)
-(conversa com a API) e [`src/lib/checkout.ts`](src/lib/checkout.ts) (cria a cobrança e confirma o pagamento).
-Para trocar de gateway, escreva o equivalente desses dois e uma rota em `src/app/api/webhooks/<gateway>/route.ts`
-que termine chamando `activateSubscription(...)`. O restante do app não muda.
+A integração com a Hotmart continua pronta, para o caso de querer usar a rede de afiliados dela. Para religar:
+cadastre o webhook da Hotmart (versão 2.0.0) em `https://seudominio.com.br/api/webhooks/hotmart`, preencha
+`HOTMART_HOTTOK` e use o link da oferta da Hotmart (`https://pay.hotmart.com/A12345678B?off=abc123`) nos planos que
+devem ser vendidos por ela. É o link de cada plano que diz por qual plataforma ele é vendido.
+
+### Onde fica o código
+
+[`src/lib/payments/cakto.ts`](src/lib/payments/cakto.ts) e [`hotmart.ts`](src/lib/payments/hotmart.ts) leem os
+avisos e montam os links; [`links.ts`](src/lib/payments/links.ts) decide a plataforma pelo link do plano;
+[`src/lib/checkout.ts`](src/lib/checkout.ts) libera e retira o plano (`settleSaleEvent`); as rotas ficam em
+`src/app/api/webhooks/<plataforma>/route.ts`. Para outra plataforma, escreva o equivalente de `cakto.ts` e uma rota.
 
 ---
 
@@ -248,7 +318,9 @@ E-mails que a plataforma envia:
 | --- | --- |
 | Boas-vindas | No cadastro |
 | Redefinir a senha | Em "esqueci minha senha" (link válido por 1 hora) |
-| Pagamento confirmado | Quando o Mercado Pago aprova o pagamento |
+| Pagamento confirmado | Quando a Cakto aprova a venda (para quem já tem conta) |
+| Acesso liberado — crie sua senha | Quando alguém compra na Cakto sem ter conta (o link vale 7 dias) |
+| Alerta de venda | Para o e-mail de suporte, quando uma venda não pôde ser liberada sozinha |
 | O seu acesso termina em breve | 3 dias antes do fim do período, pela rotina diária |
 
 Os textos ficam em [`src/lib/email-templates.ts`](src/lib/email-templates.ts).
@@ -260,9 +332,8 @@ Os textos ficam em [`src/lib/email-templates.ts`](src/lib/email-templates.ts).
 A rota `/api/cron/diario` deve ser chamada **uma vez por dia**. Ela:
 
 1. avisa por e-mail quem tem o acesso terminando nos próximos 3 dias;
-2. confere no Mercado Pago os pagamentos que ainda estão aguardando (rede de segurança caso um aviso se perca);
-3. encerra cobranças abandonadas há mais de 10 dias;
-4. apaga sessões e links de senha vencidos.
+2. encerra cobranças que ficaram pendentes há mais de 10 dias;
+3. apaga sessões e links de senha vencidos.
 
 Defina uma senha longa em `CRON_SECRET`. Na **Vercel**, só isso basta: o arquivo [`vercel.json`](vercel.json) já
 agenda a rotina para todo dia às 9h (horário de Brasília). Em outro servidor, agende esta chamada:
@@ -302,7 +373,8 @@ Sugestão simples: **Vercel** (site) + **Turso** (banco, compatível com o SQLit
    | `DATABASE_URL`, `DATABASE_AUTH_TOKEN` | Banco de dados |
    | `NEXT_PUBLIC_SITE_URL` | Endereço público (ex.: `https://seudominio.com.br`) |
    | `NEXT_PUBLIC_SUPPORT_EMAIL` | E-mail de atendimento mostrado no site |
-   | `MERCADOPAGO_ACCESS_TOKEN`, `MERCADOPAGO_WEBHOOK_SECRET` | Pagamentos |
+   | `CAKTO_WEBHOOK_SECRET` | Pagamentos (Cakto) |
+   | `HOTMART_HOTTOK`, `HOTMART_PRODUCT_ID` | Só se religar a Hotmart |
    | `RESEND_API_KEY`, `EMAIL_FROM` | E-mails |
    | `CRON_SECRET` | Rotina diária |
 
@@ -322,7 +394,7 @@ src/
     (auth)/           entrar, cadastro, recuperar senha
     (app)/            área do aluno (painel, trilhas, aula, checkout, assinatura, conta…)
     admin/            administração
-    api/              webhook do Mercado Pago e rotina diária
+    api/              webhooks de venda (Cakto e Hotmart) e rotina diária
     certificado/[id]  página pública do certificado
   actions/            Server Actions (tudo que grava no banco)
   components/         componentes de interface
@@ -354,9 +426,8 @@ o ícone do app e a imagem de compartilhamento, em [`src/lib/brand-image.tsx`](s
 - Limite de tentativas em login, cadastro, recuperação de senha, quiz, comentários, checkout e webhook
 - Links de recuperação de senha expiram em 1 hora, valem uma vez só e desconectam os outros aparelhos
 - Proteção contra redirecionamento para outros sites após o login
-- **Pagamentos**: assinatura do webhook conferida; o plano só é liberado depois de consultar o pagamento na API
-  do Mercado Pago (valor e moeda conferidos); avisos repetidos ou simultâneos liberam uma vez só; a volta do
-  checkout não aceita pagamento de outra conta
+- **Pagamentos**: só vale aviso da Cakto com assinatura válida (HMAC-SHA256, até 5 minutos de idade); avisos
+  repetidos ou simultâneos liberam uma vez só; reembolso e chargeback retiram só o período daquela venda
 - **LGPD**: o aluno baixa os próprios dados e exclui a conta sem depender de ninguém
 
 **Antes de crescer**: o limite de tentativas fica na memória do servidor. Se rodar em várias instâncias

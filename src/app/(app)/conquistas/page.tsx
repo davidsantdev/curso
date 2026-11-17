@@ -31,24 +31,25 @@ export default async function AchievementsPage() {
       <PageHeader title="Conquistas" description="Seu nível, seu XP e as conquistas que você já desbloqueou." />
 
       <div className="grid gap-6 lg:grid-cols-3">
-        <section className="bg-hero relative overflow-hidden rounded-3xl p-7 text-white sm:p-8 lg:col-span-2">
-          <div className="absolute -top-20 -right-14 size-64 rounded-full bg-white/10" aria-hidden="true" />
+        <section className="bg-night relative overflow-hidden rounded-3xl p-7 text-white sm:p-8 lg:col-span-2">
+          <div className="night-glow" aria-hidden="true" />
+          <div className="night-grid" aria-hidden="true" />
           <div className="relative">
-            <p className="text-sm font-semibold tracking-wider text-white/80 uppercase">Nível {level.number}</p>
-            <h2 className="mt-2 text-[34px] leading-tight font-bold text-white">{level.name}</h2>
-            <p className="mt-4 text-[48px] leading-none font-semibold">
+            <p className="font-mono text-[12px] font-medium tracking-[0.16em] text-[#c9c3ff] uppercase">Nível {level.number}</p>
+            <h2 className="mt-3 text-[36px] leading-tight font-semibold">{level.name}</h2>
+            <p className="mt-4 text-[52px] leading-none font-semibold tracking-[-0.04em] text-white">
               {user.xp}
-              <span className="ml-2 text-lg font-medium text-white/85">XP</span>
+              <span className="ml-2 text-lg font-medium tracking-normal text-white/60">XP</span>
             </p>
             <div className="mt-7 max-w-lg">
               <ProgressBar
                 value={level.progress}
                 label="Progresso para o próximo nível"
-                from="#ffffff"
-                to="#ffffff"
-                track="rgb(255 255 255 / 0.25)"
+                from="#8c9bff"
+                to="#b49cfb"
+                track="rgb(140 155 255 / 0.18)"
               />
-              <p className="mt-3 text-[15px] text-white/90">
+              <p className="mt-3 text-[15px] text-white/65">
                 {level.nextName
                   ? `Faltam ${level.remaining} XP para chegar ao nível ${level.nextName}.`
                   : "Você chegou ao nível máximo."}

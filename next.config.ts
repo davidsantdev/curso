@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   // Esconde o botão flutuante do Next em desenvolvimento (erros continuam aparecendo).
   devIndicators: false,
+  // O download do PDF da aula lê os arquivos de materiais/pdf: eles precisam ir junto para o servidor.
+  outputFileTracingIncludes: {
+    "/aula/\\[id\\]/pdf": ["./materiais/pdf/**/*.pdf"],
+  },
   turbopack: {
     rules: {
       "*.css": {

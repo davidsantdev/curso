@@ -102,14 +102,16 @@ export function AppSidebar({ user }: { user: NavUser }) {
         ) : null}
 
         {!user.isPremium ? (
-          <div className="bg-hero relative mt-6 overflow-hidden rounded-2xl p-5 text-white">
-            <div className="absolute -top-8 -right-8 size-24 rounded-full bg-white/15" aria-hidden="true" />
-            <Crown className="size-6" aria-hidden="true" />
-            <p className="mt-3 text-[15px] leading-snug font-semibold">Libere todos os métodos</p>
-            <p className="mt-1 text-sm leading-snug text-white/85">
+          <div className="bg-night relative mt-6 overflow-hidden rounded-2xl p-5 text-white">
+            <div className="night-glow" aria-hidden="true" />
+            <span className="grid size-10 place-items-center rounded-xl bg-[linear-gradient(135deg,#6c5cff,#f25fdc)] shadow-[0_10px_24px_-10px_rgb(214_84_230/0.7)]">
+              <Crown className="size-5" aria-hidden="true" />
+            </span>
+            <p className="mt-3.5 text-[15px] leading-snug font-semibold text-white">Libere todos os métodos</p>
+            <p className="mt-1 text-sm leading-snug text-white/60">
               Loja, site, pagamentos, robôs e anúncios no Facebook, Instagram, TikTok e Google.
             </p>
-            <Link href="/assinatura" className="btn btn-white btn-sm mt-4 w-full">
+            <Link href="/assinatura" className="btn btn-pink btn-sm mt-4 w-full">
               Conhecer o Pro
             </Link>
           </div>

@@ -1,0 +1,22 @@
+[
+ {
+  "original": 0.0,
+  "cortado": 0.0,
+  "ate": 71.735
+ },
+ {
+  "original": 73.215,
+  "cortado": 71.735,
+  "ate": 274.195
+ },
+ {
+  "original": 301.235,
+  "cortado": 273.335,
+  "ate": 466.355
+ },
+ {
+  "original": 478.525,
+  "cortado": 438.765,
+  "ate": 505.731
+ }
+]

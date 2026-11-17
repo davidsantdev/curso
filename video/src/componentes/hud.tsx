@@ -1,12 +1,10 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
-import volume from "../data/volume.json";
 import { prog } from "../lib/anim";
-import { DURACAO, FPS, PALAVRAS, type Palavra } from "../lib/tempo";
+import { useTempo } from "../lib/contexto";
+import { FPS, type Palavra } from "../lib/tempo";
 import { COR, DEGRADE_FORTE, FONTE } from "../tema";
 import { Etiqueta } from "./base";
-
-const VOLUME: number[] = volume.values;
 
 /** Barrinhas que reagem à voz do professor (volume calculado da gravação, quadro a quadro). */
 export const Barras: React.FC<{ quantidade?: number; altura?: number; largura?: number; cor?: string }> = ({
@@ -16,6 +14,7 @@ export const Barras: React.FC<{ quantidade?: number; altura?: number; largura?: 
   cor = COR.texto,
 }) => {
   const frame = useCurrentFrame();
+  const VOLUME = useTempo().volume;
   const FORMA = [0.55, 0.8, 1, 0.75, 0.95, 0.6, 0.85, 0.7, 0.5];
   return (
     <div style={{ display: "flex", alignItems: "center", gap: largura * 0.9, height: altura }}>
@@ -39,6 +38,7 @@ export type CapituloHud = { n: string; titulo: string; de: number; ate: number }
 /** Indicador discreto no canto: aula, capítulo atual e a barra de progresso do vídeo. */
 export const Hud: React.FC<{ trechos: CapituloHud[] }> = ({ trechos }) => {
   const frame = useCurrentFrame();
+  const { duracao: DURACAO, aula } = useTempo();
   const t = frame / FPS;
   const atual = trechos.find((c) => t >= c.de && t < c.ate);
   if (!atual) return null;
@@ -71,7 +71,7 @@ export const Hud: React.FC<{ trechos: CapituloHud[] }> = ({ trechos }) => {
           color: COR.apagado,
         }}
       >
-        <span>Aula 01</span>
+        <span>{aula}</span>
         <span style={{ width: 22, height: 1, background: COR.fraco }} />
         <span style={{ color: COR.suave }}>{atual.n}</span>
         <span
@@ -130,11 +130,11 @@ function montarBlocos(palavras: Palavra[]): Bloco[] {
   return blocos;
 }
 
-const BLOCOS = montarBlocos(PALAVRAS);
-
-/** Legenda na imagem (versão Aula1Legendada): a palavra falada acende. */
+/** Legenda na imagem (versões legendadas): a palavra falada acende. */
 export const Legenda: React.FC = () => {
   const frame = useCurrentFrame();
+  const { palavras } = useTempo();
+  const BLOCOS = useMemo(() => montarBlocos(palavras), [palavras]);
   const t = frame / FPS;
   const bloco = BLOCOS.find((b) => t >= b.de - 0.05 && t < b.ate);
   if (!bloco) return null;

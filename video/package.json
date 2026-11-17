@@ -10,7 +10,12 @@
     "render:rascunho": "remotion render Aula1 out/aula-01-rascunho.mp4 --scale=0.5",
     "quadros": "node scripts/quadros.mjs",
     "efeitos": "python scripts/sfx.py public && python scripts/grain.py public/grain",
-    "sincronizar": "python scripts/transcribe.py public/voz.mp3 out/transcricao.json small src/data/volume.json && python scripts/align.py out/transcricao.json ../roteiros/aula-01-vender-sem-estoque.md src/data/palavras.json && python scripts/legendas.py src/data/palavras.json out/aula-01.srt"
+    "sincronizar": "python scripts/transcribe.py public/voz.mp3 out/transcricao.json small src/data/volume.json && python scripts/align.py out/transcricao.json ../roteiros/aula-01-vender-sem-estoque.md src/data/palavras.json && python scripts/legendas.py src/data/palavras.json out/aula-01.srt",
+    "slides:aula2": "node scripts/slides.mjs .cache-slides/aula-02.html public/aula-02 src/data/aula-02/slides.json \"R$ 120\" \"R$ 6\" \"R$ 55\" \"R$ 30\" \"R$ 29\" \"margem\" \"paga o fornecedor na hora\" \"recebe do meio de pagamento dias depois\" \"Calculadora de margem\"",
+    "audio:aula2": "python scripts/cortar.py audio/aula-02/cortes.json && python scripts/palavras.py audio/aula-02/transcricao-original.json audio/aula-02/voz-mapa.json audio/aula-02/correcoes.json src/data/aula-02/palavras.json && node -e \"require('fs').copyFileSync('audio/aula-02/voz.mp3','public/aula-02/voz.mp3')\"",
+    "render:aula2": "remotion render Aula2 out/aula-02.mp4 && node scripts/masterizar.mjs out/aula-02.mp4",
+    "render:aula3": "remotion render Aula3 out/aula-03.mp4 && node scripts/masterizar.mjs out/aula-03.mp4",
+    "render:aula3:legendado": "remotion render Aula3Legendada out/aula-03-legendada.mp4 && node scripts/masterizar.mjs out/aula-03-legendada.mp4"
   },
   "dependencies": {
     "@remotion/cli": "4.0.543",
@@ -22,6 +27,7 @@
   },
   "devDependencies": {
     "@types/react": "19.3.0",
+    "puppeteer-core": "^24.15.0",
     "typescript": "5.9.3"
   }
 }

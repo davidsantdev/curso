@@ -1,6 +1,6 @@
 # Vídeos das aulas
 
-Vídeo editado da **aula 1 — Vender sem estoque**, feito com [Remotion](https://www.remotion.dev): o vídeo é
+Vídeos editados das aulas (a aula 1 com animações próprias; da aula 2 em diante, sobre os slides do PDF), feitos com [Remotion](https://www.remotion.dev): o vídeo é
 código, e cada animação está presa ao momento exato em que a palavra é falada na gravação (`public/voz.mp3`).
 
 - **Vídeo pronto:** `out/aula-01.mp4` (1920×1080, 30 fps, 7 min 19 s)
@@ -37,6 +37,46 @@ Onde mexer:
 Para regravar a voz: troque `public/voz.mp3` (precisa de Python com `faster-whisper`, `av`, `numpy` e `Pillow`),
 rode `npm run sincronizar` e depois `npm run render`. Se mudar o texto falado, mude também o roteiro: ele é a
 referência do alinhamento.
+
+## Aulas em slides (aula 2 em diante)
+
+A partir da aula 2, o vídeo é o PDF da aula (os slides de `materiais/pdf/`) com a voz e marcações animadas, como se
+alguém escrevesse com caneta na tela: círculos, marca-texto, contas escritas à mão, ✓ nas tarefas. A voz pode ser
+gravada ou gerada no ElevenLabs.
+
+- **Vídeo pronto:** `out/aula-02.mp4` (8 min 1 s) · **Legendas:** `out/aula-02.srt` (YouTube) e `out/aula-02.vtt` (site)
+- **No site:** os arquivos vão para `../public/videos/` (`aula-02.mp4`, `.jpg` de capa e `.vtt`). Na aula, o campo de
+  vídeo fica `/videos/aula-02.mp4`.
+
+Passo a passo para uma aula nova (troque 02 pelo número da aula):
+
+1. **Voz:** salve a voz em `audio/aula-02/voz-original.mp3` e transcreva:
+   `python scripts/transcribe.py audio/aula-02/voz-original.mp3 audio/aula-02/transcricao-original.json`.
+2. **Cortes (opcional):** liste os trechos a tirar em `audio/aula-02/cortes.json` (os tempos vêm da transcrição) e
+   as palavras que o reconhecimento errou em `audio/aula-02/correcoes.json`. `npm run audio:aula2` corta a voz sem
+   estalos, leva as palavras para o tempo do áudio cortado e copia a voz para `public/aula-02/`.
+3. **Slides:** na raiz do site, `PDF_HTML=video/.cache-slides npm run materiais:pdf -- 2`; aqui,
+   `npm run slides:aula2` fotografa os slides em 1920×1080 e mede onde fica cada texto (`src/data/aula-02/slides.json`).
+4. **Marcações:** em `src/aula2/dados.ts`, cada slide entra numa frase da fala e cada marcação tem o seu momento
+   (`em("frase falada")`) e o seu lugar (`el(slide, "cartao", 0)` ou `frase(slide, "R$ 120")`).
+5. **Vídeo:** `npm run render:aula2` (uns 10 minutos), depois as legendas:
+   `python scripts/legendas.py src/data/aula-02/palavras.json out/aula-02.vtt`.
+
+## Aula 3: estilo da aula 1, mais editada e com memes
+
+`src/aula3/` usa os mesmos componentes da aula 1 (fundo, texto no ritmo da fala, cartões de capítulo, indicador do
+canto) com cortes mais rápidos, batidas de câmera (`camera` em `src/aula3/memes.tsx`), efeitos sonoros novos (pop,
+ding, caixa registradora, arranhão de disco, glitch, tique-taque, boom e subida, todos de `scripts/sfx.py`) e memes.
+
+- **Os memes são originais:** emoji (Noto Color Emoji, licença livre), letra de meme (Anton) e desenhos em código.
+  Não use imagens de memes da internet: elas têm direito autoral e muitas vezes o rosto de gente real.
+- **Os componentes leem a aula do contexto** (`src/lib/contexto.ts`): `Fala`, `Barras`, `Hud` e `Legenda` usam as
+  palavras, o volume e a duração da aula que estiver no `TempoContexto.Provider`. Sem provedor, valem os da aula 1.
+- **Voz em mais de um arquivo:** junte com uma pausa curta (o `ffmpeg` do Remotion, filtro `concat`), transcreva com
+  `scripts/transcribe.py` e alinhe com o texto falado em `.txt`: `python scripts/align.py transcricao.json texto.txt
+  src/data/aula-03/palavras.json`.
+- **Comandos:** `npm run render:aula3` e `npm run render:aula3:legendado`. Para conferir antes:
+  `COMPOSICAO=Aula3 node scripts/quadros.mjs 28 84.6 135.9`.
 
 ## Cenas de apoio do Higgsfield (opcional)
 
